@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
@@ -11,6 +14,31 @@ class Profile extends StatefulWidget {
 
 class _Profile extends State<Profile> {
   bool isApicallprocess = false;
+  String name = '';
+  String email = '';
+  String phone = '';
+
+  Future<String> getUser() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    Map<String, dynamic> userData =
+        jsonDecode(sharedPreferences.getString('userData').toString())
+            as Map<String, dynamic>;
+    print(userData);
+    setState(() {
+      name = userData['profileData']['name'];
+      email = userData['profileData']['email'];
+      // phone = userData['profileData']['phone']; // hapus profile data
+    });
+    return userData[{'name', 'email'}] ?? 'loading';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
   _handleBack() => Navigator.of(context).pop();
 
   @override
@@ -29,7 +57,7 @@ class _Profile extends State<Profile> {
       backgroundColor: HexColor('#A7B79F').withOpacity(0.9),
       body: ProgressHUD(
         child: Form(
-          child: HistoryBody(context),
+          child: ProfileBody(context, name, email),
         ),
         inAsyncCall: isApicallprocess,
         key: UniqueKey(),
@@ -39,7 +67,7 @@ class _Profile extends State<Profile> {
 }
 
 // ignore: non_constant_identifier_names
-Widget HistoryBody(BuildContext context) {
+Widget ProfileBody(BuildContext context, name, email) {
   return SingleChildScrollView(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -52,7 +80,7 @@ Widget HistoryBody(BuildContext context) {
           child: const Align(
             alignment: Alignment.center,
             child: Text(
-              'Profile',
+              'Profile Account',
               style: TextStyle(
                 fontFamily: 'Josefin Sans',
                 fontSize: 25,
@@ -60,6 +88,113 @@ Widget HistoryBody(BuildContext context) {
                 fontWeight: FontWeight.w400,
               ),
             ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 40, left: 27),
+          child: Text(
+            'Full Name',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontFamily: 'Josefin Sans',
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 11,
+            left: 27,
+            right: 29,
+          ),
+          child: TextFormField(
+            initialValue: name,
+            // keyboardType: const TextInputType.numberWithOptions(),
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:
+                      const BorderSide(color: Colors.black, width: 2.0)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+              ),
+            ),
+            style: const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 11, left: 27),
+          child: Text(
+            'Email Address',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontFamily: 'Josefin Sans',
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 11,
+            left: 27,
+            right: 29,
+          ),
+          child: TextFormField(
+            initialValue: email,
+            // keyboardType: const TextInputType.numberWithOptions(),
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:
+                      const BorderSide(color: Colors.black, width: 2.0)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+              ),
+            ),
+            style: const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 11, left: 27),
+          child: Text(
+            'Phone Number',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontFamily: 'Josefin Sans',
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 11,
+            left: 27,
+            right: 29,
+          ),
+          child: TextField(
+            // keyboardType: const TextInputType.numberWithOptions(),
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:
+                      const BorderSide(color: Colors.black, width: 2.0)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+              ),
+            ),
+            style: const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
           ),
         ),
       ],

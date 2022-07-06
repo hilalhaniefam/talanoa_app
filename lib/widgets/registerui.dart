@@ -44,7 +44,7 @@ class RegisterUIState extends State<RegisterUI> {
     try {
       // if (password != confPass) {}
       Response response =
-          await post(Uri.parse('http://10.137.209.146:5000/register'), body: {
+          await post(Uri.parse('http://192.168.10.52:5000/register'), body: {
         'name': name,
         'email': email,
         'phone': phone,

@@ -22,13 +22,13 @@ class LoginUIState extends State<LoginUI> {
   late String email, password;
   // bool _isLoading = false;
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailCon = TextEditingController();
+  TextEditingController passwordCon = TextEditingController();
 
   void login(String email, password) async {
     try {
       Response response = await post(
-          Uri.parse('http://10.113.179.128:8081/api/account/login'),
+          Uri.parse('http://192.168.10.52:8081/api/account/login'),
           body: {'email': email, 'password': password});
       print(response.body);
       print(response.statusCode);
@@ -92,7 +92,7 @@ class LoginUIState extends State<LoginUI> {
                 ),
                 child: TextFormField(
                   // keyboardType: const TextInputType.numberWithOptions(),
-                  controller: emailController,
+                  controller: emailCon,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(
                         left: 16, top: 12.17, bottom: 12.12),
@@ -119,7 +119,7 @@ class LoginUIState extends State<LoginUI> {
                 ),
                 child: TextFormField(
                   // keyboardType: const TextInputType.numberWithOptions(),
-                  controller: passwordController,
+                  controller: passwordCon,
                   obscureText: hidePassword,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(
@@ -180,8 +180,8 @@ class LoginUIState extends State<LoginUI> {
                     // setState(() {
                     //   _isLoading = true;
                     // });
-                    login(emailController.text.toString(),
-                        passwordController.text.toString());
+                    login(
+                        emailCon.text.toString(), passwordCon.text.toString());
                   },
                   btnColor: HexColor("#F1ECE1"),
                   borderColor: Colors.grey,
@@ -302,8 +302,8 @@ class LoginUIState extends State<LoginUI> {
           //     // onPrimary: Colors.black,
           //   ),
           //   onPressed: () {
-          //     login(emailController.text.toString(),
-          //         passwordController.text.toString());
+          //     login(emailCon.text.toString(),
+          //         passwordCon.text.toString());
           //   },
           //   child: const Text('Login'),
           // ),

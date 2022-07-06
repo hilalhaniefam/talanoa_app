@@ -15,29 +15,25 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   bool isApicallprocess = false;
-  // String name = 'loading';
-  // Future<String> getNama() async {
-  //   final SharedPreferences sharedPreferences =
-  //       await SharedPreferences.getInstance();
-  //   Map<String, dynamic> userData =
-  //       jsonDecode(sharedPreferences.getString('userData').toString())
-  //           as Map<String, dynamic>;
-  //   print(userData);
-  //   print(userData['name']);
-  //   setState(() {
-  //     name = userData['name'];
-  //   });
-  //   return userData['name'] ?? 'loading';
-  // }
+  String name = 'loading';
+  Future<String> getName() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    Map<String, dynamic> userData =
+        jsonDecode(sharedPreferences.getString('userData').toString())
+            as Map<String, dynamic>;
+    print(userData);
+    setState(() {
+      name = userData['profileData']['name']; // hapus profile data
+    });
+    return userData['name'] ?? 'loading';
+  }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   print('called!');
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     print('called!');
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    getName();
+  }
 
   // String name = '';
   // @override
@@ -102,7 +98,7 @@ class _UserPageState extends State<UserPage> {
       backgroundColor: HexColor('#A7B79F').withOpacity(0.9),
       body: ProgressHUD(
         child: Form(
-          child: UserUI(context),
+          child: UserUI(context, name),
         ),
         inAsyncCall: isApicallprocess,
         key: UniqueKey(),
@@ -112,7 +108,7 @@ class _UserPageState extends State<UserPage> {
 }
 
 // ignore: non_constant_identifier_names
-Widget UserUI(BuildContext context) {
+Widget UserUI(BuildContext context, name) {
   return SingleChildScrollView(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -168,29 +164,32 @@ Widget UserUI(BuildContext context) {
         const SizedBox(
           height: 10,
         ),
-        const Align(
+        Align(
           alignment: Alignment.centerLeft,
-          child: Text(
-            'name',
-            style: TextStyle(
-              fontFamily: 'Josefin Sans',
-              fontSize: 22,
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 18),
+            child: Text(
+              name,
+              style: const TextStyle(
+                fontFamily: 'Josefin Sans',
+                fontSize: 22,
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
         ),
         const SizedBox(
           height: 28,
         ),
-        // Align(
-        //   alignment: Alignment.center,
-        //   child: Image.asset(
-        //     'assets/images/cafe.png',
-        //     width: 270,
-        //     height: 160,
-        //   ),
-        // ),
+        Align(
+          alignment: Alignment.center,
+          child: Image.asset(
+            'assets/images/cafe.png',
+            width: 270,
+            height: 160,
+          ),
+        ),
         const SizedBox(
           height: 21,
         ),
