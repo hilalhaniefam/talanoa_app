@@ -28,7 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   api_cache_manager: ^1.0.2
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
   flutter:
     sdk: flutter
   fluttertoast: ^8.0.9

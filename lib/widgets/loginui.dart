@@ -28,7 +28,7 @@ class LoginUIState extends State<LoginUI> {
   void login(String email, password) async {
     try {
       Response response = await post(
-          Uri.parse('http://192.168.10.52:8081/api/account/login'),
+          Uri.parse('http://10.137.228.150:5000/login'),
           body: {'email': email, 'password': password});
       print(response.body);
       print(response.statusCode);

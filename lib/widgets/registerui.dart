@@ -16,35 +16,55 @@ class RegisterUI extends StatefulWidget {
 
 class RegisterUIState extends State<RegisterUI> {
   bool hidePassword = true;
-  late String email, password, confPass, name, phone;
+  Map formValue = {
+    'email': TextEditingController(),
+    'password': TextEditingController(),
+    'confPass': TextEditingController(),
+    'name': TextEditingController(),
+    'phone': TextEditingController()
+  };
+
+  Map errorFormStatus = {
+    'email': false,
+    'password': false,
+    'confPass': false,
+    'name': false,
+    'phone': false
+  };
+
   _handleBack() => Navigator.of(context).pop();
 
-  // bool isConfpassValidate = false;
-  // bool validateTextField(String confPass) {
-  //   if (confPass.isEmpty) {
-  //     setState(() {
-  //       isConfpassValidate = true;
-  //     });
-  //     return false;
-  //   }
-  //   setState(() {
-  //     isConfpassValidate = false;
-  //   });
-  //   return true;
-  // }
-  // final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  TextEditingController emailCon = TextEditingController();
-  TextEditingController phoneCon = TextEditingController();
-  TextEditingController passwordCon = TextEditingController();
-  TextEditingController nameCon = TextEditingController();
-  TextEditingController confirmpass = TextEditingController();
+  bool validateTextField(String formKey) {
+    if (formValue[formKey].text.trim().isEmpty) {
+      setState(() {
+        errorFormStatus[formKey] = true;
+      });
+      return true;
+    }
+    setState(() {
+      errorFormStatus[formKey] = false;
+    });
+    return false;
+  }
+
+  // TextEditingController emailCon = TextEditingController();
+  // TextEditingController phoneCon = TextEditingController();
+  // TextEditingController passwordCon = TextEditingController();
+  // TextEditingController nameCon = TextEditingController();
+  // TextEditingController confirmpass = TextEditingController();
 
   void register(String name, String email, String phone, String password,
       String confPassword) async {
     try {
-      // if (password != confPass) {}
+      for (String key in errorFormStatus.keys) {
+        validateTextField(key);
+      }
+
+      for (String key in errorFormStatus.keys) {
+        if (errorFormStatus[key]) throw 'Please complete the form';
+      }
       Response response =
-          await post(Uri.parse('http://192.168.10.52:5000/register'), body: {
+          await post(Uri.parse('http://10.137.228.150:5000/register'), body: {
         'name': name,
         'email': email,
         'phone': phone,
@@ -118,18 +138,15 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        controller: nameCon,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Full Name can't be empty";
-                          }
-
-                          return null;
-                        },
-                        onSaved: (name) {
-                          name;
-                        },
+                        controller: formValue['name'],
                         decoration: InputDecoration(
+                          errorText: errorFormStatus['name']
+                              ? 'Name must be filled!'
+                              : null,
+                          errorStyle: const TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 15,
+                          ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
                           hintText: 'Full Name',
@@ -155,8 +172,15 @@ class RegisterUIState extends State<RegisterUI> {
                       ),
                       child: TextFormField(
                         // keyboardType: const TextInputType.numberWithOptions(),
-                        controller: emailCon,
+                        controller: formValue['email'],
                         decoration: InputDecoration(
+                          errorText: errorFormStatus['email']
+                              ? 'Email must be filled!'
+                              : null,
+                          errorStyle: const TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 15,
+                          ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
                           hintText: 'Email Address',
@@ -182,8 +206,15 @@ class RegisterUIState extends State<RegisterUI> {
                       ),
                       child: TextFormField(
                         keyboardType: const TextInputType.numberWithOptions(),
-                        controller: phoneCon,
+                        controller: formValue['phone'],
                         decoration: InputDecoration(
+                          errorText: errorFormStatus['phone']
+                              ? 'Phone must be filled!'
+                              : null,
+                          errorStyle: const TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 15,
+                          ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
                           hintText: 'Phone Number',
@@ -209,7 +240,7 @@ class RegisterUIState extends State<RegisterUI> {
                       ),
                       child: TextFormField(
                         // keyboardType: const TextInputType.numberWithOptions(),
-                        controller: passwordCon,
+                        controller: formValue['password'],
                         obscureText: hidePassword,
                         // validator: (value) {
                         //   confirmPass = value;
@@ -222,6 +253,13 @@ class RegisterUIState extends State<RegisterUI> {
                         //   }
                         // },
                         decoration: InputDecoration(
+                          errorText: errorFormStatus['password']
+                              ? 'Password must be filled!'
+                              : null,
+                          errorStyle: const TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 15,
+                          ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
                           hintText: 'Password',
@@ -247,7 +285,7 @@ class RegisterUIState extends State<RegisterUI> {
                       ),
                       child: TextFormField(
                         // keyboardType: const TextInputType.numberWithOptions(),
-                        controller: confirmpass,
+                        controller: formValue['confPass'],
                         obscureText: hidePassword,
                         // validator: (value) {
                         //   if (value!.isEmpty) {
@@ -261,6 +299,13 @@ class RegisterUIState extends State<RegisterUI> {
                         //   }
                         // },
                         decoration: InputDecoration(
+                          errorText: errorFormStatus['confPass']
+                              ? 'Confirm password must be filled!'
+                              : null,
+                          errorStyle: const TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 15,
+                          ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
                           hintText: 'Confirm Password',
@@ -286,11 +331,12 @@ class RegisterUIState extends State<RegisterUI> {
                         "Sign Up",
                         () {
                           register(
-                              nameCon.text.toString(),
-                              emailCon.text.toString(),
-                              phoneCon.text.toString(),
-                              passwordCon.text.toString(),
-                              confirmpass.text.toString());
+                            formValue['name']!.text.toString(),
+                            formValue['email']!.text.toString(),
+                            formValue['phone']!.text.toString(),
+                            formValue['password']!.text.toString(),
+                            formValue['confPass']!.text.toString(),
+                          );
                         },
                         btnColor: HexColor("#F1ECE1"),
                         borderColor: Colors.grey,

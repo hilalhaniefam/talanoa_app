@@ -35,16 +35,6 @@ class _UserPageState extends State<UserPage> {
     getName();
   }
 
-  // String name = '';
-  // @override
-
-  // _loadCounter() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     name = (sharedPreferences.getString('name') ?? '');
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -344,13 +334,6 @@ Widget UserUI(BuildContext context, name) {
                 )),
           ),
         )
-        // Positioned.fill(
-        //   child: Image.asset(
-        //     'assets/images/Vector.png',
-        //     fit: BoxFit.fill,
-        //     // alignment: Alignment.bottomCenter,
-        //   ),
-        // ),
       ],
     ),
   );
