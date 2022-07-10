@@ -14,6 +14,7 @@ class Profile extends StatefulWidget {
 
 class _Profile extends State<Profile> {
   bool isApicallprocess = false;
+
   String name = '';
   String email = '';
   String phone = '';
@@ -26,11 +27,11 @@ class _Profile extends State<Profile> {
             as Map<String, dynamic>;
     print(userData);
     setState(() {
-      name = userData['profileData']['name'];
-      email = userData['profileData']['email'];
-      // phone = userData['profileData']['phone']; // hapus profile data
+      name = userData['name'];
+      email = userData['email'];
+      phone = userData['phone'];
     });
-    return userData[{'name', 'email'}] ?? 'loading';
+    return userData[{'name', 'email', 'phone'}] ?? 'loading';
   }
 
   @override
@@ -57,7 +58,7 @@ class _Profile extends State<Profile> {
       backgroundColor: HexColor('#A7B79F').withOpacity(0.9),
       body: ProgressHUD(
         child: Form(
-          child: ProfileBody(context, name, email),
+          child: ProfileBody(context, name, email, phone),
         ),
         inAsyncCall: isApicallprocess,
         key: UniqueKey(),
@@ -67,7 +68,7 @@ class _Profile extends State<Profile> {
 }
 
 // ignore: non_constant_identifier_names
-Widget ProfileBody(BuildContext context, name, email) {
+Widget ProfileBody(BuildContext context, name, email, String phone) {
   return SingleChildScrollView(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -180,7 +181,8 @@ Widget ProfileBody(BuildContext context, name, email) {
             left: 27,
             right: 29,
           ),
-          child: TextField(
+          child: TextFormField(
+            initialValue: phone,
             // keyboardType: const TextInputType.numberWithOptions(),
             decoration: InputDecoration(
               contentPadding:

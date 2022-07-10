@@ -13,17 +13,13 @@ class RegisterPage extends StatefulWidget {
 
 class RegisterPageState extends State<RegisterPage> {
   bool isApicallprocess = false;
-  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor('#E5E5E5'),
       body: ProgressHUD(
-        child: Form(
-          key: globalFormKey,
-          child: const RegisterUI(),
-        ),
+        child: const RegisterUI(),
         inAsyncCall: isApicallprocess,
         key: UniqueKey(),
       ),

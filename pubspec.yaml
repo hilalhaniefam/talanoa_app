@@ -29,11 +29,14 @@ environment:
 dependencies:
   api_cache_manager: ^1.0.2
   cupertino_icons: ^1.0.5
+  email_validator: ^2.0.1
   flutter:
     sdk: flutter
+  flutter_password_strength: ^0.1.6
   fluttertoast: ^8.0.9
   font_awesome_flutter: ^10.1.0
   http: ^0.13.4
+  pinput: ^2.2.11
   shared_preferences: ^2.0.15
   snippet_coder_utils: ^1.0.12
 

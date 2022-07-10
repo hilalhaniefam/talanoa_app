@@ -64,6 +64,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.5"
+  email_validator:
+    dependency: "direct main"
+    description:
+      name: email_validator
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -97,6 +104,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
+  flutter_password_strength:
+    dependency: "direct main"
+    description:
+      name: flutter_password_strength
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.6"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -240,6 +254,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.7"
+  pinput:
+    dependency: "direct main"
+    description:
+      name: pinput
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.2.11"
   platform:
     dependency: transitive
     description:
@@ -322,6 +343,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smart_auth:
+    dependency: transitive
+    description:
+      name: smart_auth
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.5"
   snippet_coder_utils:
     dependency: "direct main"
     description:

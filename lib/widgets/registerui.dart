@@ -1,10 +1,12 @@
 import 'dart:convert';
 // import 'package:flutter/gestures.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/codeverif.dart';
 import 'package:talanoa_app/widgets/snackbar.dart';
 
 class RegisterUI extends StatefulWidget {
@@ -16,6 +18,7 @@ class RegisterUI extends StatefulWidget {
 
 class RegisterUIState extends State<RegisterUI> {
   bool hidePassword = true;
+  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   Map formValue = {
     'email': TextEditingController(),
     'password': TextEditingController(),
@@ -32,6 +35,12 @@ class RegisterUIState extends State<RegisterUI> {
     'phone': false
   };
 
+  void resetValidation() {
+    for (String key in errorFormStatus.keys) {
+      errorFormStatus[key] = false;
+    }
+  }
+
   _handleBack() => Navigator.of(context).pop();
 
   bool validateTextField(String formKey) {
@@ -41,17 +50,21 @@ class RegisterUIState extends State<RegisterUI> {
       });
       return true;
     }
+
     setState(() {
       errorFormStatus[formKey] = false;
     });
     return false;
   }
 
-  // TextEditingController emailCon = TextEditingController();
-  // TextEditingController phoneCon = TextEditingController();
-  // TextEditingController passwordCon = TextEditingController();
-  // TextEditingController nameCon = TextEditingController();
-  // TextEditingController confirmpass = TextEditingController();
+  bool validatePass(String value) {
+    RegExp passvalid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])");
+    if (passvalid.hasMatch(value)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   void register(String name, String email, String phone, String password,
       String confPassword) async {
@@ -64,7 +77,7 @@ class RegisterUIState extends State<RegisterUI> {
         if (errorFormStatus[key]) throw 'Please complete the form';
       }
       Response response =
-          await post(Uri.parse('http://10.137.228.150:5000/register'), body: {
+          await post(Uri.parse('http://192.168.1.100:5000/register'), body: {
         'name': name,
         'email': email,
         'phone': phone,
@@ -74,10 +87,16 @@ class RegisterUIState extends State<RegisterUI> {
       print(response.body);
       print(response.statusCode);
       var data = jsonDecode(response.body.toString());
+      var newUser = jsonDecode(jsonEncode(data['newUser']));
+      print('data');
+      print(newUser['user_id']);
       if (response.statusCode == 200) {
-        SharedPreferences sharedPreferences =
-            await SharedPreferences.getInstance();
-        sharedPreferences.setString('userData', data.toString());
+        // SharedPreferences sharedPreferences =
+        //     await SharedPreferences.getInstance();
+        // sharedPreferences.setString('userData', data.toString());
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                CodeVerifPage(formValue['email'].text, newUser['user_id'])));
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -94,7 +113,6 @@ class RegisterUIState extends State<RegisterUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // extendBodyBehindAppBar: true,
         appBar: AppBar(
           leading: IconButton(
             onPressed: _handleBack,
@@ -105,6 +123,8 @@ class RegisterUIState extends State<RegisterUI> {
           backgroundColor: HexColor('#F1ECE1'),
         ),
         body: SingleChildScrollView(
+            child: Form(
+          key: globalFormKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -139,17 +159,38 @@ class RegisterUIState extends State<RegisterUI> {
                       ),
                       child: TextFormField(
                         controller: formValue['name'],
+                        onChanged: (value) {
+                          for (String key in errorFormStatus.keys) {
+                            setState(() {
+                              errorFormStatus[key] = false;
+                            });
+                          }
+                        },
+                        //   globalFormKey.currentState!.validate();
+                        // },
+                        // validator: (value) {
+                        //   if (value!.isEmpty) {
+                        //     return 'Please enter your name';
+                        //   }
+                        // },
                         decoration: InputDecoration(
+                          label: const Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Text(
+                                  'Name',
+                                ),
+                              ),
+                            ]),
+                          ),
                           errorText: errorFormStatus['name']
-                              ? 'Name must be filled!'
+                              ? 'Please enter your name'
                               : null,
                           errorStyle: const TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 15,
+                            fontSize: 11,
                           ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
-                          hintText: 'Full Name',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
@@ -171,19 +212,38 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        // keyboardType: const TextInputType.numberWithOptions(),
+                        onChanged: (value) {
+                          final form = globalFormKey.currentState!;
+                          if (form.validate()) {}
+                          for (String key in errorFormStatus.keys) {
+                            setState(() {
+                              errorFormStatus[key] = false;
+                            });
+                          }
+                        },
+                        validator: (value) =>
+                            value != null && !EmailValidator.validate(value)
+                                ? 'Enter a Valid Email'
+                                : null,
                         controller: formValue['email'],
                         decoration: InputDecoration(
+                          label: const Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Text(
+                                  'Email',
+                                ),
+                              ),
+                            ]),
+                          ),
                           errorText: errorFormStatus['email']
-                              ? 'Email must be filled!'
+                              ? 'Please enter your email'
                               : null,
                           errorStyle: const TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 15,
+                            fontSize: 11,
                           ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
-                          hintText: 'Email Address',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
@@ -205,19 +265,34 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
+                        onChanged: (value) {
+                          for (String key in errorFormStatus.keys) {
+                            setState(() {
+                              errorFormStatus[key] = false;
+                            });
+                          }
+                        },
                         keyboardType: const TextInputType.numberWithOptions(),
                         controller: formValue['phone'],
                         decoration: InputDecoration(
+                          prefixText: '+62 ',
+                          label: const Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Text(
+                                  'Phone',
+                                ),
+                              ),
+                            ]),
+                          ),
                           errorText: errorFormStatus['phone']
-                              ? 'Phone must be filled!'
+                              ? 'Please enter your phone number'
                               : null,
                           errorStyle: const TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 15,
+                            fontSize: 11,
                           ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
-                          hintText: 'Phone Number',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
@@ -239,30 +314,37 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        // keyboardType: const TextInputType.numberWithOptions(),
+                        onChanged: (value) {
+                          globalFormKey.currentState!.validate();
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          if (!validatePass(value)) {
+                            return 'Password is too weak!';
+                          }
+                        },
                         controller: formValue['password'],
                         obscureText: hidePassword,
-                        // validator: (value) {
-                        //   confirmPass = value;
-                        //   if (value!.isEmpty) {
-                        //     return "Please Enter Password";
-                        //   } else if (value.length < 8) {
-                        //     return "Password must be atleast 8 characters long";
-                        //   } else {
-                        //     return null;
-                        //   }
-                        // },
                         decoration: InputDecoration(
+                          label: const Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Text(
+                                  'Password',
+                                ),
+                              ),
+                            ]),
+                          ),
                           errorText: errorFormStatus['password']
-                              ? 'Password must be filled!'
+                              ? 'Please enter password'
                               : null,
                           errorStyle: const TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 15,
+                            fontSize: 11,
                           ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
-                          hintText: 'Password',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
@@ -284,31 +366,37 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        // keyboardType: const TextInputType.numberWithOptions(),
+                        onChanged: (value) {
+                          globalFormKey.currentState!.validate();
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please re-enter your password';
+                          }
+                          if (value != formValue['password'].text) {
+                            return 'Password not match';
+                          }
+                        },
                         controller: formValue['confPass'],
                         obscureText: hidePassword,
-                        // validator: (value) {
-                        //   if (value!.isEmpty) {
-                        //     return "Please Re-Enter New Password";
-                        //   } else if (value.length < 8) {
-                        //     return "Password must be atleast 8 characters long";
-                        //   } else if (value != confirmPass) {
-                        //     return "Password must be same as above";
-                        //   } else {
-                        //     return null;
-                        //   }
-                        // },
                         decoration: InputDecoration(
+                          label: const Text.rich(
+                            TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Text(
+                                  'Confirm Password',
+                                ),
+                              ),
+                            ]),
+                          ),
                           errorText: errorFormStatus['confPass']
-                              ? 'Confirm password must be filled!'
+                              ? 'Please re-enter password'
                               : null,
                           errorStyle: const TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 15,
+                            fontSize: 11,
                           ),
                           contentPadding: const EdgeInsets.only(
                               left: 16, top: 12.17, bottom: 12.12),
-                          hintText: 'Confirm Password',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
@@ -350,6 +438,6 @@ class RegisterUIState extends State<RegisterUI> {
               )
             ],
           ),
-        ));
+        )));
   }
 }

@@ -24,7 +24,7 @@ class _UserPageState extends State<UserPage> {
             as Map<String, dynamic>;
     print(userData);
     setState(() {
-      name = userData['profileData']['name']; // hapus profile data
+      name = userData['name']; // hapus profile data
     });
     return userData['name'] ?? 'loading';
   }
@@ -104,38 +104,6 @@ Widget UserUI(BuildContext context, name) {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Container(
-        //   width: MediaQuery.of(context).size.width,
-        //   height: MediaQuery.of(context).size.height * 0.20,
-        //   decoration: BoxDecoration(
-        //       gradient: LinearGradient(
-        //         begin: Alignment.topCenter,
-        //         end: Alignment.bottomCenter,
-        //         colors: [
-        //           HexColor('A7B79F'),
-        //           HexColor('A7B79F'),
-        //         ],
-        //       ),
-        //       borderRadius: const BorderRadius.only(
-        //           bottomLeft: Radius.circular(0),
-        //           bottomRight: Radius.circular(0))),
-        //   child: Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: [
-        //       const SizedBox(
-        //         height: 70,
-        //       ),
-        //       Align(
-        //         alignment: Alignment.center,
-        //         child: Image.asset(
-        //           'assets/images/talanoafont.png',
-        //           width: 150,
-        //           height: 58,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         const SizedBox(
           height: 25,
         ),

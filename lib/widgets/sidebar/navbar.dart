@@ -1,8 +1,15 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
+
+  void signOut() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove('userData');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +126,8 @@ class NavBar extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/helpcenter');
+                    signOut();
+                    Navigator.pushNamed(context, '/');
                   },
                   icon: Image.asset(
                     'assets/images/signout.png',

@@ -10,7 +10,7 @@ import 'package:talanoa_app/pages/admin/reservasi/completed.dart';
 import 'package:talanoa_app/pages/admin/reservasi/ongoing.dart';
 import 'package:talanoa_app/pages/admin/reservasi_page.dart';
 import 'package:talanoa_app/pages/admin/userdata_page.dart';
-import 'package:talanoa_app/pages/codeverif.dart';
+// import 'package:talanoa_app/pages/codeverif.dart';
 import 'package:talanoa_app/pages/login_page.dart';
 import 'package:talanoa_app/widgets/profile/profile.dart';
 import 'package:talanoa_app/widgets/sidebar/aboutus.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/register': (context) => const RegisterPage(),
         '/resetpass': (context) => const ResetpassPage(),
-        '/codeverif': (context) => const CodeVerifPage(),
+        // '/codeverif': (context) => CodeVerifPage(),
         '/newpass': (context) => const NewpassPage(),
         '/passupdate': (context) => const Passupdate(),
         // Admin Page

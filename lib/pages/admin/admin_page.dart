@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
@@ -158,9 +159,18 @@ Widget AdminUI(BuildContext context) {
         ),
         Align(
             alignment: Alignment.center,
-            child: TextButton(
-                onPressed: () {},
-                child: const Text(
+            child: TextButton.icon(
+                icon: Image.asset(
+                  'assets/images/signout.png',
+                  width: 20,
+                  height: 20,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  signOut();
+                  Navigator.pushNamed(context, '/');
+                },
+                label: const Text(
                   'Sign Out',
                   style: TextStyle(
                     color: Colors.black,
@@ -172,4 +182,9 @@ Widget AdminUI(BuildContext context) {
       ],
     ),
   );
+}
+
+void signOut() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  sharedPreferences.remove('userData');
 }

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/user/userpage.dart';
 // import 'package:talanoa_app/main.dart';
 import 'package:talanoa_app/widgets/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +27,7 @@ class LoginUIState extends State<LoginUI> {
   void login(String email, password) async {
     try {
       Response response = await post(
-          Uri.parse('http://10.137.228.150:5000/login'),
+          Uri.parse('http://192.168.1.100:5000/login'),
           body: {'email': email, 'password': password});
       print(response.body);
       print(response.statusCode);
@@ -37,8 +36,14 @@ class LoginUIState extends State<LoginUI> {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.setString('userData', jsonEncode(data));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (builder) => const UserPage()));
+        Map<String, dynamic> userData =
+            jsonDecode(sharedPreferences.getString('userData').toString())
+                as Map<String, dynamic>;
+        if (userData['role'] == 1) {
+          Navigator.pushReplacementNamed(context, '/user');
+        } else if (userData['role'] == 2) {
+          Navigator.pushReplacementNamed(context, '/admin');
+        }
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -96,7 +101,7 @@ class LoginUIState extends State<LoginUI> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(
                         left: 16, top: 12.17, bottom: 12.12),
-                    hintText: '' 'Email',
+                    labelText: 'Email',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide:
@@ -124,7 +129,7 @@ class LoginUIState extends State<LoginUI> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(
                         left: 16, top: 12.17, bottom: 12.12),
-                    hintText: '' 'Password',
+                    labelText: 'Password',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide:
@@ -239,71 +244,3 @@ class LoginUIState extends State<LoginUI> {
     );
   }
 }
-
-// child: FormHelper.inputFieldWidget(
-          //   context,
-          //   "nohp",
-          //   "No. Handphone",
-          //   (onVaLidateVal) {
-          //     if (onVaLidateVal.isEmpty) {
-          //       return "No. Handphone can't be empty";
-          //     }
-
-          //     return null;
-          //   },
-          //   (onSavedVal) {
-          //     nohp = onSavedVal;
-          //   },
-          //   borderFocusColor: Colors.black,
-          //   borderColor: Colors.black,
-          //   textColor: Colors.black,
-          //   hintColor: Colors.black.withOpacity(0.7),
-          //   borderWidth: 288,
-          //   borderRadius: 10,
-          // )),
-
-          // child: FormHelper.inputFieldWidget(
-            //     context, 'password', 'Password', (onVaLidateVal) {
-            //   if (onVaLidateVal.isEmpty) {
-            //     return "Password can't be empty";
-            //   }
-
-            //   return null;
-            // }, (onSavedVal) {
-            //   password = onSavedVal;
-            // },
-            //     borderFocusColor: Colors.black,
-            //     borderColor: Colors.black,
-            //     textColor: Colors.black,
-            //     hintColor: Colors.black.withOpacity(0.7),
-            //     borderWidth: 288,
-            //     borderRadius: 10,
-            //     obscureText: hidePassword,
-            //     suffixIcon: IconButton(
-            //         onPressed: () {
-            //           setState(() {
-            //             hidePassword = !hidePassword;
-            //           });
-            //         },
-            //         color: Colors.black.withOpacity(0.7),
-            //         icon: Icon(hidePassword
-            //             ? Icons.visibility_off
-            // : Icons.visibility))),
-
-                      // OutlinedButton(
-          //   style: OutlinedButton.styleFrom(
-          //     shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(10)),
-          //     minimumSize: const Size(287, 39.83),
-          //     textStyle: const TextStyle(
-          //         fontFamily: 'Sansation_Regular', fontSize: 20),
-          //     primary: Colors.black,
-          //     side: const BorderSide(width: 2, color: Colors.black),
-          //     // onPrimary: Colors.black,
-          //   ),
-          //   onPressed: () {
-          //     login(emailCon.text.toString(),
-          //         passwordCon.text.toString());
-          //   },
-          //   child: const Text('Login'),
-          // ),
