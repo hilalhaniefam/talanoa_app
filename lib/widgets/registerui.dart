@@ -1,9 +1,7 @@
 import 'dart:convert';
-// import 'package:flutter/gestures.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/codeverif.dart';
@@ -77,7 +75,7 @@ class RegisterUIState extends State<RegisterUI> {
         if (errorFormStatus[key]) throw 'Please complete the form';
       }
       Response response =
-          await post(Uri.parse('http://192.168.1.100:5000/register'), body: {
+          await post(Uri.parse('http://192.168.0.126:5000/register'), body: {
         'name': name,
         'email': email,
         'phone': phone,
@@ -89,14 +87,14 @@ class RegisterUIState extends State<RegisterUI> {
       var data = jsonDecode(response.body.toString());
       var newUser = jsonDecode(jsonEncode(data['newUser']));
       print('data');
-      print(newUser['user_id']);
+      print(newUser['userId']);
       if (response.statusCode == 200) {
         // SharedPreferences sharedPreferences =
         //     await SharedPreferences.getInstance();
         // sharedPreferences.setString('userData', data.toString());
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                CodeVerifPage(formValue['email'].text, newUser['user_id'])));
+                CodeVerifPage(formValue['email'].text, newUser['userId'])));
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -324,6 +322,7 @@ class RegisterUIState extends State<RegisterUI> {
                           if (!validatePass(value)) {
                             return 'Password is too weak!';
                           }
+                          return null;
                         },
                         controller: formValue['password'],
                         obscureText: hidePassword,
@@ -376,6 +375,7 @@ class RegisterUIState extends State<RegisterUI> {
                           if (value != formValue['password'].text) {
                             return 'Password not match';
                           }
+                          return null;
                         },
                         controller: formValue['confPass'],
                         obscureText: hidePassword,

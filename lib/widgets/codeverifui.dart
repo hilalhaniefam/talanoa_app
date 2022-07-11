@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -8,34 +6,28 @@ import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/registered.dart';
 import 'package:talanoa_app/widgets/snackbar.dart';
 
-import '../pages/codeverif.dart';
-
-class CodeverifUI extends StatefulWidget {
+class CodeVerifUI extends StatefulWidget {
   final String email;
-  final int user_id;
-  const CodeverifUI(this.email, this.user_id, {Key? key}) : super(key: key);
+  final String userId;
+  const CodeVerifUI(this.email, this.userId, {Key? key}) : super(key: key);
 
   @override
-  State<CodeverifUI> createState() => _CodeverifUIState();
+  State<CodeVerifUI> createState() => _CodeVerifUIState();
 }
 
-class _CodeverifUIState extends State<CodeverifUI> {
-  final _formKey = GlobalKey<FormState>();
+class _CodeVerifUIState extends State<CodeVerifUI> {
   _handleBack() => Navigator.of(context).pop();
-  Widget buildPinPut() {
-    return Pinput(
-      onCompleted: (pin) => print(pin),
-    );
-  }
+  String otp = '';
+  TextEditingController otpCon = TextEditingController();
 
-  void sendOtp(String email, int user_id) async {
-    //user_id ganti ke String
+  void sendOtp(String email, String userId) async {
     try {
       Response response =
-          await post(Uri.parse('http://192.168.1.100:5000/sendOtp'), body: {
-        'user_id': user_id.toString(),
+          await post(Uri.parse('http://192.168.0.126:5000/sendOtp'), body: {
+        'userId': userId,
         'email': email,
       });
       print('SEND OTP:');
@@ -59,10 +51,35 @@ class _CodeverifUIState extends State<CodeverifUI> {
     }
   }
 
+  void verifyOtp(String otp, String userId) async {
+    try {
+      Response response =
+          await post(Uri.parse('http://192.168.0.126:5000/verifyOtp'), body: {
+        'userId': userId,
+        'otp': otp,
+      });
+      print('VERIFY OTP:');
+      print(response.body);
+      print(response.statusCode);
+      var data = jsonDecode(response.body.toString());
+      if (response.statusCode == 200) {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString('userData', data.toString());
+        Navigator.pushNamed(context, '/registered');
+      } else {
+        throw data['error'];
+      }
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(e.toString()));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    sendOtp(widget.email, widget.user_id);
+    sendOtp(widget.email, widget.userId);
   }
 
   @override
@@ -79,7 +96,6 @@ class _CodeverifUIState extends State<CodeverifUI> {
         ),
         body: SingleChildScrollView(
             child: Column(
-                key: _formKey,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -104,7 +120,7 @@ class _CodeverifUIState extends State<CodeverifUI> {
                     const Padding(
                       padding: EdgeInsets.only(right: 107),
                       child: Text(
-                        'CODE VERIFIVATION',
+                        'CODE VERIFICATION',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontFamily: 'Josefin Sans',
@@ -144,6 +160,7 @@ class _CodeverifUIState extends State<CodeverifUI> {
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
                       child: Pinput(
+                        controller: otpCon,
                         length: 6,
                         defaultPinTheme: PinTheme(
                           width: 56,
@@ -168,12 +185,12 @@ class _CodeverifUIState extends State<CodeverifUI> {
                       height: 50,
                     ),
                     SizedBox(
-                      width: 311,
-                      height: 58,
+                      width: 150,
+                      height: 40,
                       child: FormHelper.submitButton(
                         "Verify Code",
                         () {
-                          Navigator.pushNamed(context, '/newpass');
+                          verifyOtp(otpCon.text, widget.userId);
                         },
                         btnColor: HexColor("#F1ECE1"),
                         borderColor: Colors.grey,
@@ -202,7 +219,9 @@ class _CodeverifUIState extends State<CodeverifUI> {
                                   color: Colors.black,
                                 ),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {},
+                                  ..onTap = () {
+                                    sendOtp(widget.email, widget.userId);
+                                  },
                               ),
                             ],
                           ),

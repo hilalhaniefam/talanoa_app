@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -7,8 +5,8 @@ import '../widgets/codeverifui.dart';
 
 class CodeVerifPage extends StatefulWidget {
   final String email;
-  final int user_id;
-  const CodeVerifPage(this.email, this.user_id, {Key? key}) : super(key: key);
+  final String userId;
+  const CodeVerifPage(this.email, this.userId, {Key? key}) : super(key: key);
   @override
   State<CodeVerifPage> createState() => _CodeVerifPageState();
 }
@@ -24,7 +22,7 @@ class _CodeVerifPageState extends State<CodeVerifPage> {
       body: ProgressHUD(
         child: Form(
           key: globalFormKey,
-          child: CodeverifUI(widget.email, widget.user_id),
+          child: CodeVerifUI(widget.email, widget.userId),
         ),
         inAsyncCall: isApicallprocess,
         key: UniqueKey(),

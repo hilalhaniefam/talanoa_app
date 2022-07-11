@@ -18,16 +18,16 @@ class LoginUI extends StatefulWidget {
 
 class LoginUIState extends State<LoginUI> {
   bool hidePassword = true;
-  late String email, password;
-  // bool _isLoading = false;
+  String email = '';
+  String password = '';
 
   TextEditingController emailCon = TextEditingController();
   TextEditingController passwordCon = TextEditingController();
 
-  void login(String email, password) async {
+  void login(String email, String password) async {
     try {
       Response response = await post(
-          Uri.parse('http://192.168.1.100:5000/login'),
+          Uri.parse('http://192.168.0.126:5000/login'),
           body: {'email': email, 'password': password});
       print(response.body);
       print(response.statusCode);
@@ -178,15 +178,16 @@ class LoginUIState extends State<LoginUI> {
               const SizedBox(
                 height: 90,
               ),
-              Center(
+              SizedBox(
+                width: 150,
+                height: 40,
                 child: FormHelper.submitButton(
                   "Login",
                   () {
-                    // setState(() {
-                    //   _isLoading = true;
-                    // });
                     login(
-                        emailCon.text.toString(), passwordCon.text.toString());
+                      emailCon.text.toString(),
+                      passwordCon.text.toString(),
+                    );
                   },
                   btnColor: HexColor("#F1ECE1"),
                   borderColor: Colors.grey,

@@ -12,6 +12,7 @@ import 'package:talanoa_app/pages/admin/reservasi_page.dart';
 import 'package:talanoa_app/pages/admin/userdata_page.dart';
 // import 'package:talanoa_app/pages/codeverif.dart';
 import 'package:talanoa_app/pages/login_page.dart';
+import 'package:talanoa_app/pages/registered.dart';
 import 'package:talanoa_app/widgets/profile/profile.dart';
 import 'package:talanoa_app/widgets/sidebar/aboutus.dart';
 import 'package:talanoa_app/pages/newpass.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/register': (context) => const RegisterPage(),
+        '/registered': (context) => const Registered(),
         '/resetpass': (context) => const ResetpassPage(),
         // '/codeverif': (context) => CodeVerifPage(),
         '/newpass': (context) => const NewpassPage(),

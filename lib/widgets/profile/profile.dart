@@ -1,13 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
-
   @override
   State<Profile> createState() => _Profile();
 }
@@ -15,9 +14,11 @@ class Profile extends StatefulWidget {
 class _Profile extends State<Profile> {
   bool isApicallprocess = false;
 
-  String name = '';
-  String email = '';
-  String phone = '';
+  Map formValue = {
+    'name': TextEditingController(),
+    'email': TextEditingController(),
+    'phone': TextEditingController()
+  };
 
   Future<String> getUser() async {
     final SharedPreferences sharedPreferences =
@@ -27,9 +28,9 @@ class _Profile extends State<Profile> {
             as Map<String, dynamic>;
     print(userData);
     setState(() {
-      name = userData['name'];
-      email = userData['email'];
-      phone = userData['phone'];
+      formValue['name'].text = userData['name'];
+      formValue['email'].text = userData['email'];
+      formValue['phone'].text = userData['phone'];
     });
     return userData[{'name', 'email', 'phone'}] ?? 'loading';
   }
@@ -41,7 +42,6 @@ class _Profile extends State<Profile> {
   }
 
   _handleBack() => Navigator.of(context).pop();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +58,8 @@ class _Profile extends State<Profile> {
       backgroundColor: HexColor('#A7B79F').withOpacity(0.9),
       body: ProgressHUD(
         child: Form(
-          child: ProfileBody(context, name, email, phone),
+          child: ProfileBody(context, formValue['name'], formValue['email'],
+              formValue['phone']),
         ),
         inAsyncCall: isApicallprocess,
         key: UniqueKey(),
@@ -67,8 +68,14 @@ class _Profile extends State<Profile> {
   }
 }
 
+GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
 // ignore: non_constant_identifier_names
-Widget ProfileBody(BuildContext context, name, email, String phone) {
+update(val) {
+  print(val);
+}
+
+Widget ProfileBody(BuildContext context, TextEditingController nameCon,
+    TextEditingController emailCon, TextEditingController phoneCon) {
   return SingleChildScrollView(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -103,30 +110,33 @@ Widget ProfileBody(BuildContext context, name, email, String phone) {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 11,
-            left: 27,
-            right: 29,
-          ),
-          child: TextFormField(
-            initialValue: name,
-            // keyboardType: const TextInputType.numberWithOptions(),
-            decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(color: Colors.black, width: 2.0)),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+        Form(
+            key: globalFormKey,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 11,
+                left: 27,
+                right: 29,
               ),
-            ),
-            style: const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
-          ),
-        ),
+              child: TextFormField(
+                controller: nameCon,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(
+                      left: 16, top: 12.17, bottom: 12.12),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 2.0)),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide:
+                        const BorderSide(color: Colors.black, width: 2.0),
+                  ),
+                ),
+                style:
+                    const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
+              ),
+            )),
         const Padding(
           padding: EdgeInsets.only(top: 11, left: 27),
           child: Text(
@@ -146,8 +156,7 @@ Widget ProfileBody(BuildContext context, name, email, String phone) {
             right: 29,
           ),
           child: TextFormField(
-            initialValue: email,
-            // keyboardType: const TextInputType.numberWithOptions(),
+            controller: emailCon,
             decoration: InputDecoration(
               contentPadding:
                   const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
@@ -182,8 +191,7 @@ Widget ProfileBody(BuildContext context, name, email, String phone) {
             right: 29,
           ),
           child: TextFormField(
-            initialValue: phone,
-            // keyboardType: const TextInputType.numberWithOptions(),
+            controller: phoneCon,
             decoration: InputDecoration(
               contentPadding:
                   const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
@@ -197,6 +205,22 @@ Widget ProfileBody(BuildContext context, name, email, String phone) {
               ),
             ),
             style: const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
+          ),
+        ),
+        const SizedBox(
+          height: 265,
+        ),
+        Center(
+          child: FormHelper.submitButton(
+            "Update",
+            () {
+              update({nameCon.text, emailCon.text, phoneCon.text});
+            },
+            btnColor: HexColor("#F1ECE1"),
+            borderColor: Colors.grey,
+            txtColor: Colors.black,
+            borderRadius: 10,
+            fontSize: 20,
           ),
         ),
       ],
