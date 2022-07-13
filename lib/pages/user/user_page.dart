@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/widgets/profile/profile.dart';
 import 'package:talanoa_app/widgets/sidebar/navbar.dart';
 
 class UserPage extends StatefulWidget {
@@ -66,7 +67,10 @@ class _UserPageState extends State<UserPage> {
                 size: 22,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/profile');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => const Profile()));
               },
             ),
           ),

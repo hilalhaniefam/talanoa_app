@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/codeverif.dart';
-import 'package:talanoa_app/widgets/snackbar.dart';
+import 'package:talanoa_app/pages/account_services/codeverif_page.dart';
+import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
-class RegisterUI extends StatefulWidget {
-  const RegisterUI({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterUI> createState() => RegisterUIState();
+  RegisterPageState createState() => RegisterPageState();
 }
 
-class RegisterUIState extends State<RegisterUI> {
+class RegisterPageState extends State<RegisterPage> {
+  bool isApicallprocess = false;
   bool hidePassword = true;
-  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Map formValue = {
     'email': TextEditingController(),
     'password': TextEditingController(),
@@ -33,12 +34,6 @@ class RegisterUIState extends State<RegisterUI> {
     'phone': false
   };
 
-  void resetValidation() {
-    for (String key in errorFormStatus.keys) {
-      errorFormStatus[key] = false;
-    }
-  }
-
   _handleBack() => Navigator.of(context).pop();
 
   bool validateTextField(String formKey) {
@@ -48,16 +43,15 @@ class RegisterUIState extends State<RegisterUI> {
       });
       return true;
     }
-
     setState(() {
       errorFormStatus[formKey] = false;
     });
     return false;
   }
 
-  bool validatePass(String value) {
+  bool validatePass(String pass) {
     RegExp passvalid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])");
-    if (passvalid.hasMatch(value)) {
+    if (passvalid.hasMatch(pass)) {
       return true;
     } else {
       return false;
@@ -75,7 +69,7 @@ class RegisterUIState extends State<RegisterUI> {
         if (errorFormStatus[key]) throw 'Please complete the form';
       }
       Response response =
-          await post(Uri.parse('http://192.168.0.126:5000/register'), body: {
+          await post(Uri.parse('http://192.168.1.101:5000/register'), body: {
         'name': name,
         'email': email,
         'phone': phone,
@@ -86,8 +80,7 @@ class RegisterUIState extends State<RegisterUI> {
       print(response.statusCode);
       var data = jsonDecode(response.body.toString());
       var newUser = jsonDecode(jsonEncode(data['newUser']));
-      print('data');
-      print(newUser['userId']);
+      print(newUser);
       if (response.statusCode == 200) {
         // SharedPreferences sharedPreferences =
         //     await SharedPreferences.getInstance();
@@ -122,7 +115,7 @@ class RegisterUIState extends State<RegisterUI> {
         ),
         body: SingleChildScrollView(
             child: Form(
-          key: globalFormKey,
+          key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -157,18 +150,11 @@ class RegisterUIState extends State<RegisterUI> {
                       ),
                       child: TextFormField(
                         controller: formValue['name'],
-                        onChanged: (value) {
-                          for (String key in errorFormStatus.keys) {
-                            setState(() {
-                              errorFormStatus[key] = false;
-                            });
-                          }
-                        },
-                        //   globalFormKey.currentState!.validate();
-                        // },
-                        // validator: (value) {
-                        //   if (value!.isEmpty) {
-                        //     return 'Please enter your name';
+                        // onChanged: (value) {
+                        //   for (String key in errorFormStatus.keys) {
+                        //     setState(() {
+                        //       errorFormStatus[key] = false;
+                        //     });
                         //   }
                         // },
                         decoration: InputDecoration(
@@ -210,15 +196,13 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        onChanged: (value) {
-                          final form = globalFormKey.currentState!;
-                          if (form.validate()) {}
-                          for (String key in errorFormStatus.keys) {
-                            setState(() {
-                              errorFormStatus[key] = false;
-                            });
-                          }
-                        },
+                        // onChanged: (value) {
+                        //   for (String key in errorFormStatus.keys) {
+                        //     setState(() {
+                        //       errorFormStatus[key] = false;
+                        //     });
+                        //   }
+                        // },
                         validator: (value) =>
                             value != null && !EmailValidator.validate(value)
                                 ? 'Enter a Valid Email'
@@ -263,15 +247,15 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        onChanged: (value) {
-                          for (String key in errorFormStatus.keys) {
-                            setState(() {
-                              errorFormStatus[key] = false;
-                            });
-                          }
-                        },
                         keyboardType: const TextInputType.numberWithOptions(),
                         controller: formValue['phone'],
+                        // onChanged: (value) {
+                        //   for (String key in errorFormStatus.keys) {
+                        //     setState(() {
+                        //       errorFormStatus[key] = false;
+                        //     });
+                        //   }
+                        // },
                         decoration: InputDecoration(
                           prefixText: '+62 ',
                           label: const Text.rich(
@@ -312,17 +296,24 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        onChanged: (value) {
-                          globalFormKey.currentState!.validate();
-                        },
+                        // onChanged: (value) {
+                        //   for (String key in errorFormStatus.keys) {
+                        //     setState(() {
+                        //       errorFormStatus[key] = false;
+                        //     });
+                        //   }
+                        // },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your password';
+                          } else {
+                            bool result = validatePass(value);
+                            if (result) {
+                              return null;
+                            } else {
+                              return 'Password is too weak!';
+                            }
                           }
-                          if (!validatePass(value)) {
-                            return 'Password is too weak!';
-                          }
-                          return null;
                         },
                         controller: formValue['password'],
                         obscureText: hidePassword,
@@ -365,9 +356,6 @@ class RegisterUIState extends State<RegisterUI> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        onChanged: (value) {
-                          globalFormKey.currentState!.validate();
-                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please re-enter your password';
@@ -418,6 +406,7 @@ class RegisterUIState extends State<RegisterUI> {
                       child: FormHelper.submitButton(
                         "Sign Up",
                         () {
+                          formKey.currentState!.validate();
                           register(
                             formValue['name']!.text.toString(),
                             formValue['email']!.text.toString(),

@@ -11,7 +11,7 @@ class ResetpassUI extends StatefulWidget {
 }
 
 class _ResetpassUIState extends State<ResetpassUI> {
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   bool isEmailValidate = false;
   bool validateTextField(String email) {
     if (email.isEmpty) {
@@ -31,7 +31,7 @@ class _ResetpassUIState extends State<ResetpassUI> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
-            key: _formKey,
+            key: formKey,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -56,7 +56,7 @@ class _ResetpassUIState extends State<ResetpassUI> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '    FORGOT PASSWORD',
+                    'FORGOT PASSWORD',
                     style: TextStyle(
                         fontFamily: 'Josefin Sans',
                         fontWeight: FontWeight.w700,

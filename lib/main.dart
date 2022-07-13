@@ -1,27 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/admin/admin_page.dart';
-import 'package:talanoa_app/pages/admin/rent_area/cenceled.dart';
-import 'package:talanoa_app/pages/admin/rent_area/completed.dart';
-import 'package:talanoa_app/pages/admin/rent_area/ongoing.dart';
-import 'package:talanoa_app/pages/admin/rentarea_page.dart';
-import 'package:talanoa_app/pages/admin/reservasi/cenceled.dart';
-import 'package:talanoa_app/pages/admin/reservasi/completed.dart';
-import 'package:talanoa_app/pages/admin/reservasi/ongoing.dart';
-import 'package:talanoa_app/pages/admin/reservasi_page.dart';
-import 'package:talanoa_app/pages/admin/userdata_page.dart';
-// import 'package:talanoa_app/pages/codeverif.dart';
-import 'package:talanoa_app/pages/login_page.dart';
-import 'package:talanoa_app/pages/registered.dart';
-import 'package:talanoa_app/widgets/profile/profile.dart';
-import 'package:talanoa_app/widgets/sidebar/aboutus.dart';
-import 'package:talanoa_app/pages/newpass.dart';
-import 'package:talanoa_app/pages/passupdate.dart';
-import 'package:talanoa_app/pages/register_pages.dart';
-import 'package:talanoa_app/pages/resetpass.dart';
-import 'package:talanoa_app/pages/user/userpage.dart';
-import 'package:talanoa_app/widgets/sidebar/helpcenter.dart';
-import 'package:talanoa_app/widgets/sidebar/history.dart';
+import 'package:talanoa_app/pages/account_services/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,36 +13,37 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: const LoginPage(),
       title: 'Talanoa App',
       theme: ThemeData(
         primaryColor: HexColor('#E5E5E5'),
       ),
-      routes: {
-        '/register': (context) => const RegisterPage(),
-        '/registered': (context) => const Registered(),
-        '/resetpass': (context) => const ResetpassPage(),
-        // '/codeverif': (context) => CodeVerifPage(),
-        '/newpass': (context) => const NewpassPage(),
-        '/passupdate': (context) => const Passupdate(),
-        // Admin Page
-        '/admin': (context) => const AdminPage(),
-        '/userdata': (context) => const Userdata(),
-        '/reservasidata': (context) => const Reservasidata(),
-        '/reservasi/ongoing': (context) => const ReservasiOngoing(),
-        '/reservasi/completed': (context) => const ReservasiCompleted(),
-        '/reservasi/cenceled': (context) => const ReservasiCenceled(),
-        '/rentarea': (context) => const RentArea(),
-        '/rentarea/ongoing': (context) => const RentOngoing(),
-        '/rentarea/completed': (context) => const Rentareacompleted(),
-        '/rentarea/cenceled': (context) => const Rentareacenceled(),
-        //user
-        '/': (context) => const LoginPage(),
-        '/user': (context) => const UserPage(),
-        '/aboutus': (context) => const Aboutus(),
-        '/history': (context) => const History(),
-        '/helpcenter': (context) => const Helpcenter(),
-        '/profile': (context) => const Profile(),
-      },
+      // routes: {
+      //   '/': (context) => const LoginPage(),
+      //   // '/register': (context) => const RegisterPage(),
+      //   // '/registered': (context) => const Registered(),
+      //   // '/resetpass': (context) => const ResetpassPage(),
+      //   // // '/codeverif': (context) => CodeVerifPage(),
+      //   // '/newpass': (context) => const NewpassPage(),
+      //   // '/passupdate': (context) => const Passupdate(),
+      //   // Admin Page
+      //   // '/admin': (context) => const AdminPage(),
+      //   // '/userdata': (context) => const Userdata(),
+      //   // '/reservasidata': (context) => const Reservasidata(),
+      //   // '/reservasi/ongoing': (context) => const ReservasiOngoing(),
+      //   // '/reservasi/completed': (context) => const ReservasiCompleted(),
+      //   // '/reservasi/cenceled': (context) => const ReservasiCenceled(),
+      //   // '/rentarea': (context) => const RentArea(),
+      //   // '/rentarea/ongoing': (context) => const RentOngoing(),
+      //   // '/rentarea/completed': (context) => const Rentareacompleted(),
+      //   // '/rentarea/cenceled': (context) => const Rentareacenceled(),
+      //   //user
+      //   // // '/user': (context) => const UserPage(),
+      //   // '/aboutus': (context) => const Aboutus(),
+      //   // '/history': (context) => const History(),
+      //   // '/helpcenter': (context) => const Helpcenter(),
+      //   // '/profile': (context) => const Profile(),
+      // },
     );
   }
 }

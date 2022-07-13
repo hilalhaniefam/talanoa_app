@@ -58,7 +58,7 @@ class _Profile extends State<Profile> {
       backgroundColor: HexColor('#A7B79F').withOpacity(0.9),
       body: ProgressHUD(
         child: Form(
-          child: ProfileBody(context, formValue['name'], formValue['email'],
+          child: profileBody(context, formValue['name'], formValue['email'],
               formValue['phone']),
         ),
         inAsyncCall: isApicallprocess,
@@ -68,16 +68,14 @@ class _Profile extends State<Profile> {
   }
 }
 
-GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-// ignore: non_constant_identifier_names
-update(val) {
-  print(val);
-}
+GlobalKey<FormState> formKey = GlobalKey<FormState>();
+update(val) {}
 
-Widget ProfileBody(BuildContext context, TextEditingController nameCon,
+Widget profileBody(BuildContext context, TextEditingController nameCon,
     TextEditingController emailCon, TextEditingController phoneCon) {
   return SingleChildScrollView(
     child: Column(
+      key: formKey,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -111,32 +109,29 @@ Widget ProfileBody(BuildContext context, TextEditingController nameCon,
           ),
         ),
         Form(
-            key: globalFormKey,
             child: Padding(
-              padding: const EdgeInsets.only(
-                top: 11,
-                left: 27,
-                right: 29,
+          padding: const EdgeInsets.only(
+            top: 11,
+            left: 27,
+            right: 29,
+          ),
+          child: TextFormField(
+            controller: nameCon,
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide:
+                      const BorderSide(color: Colors.black, width: 2.0)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
-              child: TextFormField(
-                controller: nameCon,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.only(
-                      left: 16, top: 12.17, bottom: 12.12),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 2.0)),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        const BorderSide(color: Colors.black, width: 2.0),
-                  ),
-                ),
-                style:
-                    const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
-              ),
-            )),
+            ),
+            style: const TextStyle(fontFamily: 'Josefin Sans', fontSize: 17),
+          ),
+        )),
         const Padding(
           padding: EdgeInsets.only(top: 11, left: 27),
           child: Text(
@@ -156,6 +151,7 @@ Widget ProfileBody(BuildContext context, TextEditingController nameCon,
             right: 29,
           ),
           child: TextFormField(
+            readOnly: true,
             controller: emailCon,
             decoration: InputDecoration(
               contentPadding:
@@ -191,6 +187,7 @@ Widget ProfileBody(BuildContext context, TextEditingController nameCon,
             right: 29,
           ),
           child: TextFormField(
+            keyboardType: const TextInputType.numberWithOptions(),
             controller: phoneCon,
             decoration: InputDecoration(
               contentPadding:
