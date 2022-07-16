@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -7,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/account_services/codeverif_resetpass_page.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class ResetpassPage extends StatefulWidget {
@@ -41,7 +41,7 @@ class _ResetpassPageState extends State<ResetpassPage> {
         validateTextField(emailCon.text);
       } else {
         Response response = await post(
-            Uri.parse('http://192.168.1.101:5000/send-otp-forgot-pass'),
+            Uri.parse('http://192.168.10.52:5000/send-otp-forgot-pass'),
             body: {
               'userId': userId,
               'email': email,
@@ -50,11 +50,15 @@ class _ResetpassPageState extends State<ResetpassPage> {
         print(response.body);
         print(response.statusCode);
         var data = jsonDecode(response.body.toString());
+        var verifiedUser = jsonDecode(jsonEncode(data['data']));
         if (response.statusCode == 200) {
           SharedPreferences sharedPreferences =
               await SharedPreferences.getInstance();
           sharedPreferences.setString(
               'userData', data['verifiedUser'].toString());
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CodeVerifResetPassPage(
+                  emailCon.text, verifiedUser['userId'])));
         } else {
           if (data['message'].isNotEmpty) {
             throw data['message'];

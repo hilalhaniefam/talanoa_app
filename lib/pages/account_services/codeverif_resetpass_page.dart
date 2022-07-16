@@ -7,31 +7,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/account_services/account_registered_pages.dart';
+import 'package:talanoa_app/pages/account_services/newpass_page.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
-class CodeVerifPage extends StatefulWidget {
+class CodeVerifResetPassPage extends StatefulWidget {
   final String email;
   final String userId;
-  const CodeVerifPage(this.email, this.userId, {Key? key}) : super(key: key);
+  const CodeVerifResetPassPage(this.email, this.userId, {Key? key})
+      : super(key: key);
   @override
-  State<CodeVerifPage> createState() => _CodeVerifPageState();
+  State<CodeVerifResetPassPage> createState() => _CodeVerifResetPassPageState();
 }
 
-class _CodeVerifPageState extends State<CodeVerifPage> {
+class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
   bool isApicallprocess = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   _handleBack() => Navigator.of(context).pop();
   String otp = '';
   TextEditingController otpCon = TextEditingController();
 
-  void sendOtp(String email, String userId) async {
+  void sendOtpForgotPass(String email, String userId) async {
     try {
-      Response response =
-          await post(Uri.parse('http://192.168.1.101:5000/send-otp'), body: {
-        'userId': userId,
-        'email': email,
-      });
+      Response response = await post(
+          Uri.parse('http://192.168.10.52:5000/send-otp-forgot-pass'),
+          body: {
+            'userId': userId,
+            'email': email,
+          });
       print('SEND OTP:');
       print(response.body);
       print(response.statusCode);
@@ -54,26 +56,33 @@ class _CodeVerifPageState extends State<CodeVerifPage> {
     }
   }
 
-  void verifyOtp(String otp, String userId) async {
+  void verifyOtpForgotPass(String otp, String userId) async {
     try {
-      Response response =
-          await post(Uri.parse('http://192.168.1.101:5000/verify-otp'), body: {
-        'userId': userId,
-        'otp': otp,
-      });
+      Response response = await post(
+          Uri.parse('http://192.168.10.52:5000/verify-otp-forgot-pass'),
+          body: {
+            'userId': userId,
+            'otp': otp,
+          });
       print('VERIFY OTP:');
       print(response.body);
       print(response.statusCode);
       var data = jsonDecode(response.body.toString());
+      var user = jsonDecode(jsonEncode(data['User']));
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setString(
-            'userData', data['verifiedUser'].toString());
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const Registered()));
+        sharedPreferences.setString('userData', data['User'].toString());
+        print('USER:');
+        print(user);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => NewpassPage(user['email'])));
       } else {
-        throw data['error'];
+        if (data['message'].isNotEmpty) {
+          throw data['message'];
+        } else {
+          throw data['error'];
+        }
       }
     } catch (e) {
       print(e);
@@ -84,7 +93,6 @@ class _CodeVerifPageState extends State<CodeVerifPage> {
   @override
   void initState() {
     super.initState();
-    sendOtp(widget.email, widget.userId);
   }
 
   @override
@@ -216,7 +224,7 @@ class _CodeVerifPageState extends State<CodeVerifPage> {
                           child: FormHelper.submitButton(
                             "Verify Code",
                             () {
-                              verifyOtp(otpCon.text, widget.userId);
+                              verifyOtpForgotPass(otpCon.text, widget.userId);
                             },
                             btnColor: HexColor("#F1ECE1"),
                             borderColor: Colors.grey,
@@ -246,7 +254,8 @@ class _CodeVerifPageState extends State<CodeVerifPage> {
                                     ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        sendOtp(widget.email, widget.userId);
+                                        sendOtpForgotPass(
+                                            widget.email, widget.userId);
                                       },
                                   ),
                                 ],

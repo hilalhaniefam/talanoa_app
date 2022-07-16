@@ -5,8 +5,8 @@ import 'package:flutter/gestures.dart';
 import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/account_services/codeverif_page.dart';
-import 'package:talanoa_app/pages/account_services/register_page.dart';
+import 'package:talanoa_app/pages/account_services/new_account/codeverif_newacc_page.dart';
+import 'package:talanoa_app/pages/account_services/new_account/register_page.dart';
 import 'package:talanoa_app/pages/account_services/resetpass_page.dart';
 import 'package:talanoa_app/pages/admin/admin_page.dart';
 import 'package:talanoa_app/pages/user/user_page.dart';
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
         if (errorFormStatus[key]) throw 'Please enter your email and password';
       }
       Response response = await post(
-          Uri.parse('http://192.168.1.101:5000/login'),
+          Uri.parse('http://192.168.10.52:5000/login'),
           body: {'email': email, 'password': password});
       print(response.body);
       print(response.statusCode);
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (BuildContext context) => const UserPage()));
           } else if (userData['isVerified'] == false) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CodeVerifPage(
+                builder: (context) => CodeVerifAccPage(
                     formValue['email'].text, userData['userId'])));
           }
         }
@@ -252,7 +252,10 @@ class _LoginPageState extends State<LoginPage> {
                               "Login",
                               () {
                                 login(
-                                  formValue['email'].text.toString(),
+                                  formValue['email']
+                                      .text
+                                      .toString()
+                                      .toLowerCase(),
                                   formValue['password'].text.toString(),
                                 );
                               },

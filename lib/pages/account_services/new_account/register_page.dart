@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/account_services/codeverif_page.dart';
+import 'package:talanoa_app/pages/account_services/new_account/codeverif_newacc_page.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -69,7 +69,7 @@ class RegisterPageState extends State<RegisterPage> {
         if (errorFormStatus[key]) throw 'Please complete the form';
       }
       Response response =
-          await post(Uri.parse('http://192.168.1.101:5000/register'), body: {
+          await post(Uri.parse('http://192.168.10.52:5000/register'), body: {
         'name': name,
         'email': email,
         'phone': phone,
@@ -87,7 +87,7 @@ class RegisterPageState extends State<RegisterPage> {
         // sharedPreferences.setString('userData', data.toString());
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                CodeVerifPage(formValue['email'].text, newUser['userId'])));
+                CodeVerifAccPage(formValue['email'].text, newUser['userId'])));
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
