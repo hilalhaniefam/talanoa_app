@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setString('userData', jsonEncode(data['userData']));
+        sharedPreferences.setString('userData', jsonEncode(data['payload']));
         Map<String, dynamic> userData =
             jsonDecode(sharedPreferences.getString('userData').toString())
                 as Map<String, dynamic>;

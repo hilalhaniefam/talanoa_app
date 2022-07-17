@@ -27,6 +27,8 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
   TextEditingController otpCon = TextEditingController();
 
   void sendOtpForgotPass(String email, String userId) async {
+    // delete userId
+    // delete userId
     try {
       Response response = await post(
           Uri.parse('http://192.168.10.52:5000/send-otp-forgot-pass'),
@@ -41,8 +43,7 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setString(
-            'userData', data['verifiedUser'].toString());
+        sharedPreferences.setString('userData', data['payload'].toString());
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -68,11 +69,12 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
       print(response.body);
       print(response.statusCode);
       var data = jsonDecode(response.body.toString());
-      var user = jsonDecode(jsonEncode(data['User']));
+      var user = jsonDecode(jsonEncode(data['payload']['user']));
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setString('userData', data['User'].toString());
+        sharedPreferences.setString(
+            'otpForgotPass', data['payload'].toString());
         print('USER:');
         print(user);
         Navigator.of(context).push(MaterialPageRoute(

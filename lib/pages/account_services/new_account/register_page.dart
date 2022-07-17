@@ -79,12 +79,9 @@ class RegisterPageState extends State<RegisterPage> {
       print(response.body);
       print(response.statusCode);
       var data = jsonDecode(response.body.toString());
-      var newUser = jsonDecode(jsonEncode(data['newUser']));
+      var newUser = jsonDecode(jsonEncode(data['payload']));
       print(newUser);
       if (response.statusCode == 200) {
-        // SharedPreferences sharedPreferences =
-        //     await SharedPreferences.getInstance();
-        // sharedPreferences.setString('userData', data.toString());
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 CodeVerifAccPage(formValue['email'].text, newUser['userId'])));

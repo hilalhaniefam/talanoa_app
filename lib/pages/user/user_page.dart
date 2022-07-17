@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
@@ -16,13 +15,13 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   bool isApicallprocess = false;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String name = 'loading';
   Future<String> getName() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    Map<String, dynamic> userData =
-        jsonDecode(sharedPreferences.getString('userData').toString())
-            as Map<String, dynamic>;
+    var userData =
+        jsonDecode(sharedPreferences.getString('userData').toString());
     print(userData);
     setState(() {
       name = userData['name']; // hapus profile data
@@ -30,10 +29,16 @@ class _UserPageState extends State<UserPage> {
     return userData['name'] ?? 'loading';
   }
 
+  reloadName() async {
+    SharedPreferences userData = await SharedPreferences.getInstance();
+    await userData.reload();
+  }
+
   @override
   void initState() {
     super.initState();
     getName();
+    reloadName();
   }
 
   @override
@@ -95,7 +100,7 @@ class _UserPageState extends State<UserPage> {
           child: UserUI(context, name),
         ),
         inAsyncCall: isApicallprocess,
-        key: UniqueKey(),
+        key: formKey,
       ),
     );
   }
@@ -111,18 +116,20 @@ Widget UserUI(BuildContext context, name) {
         const SizedBox(
           height: 25,
         ),
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "  Welcome",
-            style: TextStyle(
-              fontFamily: 'Josefin Sans',
-              fontSize: 25,
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
+        const Padding(
+            padding: EdgeInsets.only(left: 18),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Welcome",
+                style: TextStyle(
+                  fontFamily: 'Josefin Sans',
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            )),
         const SizedBox(
           height: 10,
         ),

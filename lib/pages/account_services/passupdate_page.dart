@@ -74,7 +74,7 @@ class _PassupdateState extends State<Passupdate> {
                   ),
                 ),
                 const SizedBox(
-                  height: 31,
+                  height: 45,
                 ),
                 SizedBox(
                   width: 311,

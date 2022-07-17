@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/admin/userdata_page.dart';
 
 // import '../widgets/adminui.dart';
 
@@ -40,18 +41,20 @@ Widget AdminUI(BuildContext context) {
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.30,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  HexColor('A7B79F'),
-                  HexColor('A7B79F'),
-                ],
-              ),
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(100),
-                  bottomRight: Radius.circular(100))),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/Ellipse2.png'))),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topCenter,
+          //   end: Alignment.bottomCenter,
+          //   colors: [
+          //     HexColor('A7B79F'),
+          //     HexColor('A7B79F'),
+          //   ],
+          // ),
+          // borderRadius: const BorderRadius.only(
+          //     bottomLeft: Radius.circular(100),
+          //     bottomRight: Radius.circular(100))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -90,7 +93,8 @@ Widget AdminUI(BuildContext context) {
               height: 115,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/userdata');
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const Userdata()));
                   },
                   child: const Text(
                     "User Data",

@@ -45,11 +45,8 @@ class _NewpassPageState extends State<NewpassPage> {
       print(response.body);
       print(response.statusCode);
       var data = jsonDecode(response.body.toString());
-      var newData = jsonDecode(jsonEncode(data['newData']));
+      var newData = jsonDecode(jsonEncode(data['payload']));
       if (response.statusCode == 200) {
-        SharedPreferences sharedPreferences =
-            await SharedPreferences.getInstance();
-        sharedPreferences.setString('userData', data['newData'].toString());
         print('USER:');
         print(newData);
         Navigator.of(context)

@@ -39,8 +39,7 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setString(
-            'userData', data['verifiedUser'].toString());
+        sharedPreferences.setString('otpNewUser', data['payload'].toString());
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -68,8 +67,7 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setString(
-            'userData', data['verifiedUser'].toString());
+        sharedPreferences.setString('otpNewUser', data['payload'].toString());
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const Registered()));
       } else {
