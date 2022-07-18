@@ -84,7 +84,7 @@ class _Profile extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 70,
         leading: IconButton(
           onPressed: _handleBack,
           icon: const Icon(Icons.arrow_back),
@@ -98,7 +98,6 @@ class _Profile extends State<Profile> {
           key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -119,7 +118,7 @@ class _Profile extends State<Profile> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height - 145,
                 decoration: BoxDecoration(color: HexColor('A7B79F')),
                 child: Column(children: [
                   const Padding(

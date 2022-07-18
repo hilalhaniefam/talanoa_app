@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/account_services/passupdate_page.dart';

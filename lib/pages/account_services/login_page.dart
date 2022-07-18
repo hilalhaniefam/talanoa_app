@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isApicallprocess = false;
   bool hidePassword = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isLoading = true;
   Map formValue = {
     'email': TextEditingController(),
     'password': TextEditingController(),

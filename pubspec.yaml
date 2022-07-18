@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   api_cache_manager: ^1.0.2
+  carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.5
   email_validator: ^2.0.1
   flutter:
@@ -36,9 +37,12 @@ dependencies:
   fluttertoast: ^8.0.9
   font_awesome_flutter: ^10.1.0
   http: ^0.13.4
+  intl: ^0.17.0
   pinput: ^2.2.11
   shared_preferences: ^2.0.15
+  smooth_page_indicator: ^1.0.0+2
   snippet_coder_utils: ^1.0.12
+  syncfusion_flutter_datepicker: ^20.2.38
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -71,6 +75,7 @@ flutter:
     - family: Josefin Sans
       fonts:
         - asset: assets/fonts/Josefin Sans/JosefinSans-Regular.ttf
+        - asset: assets/fonts/Josefin Sans/JosefinSans-Thin.ttf
     - family: Sansation
       fonts:
         - asset: assets/fonts/Sansation_Regular.ttf

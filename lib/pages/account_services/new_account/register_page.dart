@@ -65,6 +65,19 @@ class RegisterPageState extends State<RegisterPage> {
         validateTextField(key);
       }
 
+      if (formKey.currentState!.validate() == false) {
+        throw 'Please complete the form!';
+      }
+
+      List<String> phoneArr = phone.split('');
+      if (phoneArr[0] == '0') {
+        phoneArr.removeAt(0);
+        phone = phoneArr.join();
+        phone = '+62' + phone;
+      } else {
+        phone = '+62' + phone;
+      }
+
       for (String key in errorFormStatus.keys) {
         if (errorFormStatus[key]) throw 'Please complete the form';
       }
@@ -147,13 +160,11 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                       child: TextFormField(
                         controller: formValue['name'],
-                        // onChanged: (value) {
-                        //   for (String key in errorFormStatus.keys) {
-                        //     setState(() {
-                        //       errorFormStatus[key] = false;
-                        //     });
-                        //   }
-                        // },
+                        onChanged: (value) {
+                          setState(() {
+                            errorFormStatus['name'] = false;
+                          });
+                        },
                         decoration: InputDecoration(
                           label: const Text.rich(
                             TextSpan(children: <InlineSpan>[
@@ -193,13 +204,11 @@ class RegisterPageState extends State<RegisterPage> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        // onChanged: (value) {
-                        //   for (String key in errorFormStatus.keys) {
-                        //     setState(() {
-                        //       errorFormStatus[key] = false;
-                        //     });
-                        //   }
-                        // },
+                        onChanged: (value) {
+                          setState(() {
+                            errorFormStatus['email'] = false;
+                          });
+                        },
                         validator: (value) =>
                             value != null && !EmailValidator.validate(value)
                                 ? 'Enter a Valid Email'
@@ -246,13 +255,11 @@ class RegisterPageState extends State<RegisterPage> {
                       child: TextFormField(
                         keyboardType: const TextInputType.numberWithOptions(),
                         controller: formValue['phone'],
-                        // onChanged: (value) {
-                        //   for (String key in errorFormStatus.keys) {
-                        //     setState(() {
-                        //       errorFormStatus[key] = false;
-                        //     });
-                        //   }
-                        // },
+                        onChanged: (value) {
+                          setState(() {
+                            errorFormStatus['phone'] = false;
+                          });
+                        },
                         decoration: InputDecoration(
                           prefixText: '+62 ',
                           label: const Text.rich(
@@ -293,13 +300,11 @@ class RegisterPageState extends State<RegisterPage> {
                         right: 43,
                       ),
                       child: TextFormField(
-                        // onChanged: (value) {
-                        //   for (String key in errorFormStatus.keys) {
-                        //     setState(() {
-                        //       errorFormStatus[key] = false;
-                        //     });
-                        //   }
-                        // },
+                        onChanged: (value) {
+                          setState(() {
+                            errorFormStatus['password'] = false;
+                          });
+                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your password';
@@ -353,6 +358,11 @@ class RegisterPageState extends State<RegisterPage> {
                         right: 43,
                       ),
                       child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            errorFormStatus['confPass'] = false;
+                          });
+                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please re-enter your password';
@@ -403,10 +413,9 @@ class RegisterPageState extends State<RegisterPage> {
                       child: FormHelper.submitButton(
                         "Sign Up",
                         () {
-                          formKey.currentState!.validate();
                           register(
                             formValue['name']!.text.toString(),
-                            formValue['email']!.text.toString(),
+                            formValue['email']!.text.toString().toLowerCase(),
                             formValue['phone']!.text.toString(),
                             formValue['password']!.text.toString(),
                             formValue['confPass']!.text.toString(),

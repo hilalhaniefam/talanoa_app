@@ -26,42 +26,28 @@ class _AboutusState extends State<History> {
         elevation: 0,
         backgroundColor: HexColor('#B9C5B2'),
       ),
-      backgroundColor: HexColor('#A7B79F').withOpacity(0.9),
-      body: ProgressHUD(
-        child: Form(
-          child: HistoryBody(context),
-        ),
-        inAsyncCall: isApicallprocess,
-        key: UniqueKey(),
+      backgroundColor: HexColor('#A7B79F'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            decoration: BoxDecoration(color: HexColor('#B9C5B2')),
+            child: const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'History',
+                  style: TextStyle(
+                    fontFamily: 'Josefin Sans',
+                    fontSize: 25,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )),
+          ),
+        ],
       ),
     );
   }
-}
-
-// ignore: non_constant_identifier_names
-Widget HistoryBody(BuildContext context) {
-  return SingleChildScrollView(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          decoration: BoxDecoration(color: HexColor('#B9C5B2')),
-          child: const Align(
-              alignment: Alignment.center,
-              child: Text(
-                'History',
-                style: TextStyle(
-                  fontFamily: 'Josefin Sans',
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                ),
-              )),
-        ),
-      ],
-    ),
-  );
 }

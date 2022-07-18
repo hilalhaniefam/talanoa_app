@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/widgets/sidebar/aboutus.dart';
+import 'package:talanoa_app/widgets/sidebar/helpcenter.dart';
+import 'package:talanoa_app/widgets/sidebar/history.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -50,7 +53,8 @@ class NavBar extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/aboutus');
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const Aboutus()));
                   },
                   icon: Image.asset(
                     'assets/images/Vector!.png',
@@ -75,7 +79,8 @@ class NavBar extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/history');
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const History()));
                   },
                   icon: Image.asset(
                     'assets/images/history.png',
@@ -100,7 +105,8 @@ class NavBar extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/helpcenter');
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const Helpcenter()));
                   },
                   icon: Image.asset(
                     'assets/images/ch.png',
@@ -115,7 +121,7 @@ class NavBar extends StatelessWidget {
                         fontSize: 22,
                         fontFamily: 'Josefin Sans',
                         fontWeight: FontWeight.w400),
-                  ), // <-- Text
+                  ),
                 ),
               ),
             ),
@@ -141,7 +147,7 @@ class NavBar extends StatelessWidget {
                         fontSize: 22,
                         fontFamily: 'Josefin Sans',
                         fontWeight: FontWeight.w400),
-                  ), // <-- Text
+                  ),
                 ),
               ),
             )

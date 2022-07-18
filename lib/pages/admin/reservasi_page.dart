@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/admin/reservasi/ongoing_res.dart';
 
 class Reservasidata extends StatefulWidget {
   const Reservasidata({Key? key}) : super(key: key);
@@ -10,69 +10,45 @@ class Reservasidata extends StatefulWidget {
 }
 
 class _ReservasidataState extends State<Reservasidata> {
-  bool isApicallprocess = false;
+  _handleBack() => Navigator.of(context).pop();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor('C6D0C1'),
-      body: ProgressHUD(
-        child: Form(
-          child: AdminUI(context),
+      appBar: AppBar(
+        toolbarHeight: 110,
+        leading: IconButton(
+          onPressed: _handleBack,
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.black,
         ),
-        inAsyncCall: isApicallprocess,
-        key: UniqueKey(),
-      ),
-    );
-  }
-}
-
-// ignore: non_constant_identifier_names
-Widget AdminUI(BuildContext context) {
-  return SingleChildScrollView(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.25,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                HexColor('B9C5B2'),
-                HexColor('B9C5B2'),
-              ],
-            ),
-          ),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const SizedBox(
-              height: 130,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Data Reservation',
-                style: TextStyle(
-                    shadows: [
-                      Shadow(
-                          color: Colors.black.withOpacity(0.3),
-                          offset: const Offset(5, 5),
-                          blurRadius: 15),
-                    ],
-                    fontFamily: 'Sansation_Bold',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    color: Colors.black),
+        title: Title(
+            color: Colors.black,
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 32, top: 55),
+                child: Text(
+                  'Reservation Data',
+                  style: TextStyle(
+                      shadows: [
+                        Shadow(
+                            color: Colors.black.withOpacity(0.3),
+                            offset: const Offset(5, 5),
+                            blurRadius: 15),
+                      ],
+                      fontFamily: 'Josefin Sans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 28,
+                      color: Colors.black),
+                ),
               ),
-            ),
-          ]),
-        ),
-        const SizedBox(
-          height: 89,
-        ),
+            )),
+        elevation: 0,
+        backgroundColor: HexColor('#B9C5B2'),
+      ),
+      backgroundColor: HexColor('A7B79F'),
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Align(
             alignment: Alignment.center,
             child: SizedBox(
@@ -80,15 +56,16 @@ Widget AdminUI(BuildContext context) {
               height: 115,
               child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/reservasi/ongoing');
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ReservasiOngoing()));
                   },
                   child: const Text(
                     "Ongoing",
                     style: TextStyle(
-                      fontFamily: 'Sansation',
+                      fontFamily: 'Josefin Sans',
                       fontSize: 25,
                       color: Colors.black,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -110,10 +87,10 @@ Widget AdminUI(BuildContext context) {
                     "Completed",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: 'Sansation',
+                      fontFamily: 'Josefin Sans',
                       fontSize: 25,
                       color: Colors.black,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   style:
@@ -135,10 +112,10 @@ Widget AdminUI(BuildContext context) {
                     "Cenceled",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: 'Sansation',
+                      fontFamily: 'Josefin Sans',
                       fontSize: 25,
                       color: Colors.black,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   style:
@@ -147,7 +124,7 @@ Widget AdminUI(BuildContext context) {
         const SizedBox(
           height: 50,
         ),
-      ],
-    ),
-  );
+      ]),
+    );
+  }
 }
