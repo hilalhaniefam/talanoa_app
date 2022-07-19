@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/login_page.dart';
 
 void main() {
@@ -13,37 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const LoginPage(),
+      // home: LoginPage(ipurl),
+      home: const LoginPage(ipurl),
       title: 'Talanoa App',
       theme: ThemeData(
-        primaryColor: HexColor('#E5E5E5'),
-      ),
-      // routes: {
-      //   '/': (context) => const LoginPage(),
-      //   // '/register': (context) => const RegisterPage(),
-      //   // '/registered': (context) => const Registered(),
-      //   // '/resetpass': (context) => const ResetpassPage(),
-      //   // // '/codeverif': (context) => CodeVerifPage(),
-      //   // '/newpass': (context) => const NewpassPage(),
-      //   // '/passupdate': (context) => const Passupdate(),
-      //   // Admin Page
-      //   // '/admin': (context) => const AdminPage(),
-      //   // '/userdata': (context) => const Userdata(),
-      //   // '/reservasidata': (context) => const Reservasidata(),
-      //   // '/reservasi/ongoing': (context) => const ReservasiOngoing(),
-      //   // '/reservasi/completed': (context) => const ReservasiCompleted(),
-      //   // '/reservasi/cenceled': (context) => const ReservasiCenceled(),
-      //   // '/rentarea': (context) => const RentArea(),
-      //   // '/rentarea/ongoing': (context) => const RentOngoing(),
-      //   // '/rentarea/completed': (context) => const Rentareacompleted(),
-      //   // '/rentarea/cenceled': (context) => const Rentareacenceled(),
-      //   //user
-      //   // // '/user': (context) => const UserPage(),
-      //   // '/aboutus': (context) => const Aboutus(),
-      //   // '/history': (context) => const History(),
-      //   // '/helpcenter': (context) => const Helpcenter(),
-      //   // '/profile': (context) => const Profile(),
-      // },
+          primaryColor: HexColor('A7B79F'), fontFamily: 'Josefin Sans'),
     );
   }
 }

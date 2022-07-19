@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/admin/menu_data/menudata_page.dart';
 import 'package:talanoa_app/pages/admin/rentarea_page.dart';
 import 'package:talanoa_app/pages/admin/reservasi_page.dart';
 import 'package:talanoa_app/pages/admin/userdata_page.dart';
@@ -28,7 +29,7 @@ class _AdminState extends State<AdminPage> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 290,
+            height: 250,
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/Ellipse2.png'),
@@ -37,91 +38,72 @@ class _AdminState extends State<AdminPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '  Halo, Admin',
-                    style: TextStyle(
-                        fontFamily: 'Josefins Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 35,
-                        color: Colors.black),
-                  ),
-                ),
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 19),
+                      child: Text(
+                        'Halo, Admin',
+                        style: TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 35,
+                            color: Colors.black),
+                      ),
+                    )),
                 Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '  Selamat Datang!',
-                    style: TextStyle(
-                        fontFamily: 'Josefins Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 35,
-                        color: Colors.black),
-                  ),
-                ),
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 19),
+                      child: Text(
+                        'Selamat Datang!',
+                        style: TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 35,
+                            color: Colors.black),
+                      ),
+                    )),
               ],
             ),
           ),
           const SizedBox(
-            height: 25,
+            height: 19,
           ),
           Align(
               alignment: Alignment.center,
               child: SizedBox(
-                width: 220,
-                height: 115,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Userdata()));
-                    },
-                    child: const Text(
-                      "User Data",
-                      style: TextStyle(
-                        fontFamily: 'Josefins Sans',
-                        fontSize: 28,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        primary: HexColor('#F1ECE1'),
-                        shadowColor: Colors.black)),
-              )),
-          const SizedBox(
-            height: 21,
-          ),
-          Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 220,
-                height: 115,
+                width: 192,
+                height: 89.86,
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const Reservasidata()));
                     },
                     child: const Text(
-                      "Reservasi Data",
+                      'Reservation Data',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Josefins Sans',
-                        fontSize: 28,
+                        fontFamily: 'Josefin Sans',
+                        fontSize: 25,
                         color: Colors.black,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         primary: HexColor('#F1ECE1'),
                         shadowColor: Colors.black)),
               )),
           const SizedBox(
-            height: 21,
+            height: 19,
           ),
           Align(
               alignment: Alignment.center,
               child: SizedBox(
-                width: 220,
-                height: 115,
+                width: 192,
+                height: 89.86,
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -131,13 +113,76 @@ class _AdminState extends State<AdminPage> {
                       "Rent Area Data",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Josefins Sans',
-                        fontSize: 28,
+                        fontFamily: 'Josefin Sans',
+                        fontSize: 25,
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        primary: HexColor('#F1ECE1'),
+                        shadowColor: Colors.black)),
+              )),
+          const SizedBox(
+            height: 19,
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 192,
+                height: 89.86,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Userdata()));
+                    },
+                    child: const Text(
+                      "User Data",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Josefin Sans',
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        primary: HexColor('#F1ECE1'),
+                        shadowColor: Colors.black)),
+              )),
+          const SizedBox(
+            height: 19,
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 192,
+                height: 89.86,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Menudata()));
+                    },
+                    child: const Text(
+                      "Menu Data",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Josefin Sans',
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         primary: HexColor('#F1ECE1'),
                         shadowColor: Colors.black)),
               )),

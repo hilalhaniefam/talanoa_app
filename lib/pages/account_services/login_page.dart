@@ -12,16 +12,17 @@ import 'package:talanoa_app/pages/admin/admin_page.dart';
 import 'package:talanoa_app/pages/user/user_page.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final String ipurl;
+  const LoginPage(this.ipurl, {Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isApicallprocess = false;
   bool hidePassword = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isLoading = true;
@@ -51,8 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       for (String key in errorFormStatus.keys) {
         if (errorFormStatus[key]) throw 'Please enter your email and password';
       }
-      Response response = await post(
-          Uri.parse('http://192.168.10.52:5000/login'),
+      Response response = await post(Uri.parse('$ipurl/login'),
           body: {'email': email, 'password': password});
       print(response.body);
       print(response.statusCode);

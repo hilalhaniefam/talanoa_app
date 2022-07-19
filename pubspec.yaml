@@ -43,6 +43,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   snippet_coder_utils: ^1.0.12
   syncfusion_flutter_datepicker: ^20.2.38
+  dotted_border: ^2.0.0+2
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -75,7 +76,6 @@ flutter:
     - family: Josefin Sans
       fonts:
         - asset: assets/fonts/Josefin Sans/JosefinSans-Regular.ttf
-        - asset: assets/fonts/Josefin Sans/JosefinSans-Thin.ttf
     - family: Sansation
       fonts:
         - asset: assets/fonts/Sansation_Regular.ttf
