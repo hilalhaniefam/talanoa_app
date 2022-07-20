@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/widgets/carousel/carousel_reservation.dart';
-import 'package:intl/intl.dart';
 
 class UserReservationPage extends StatefulWidget {
   const UserReservationPage({Key? key}) : super(key: key);
@@ -370,8 +369,8 @@ class _UserReservationPageState extends State<UserReservationPage> {
                 Padding(
                     padding: const EdgeInsets.only(top: 40),
                     child: SizedBox(
-                      width: 150,
-                      height: 45,
+                      width: 194,
+                      height: 44,
                       child: FormHelper.submitButton(
                         "Book",
                         () {},

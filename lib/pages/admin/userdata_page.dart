@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
 
 class Userdata extends StatefulWidget {
   const Userdata({Key? key}) : super(key: key);
@@ -22,8 +23,7 @@ class _UserdataState extends State<Userdata> {
     var userData =
         jsonDecode(sharedPreferences.getString('userData').toString());
     String token = userData['accessToken'];
-    Response response = await http.get(
-        Uri.parse('http://192.168.10.52:5000/users'),
+    Response response = await http.get(Uri.parse('$ipurl/users'),
         headers: {'Authorization': 'Bearer $token'});
     var data = jsonDecode(response.body.toString());
     print(response.body);

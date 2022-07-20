@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/login_page.dart';
 
 void main() {
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: LoginPage(ipurl),
-      home: const LoginPage(ipurl),
+      home: const LoginPage(),
       title: 'Talanoa App',
       theme: ThemeData(
           primaryColor: HexColor('A7B79F'), fontFamily: 'Josefin Sans'),

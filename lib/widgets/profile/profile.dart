@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class Profile extends StatefulWidget {
@@ -28,8 +29,7 @@ class _Profile extends State<Profile> {
           jsonDecode(sharedPreferences.getString('userData').toString())
               as Map<String, dynamic>;
       String token = userData['accessToken'];
-      Response response =
-          await put(Uri.parse('http://192.168.10.52:5000/update-user'), body: {
+      Response response = await put(Uri.parse('$ipurl/update-user'), body: {
         'name': name,
         'phone': phone,
       }, headers: {
@@ -244,20 +244,24 @@ class _Profile extends State<Profile> {
                   const SizedBox(
                     height: 265,
                   ),
-                  Center(
-                    child: FormHelper.submitButton(
-                      "Update",
-                      () {
-                        updateUser(
-                            formValue['name'].text, formValue['phone'].text);
-                      },
-                      btnColor: HexColor("#F1ECE1"),
-                      borderColor: Colors.grey,
-                      txtColor: Colors.black,
-                      borderRadius: 10,
-                      fontSize: 20,
+                  SizedBox(
+                    width: 150,
+                    height: 40,
+                    child: Center(
+                      child: FormHelper.submitButton(
+                        "Update",
+                        () {
+                          updateUser(
+                              formValue['name'].text, formValue['phone'].text);
+                        },
+                        btnColor: HexColor("#F1ECE1"),
+                        borderColor: Colors.grey,
+                        txtColor: Colors.black,
+                        borderRadius: 10,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
+                  )
                 ]),
               )
             ],

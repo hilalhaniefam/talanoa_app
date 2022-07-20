@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/account_services/passupdate_page.dart';
+import 'package:talanoa_app/pages/account_services/updatedpass_page.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
 
 class NewpassPage extends StatefulWidget {
   final String email;
@@ -15,7 +16,6 @@ class NewpassPage extends StatefulWidget {
 }
 
 class _NewpassPageState extends State<NewpassPage> {
-  bool isApicallprocess = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Map formValue = {
     'password': TextEditingController(),
@@ -32,13 +32,11 @@ class _NewpassPageState extends State<NewpassPage> {
 
   void updatePass(String password, String confPass, String email) async {
     try {
-      Response response = await put(
-          Uri.parse('http://192.168.10.52:5000/update-password'),
-          body: {
-            'password': password,
-            'confPassword': confPass,
-            'email': email
-          });
+      Response response = await put(Uri.parse('$ipurl/update-password'), body: {
+        'password': password,
+        'confPassword': confPass,
+        'email': email
+      });
       print('Update pass:');
       print(response.body);
       print(response.statusCode);

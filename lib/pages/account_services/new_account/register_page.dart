@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/new_account/codeverif_newacc_page.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
@@ -81,8 +82,7 @@ class RegisterPageState extends State<RegisterPage> {
       for (String key in errorFormStatus.keys) {
         if (errorFormStatus[key]) throw 'Please complete the form';
       }
-      Response response =
-          await post(Uri.parse('http://192.168.10.52:5000/register'), body: {
+      Response response = await post(Uri.parse('$ipurl/register'), body: {
         'name': name,
         'email': email,
         'phone': phone,

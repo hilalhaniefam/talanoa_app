@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:snippet_coder_utils/ProgressHUD.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter/gestures.dart';
 import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -15,8 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 
 class LoginPage extends StatefulWidget {
-  final String ipurl;
-  const LoginPage(this.ipurl, {Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -100,222 +99,245 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ProgressHUD(
-            key: formKey,
-            inAsyncCall: false,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            HexColor('#F1ECE1'),
-                            HexColor("#A7B79F"),
-                          ]),
-                    ),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+            child: Builder(
+                builder: (context) => Center(
+                        child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'assets/images/talanoa.png',
-                              width: 170,
-                              height: 227,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 20,
-                              left: 44,
-                              right: 43,
-                            ),
-                            child: TextFormField(
-                              controller: formValue['email'],
-                              onChanged: (value) {
-                                setState(() {
-                                  errorFormStatus['email'] = false;
-                                });
-                              },
-                              decoration: InputDecoration(
-                                errorText: errorFormStatus['email']
-                                    ? 'Please enter your email'
-                                    : null,
-                                errorStyle: const TextStyle(
-                                  fontSize: 11,
-                                ),
-                                contentPadding: const EdgeInsets.only(
-                                    left: 16, top: 12.17, bottom: 12.12),
-                                labelText: 'Email',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: Colors.black, width: 2.0),
-                                ),
-                              ),
-                              style: const TextStyle(
-                                  fontFamily: 'Josefin Sans', fontSize: 17),
-                            ),
-                          ),
                           Container(
-                            padding: const EdgeInsets.only(
-                              top: 16.17,
-                              left: 44,
-                              right: 43,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    HexColor('#F1ECE1'),
+                                    HexColor("#A7B79F"),
+                                  ]),
                             ),
-                            child: TextFormField(
-                              onChanged: (value) {
-                                setState(() {
-                                  errorFormStatus['password'] = false;
-                                });
-                              },
-                              controller: formValue['password'],
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                errorText: errorFormStatus['password']
-                                    ? 'Please enter your password'
-                                    : null,
-                                errorStyle: const TextStyle(
-                                  fontSize: 11,
-                                ),
-                                contentPadding: const EdgeInsets.only(
-                                    left: 16, top: 12.17, bottom: 12.12),
-                                labelText: 'Password',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: Colors.black, width: 2.0),
-                                ),
-                              ),
-                              style: const TextStyle(
-                                  fontFamily: 'Josefin Sans', fontSize: 17),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 7.17,
-                                right: 48,
-                              ),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: 'Forgot Password?',
-                                      style: const TextStyle(
-                                        fontFamily: 'Josefin Sans',
-                                        color: Colors.black,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      const ResetpassPage()));
-                                        },
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Image.asset(
+                                      'assets/images/talanoa.png',
+                                      width: 170,
+                                      height: 227,
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 80,
-                          ),
-                          SizedBox(
-                            width: 150,
-                            height: 45,
-                            child: FormHelper.submitButton(
-                              "Login",
-                              () {
-                                login(
-                                  formValue['email']
-                                      .text
-                                      .toString()
-                                      .toLowerCase(),
-                                  formValue['password'].text.toString(),
-                                );
-                              },
-                              btnColor: HexColor("#F1ECE1"),
-                              borderColor: Colors.grey,
-                              txtColor: Colors.black,
-                              borderRadius: 10,
-                              fontSize: 20,
-                            ),
-                          ),
-                          const Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text(
-                                "OR",
-                                style: TextStyle(
-                                    fontFamily: "Josefin Sans",
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 7.17,
-                              ),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                                  children: <TextSpan>[
-                                    const TextSpan(
-                                        text: 'Don\'t have an account? '),
-                                    TextSpan(
-                                      text: "Sign Up",
-                                      style: const TextStyle(
-                                        fontFamily: 'Josefin Sans',
-                                        color: Colors.black,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      const RegisterPage()));
-                                        },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 20,
+                                      left: 44,
+                                      right: 43,
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                    child: TextFormField(
+                                      controller: formValue['email'],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          errorFormStatus['email'] = false;
+                                        });
+                                      },
+                                      decoration: InputDecoration(
+                                        errorText: errorFormStatus['email']
+                                            ? 'Please enter your email'
+                                            : null,
+                                        errorStyle: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                        contentPadding: const EdgeInsets.only(
+                                            left: 16,
+                                            top: 12.17,
+                                            bottom: 12.12),
+                                        labelText: 'Email',
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Colors.black,
+                                                width: 2.0)),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              color: Colors.black, width: 2.0),
+                                        ),
+                                      ),
+                                      style: const TextStyle(
+                                          fontFamily: 'Josefin Sans',
+                                          fontSize: 17),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 16.17,
+                                      left: 44,
+                                      right: 43,
+                                    ),
+                                    child: TextFormField(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          errorFormStatus['password'] = false;
+                                        });
+                                      },
+                                      controller: formValue['password'],
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                        errorText: errorFormStatus['password']
+                                            ? 'Please enter your password'
+                                            : null,
+                                        errorStyle: const TextStyle(
+                                          fontSize: 11,
+                                        ),
+                                        contentPadding: const EdgeInsets.only(
+                                            left: 16,
+                                            top: 12.17,
+                                            bottom: 12.12),
+                                        labelText: 'Password',
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                                color: Colors.black,
+                                                width: 2.0)),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              color: Colors.black, width: 2.0),
+                                        ),
+                                      ),
+                                      style: const TextStyle(
+                                          fontFamily: 'Josefin Sans',
+                                          fontSize: 17),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 7.17,
+                                        right: 48,
+                                      ),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: 'Forgot Password?',
+                                              style: const TextStyle(
+                                                fontFamily: 'Josefin Sans',
+                                                color: Colors.black,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              const ResetpassPage()));
+                                                },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 80,
+                                  ),
+                                  SizedBox(
+                                    width: 150,
+                                    height: 40,
+                                    child: FormHelper.submitButton(
+                                      "Login",
+                                      () {
+                                        final progress =
+                                            ProgressHUD.of(context);
+                                        progress?.show();
+                                        Future.delayed(
+                                            const Duration(seconds: 2), () {
+                                          progress?.dismiss();
+                                        });
+                                        login(
+                                          formValue['email']
+                                              .text
+                                              .toString()
+                                              .toLowerCase(),
+                                          formValue['password'].text.toString(),
+                                        );
+                                      },
+                                      btnColor: HexColor("#F1ECE1"),
+                                      borderColor: Colors.grey,
+                                      txtColor: Colors.black,
+                                      borderRadius: 10,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  const Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 10, bottom: 10),
+                                      child: Text(
+                                        "OR",
+                                        style: TextStyle(
+                                            fontFamily: "Josefin Sans",
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 7.17,
+                                      ),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400),
+                                          children: <TextSpan>[
+                                            const TextSpan(
+                                                text:
+                                                    'Don\'t have an account? '),
+                                            TextSpan(
+                                              text: "Sign Up",
+                                              style: const TextStyle(
+                                                fontFamily: 'Josefin Sans',
+                                                color: Colors.black,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              const RegisterPage()));
+                                                },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
                           ),
-                        ]),
-                  ),
-                ],
-              ),
-            )));
+                        ],
+                      ),
+                    )))));
   }
 }
