@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/user/menu_page.dart';
 import 'package:talanoa_app/pages/user/user_rent.dart';
 import 'package:talanoa_app/pages/user/user_res.dart';
 import 'package:talanoa_app/widgets/profile/profile.dart';
 import 'package:talanoa_app/widgets/sidebar/navbar.dart';
 import 'package:talanoa_app/widgets/shared/waves.dart';
-import 'package:talanoa_app/api_services/adress_url.dart';
+import 'package:talanoa_app/api_services/location_url.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class _UserPageState extends State<UserPage> {
               icon: const Icon(
                 Icons.menu,
                 color: Colors.black,
-                size: 22, // Changing Drawer Icon Size
+                size: 22,
               ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -241,8 +242,9 @@ class _UserPageState extends State<UserPage> {
                             width: 134,
                             height: 80,
                             child: ElevatedButton(
-                              onPressed: () {},
-                              // launchUrl_(),
+                              onPressed: () {
+                                launchUrl_();
+                              },
                               child: const Text(
                                 "Location",
                                 textAlign: TextAlign.center,
@@ -278,7 +280,11 @@ class _UserPageState extends State<UserPage> {
                                 height: 80,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/rentarea');
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                const MenuPage()));
                                   },
                                   child: const Text(
                                     "Menu",

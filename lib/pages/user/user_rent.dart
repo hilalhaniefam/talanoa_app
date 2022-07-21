@@ -11,6 +11,9 @@ class UserRentPage extends StatefulWidget {
   State<UserRentPage> createState() => _UserReservationPageState();
 }
 
+int _itemCount = 0;
+String hours = _itemCount.toString();
+
 class _UserReservationPageState extends State<UserRentPage> {
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -92,11 +95,56 @@ class _UserReservationPageState extends State<UserRentPage> {
     return "$hour : $minute";
   }
 
+  itemCount() {
+    _itemCount != 0
+        ? Container(
+            width: 130,
+            height: 45,
+            margin: const EdgeInsets.only(top: 13, right: 200),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black, width: 1.5),
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.transparent),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              InkWell(
+                onTap: () => setState(() => _itemCount++),
+                child: const Icon(
+                  Icons.remove,
+                  color: Colors.black,
+                  size: 20,
+                ),
+              ),
+              Container(
+                width: 75,
+                height: 45,
+                margin: const EdgeInsets.symmetric(horizontal: 2),
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                    border: Border.symmetric(
+                        vertical: BorderSide(color: Colors.black, width: 1.5)),
+                    color: Colors.transparent),
+                child: Text(
+                  '$hours Hours',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+              ),
+              InkWell(
+                  onTap: () => setState(() => _itemCount++),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.black,
+                    size: 20,
+                  ))
+            ]))
+        : Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 70,
+          toolbarHeight: 60,
           leading: IconButton(
             onPressed: _handleBack,
             icon: const Icon(Icons.arrow_back),
@@ -125,7 +173,7 @@ class _UserReservationPageState extends State<UserRentPage> {
           ),
           Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 145,
+              height: MediaQuery.of(context).size.height - 134,
               decoration: BoxDecoration(color: HexColor('A7B79F')),
               child: Column(children: [
                 Padding(
@@ -339,43 +387,53 @@ class _UserReservationPageState extends State<UserRentPage> {
                               ),
                             ),
                           )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 13, right: 200),
-                              child: SizedBox(
-                                  width: 130,
-                                  height: 45,
-                                  child: OutlinedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              setPaxButtonColor('1-4')),
-                                      side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              color: Colors.black, width: 1.5)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0))),
-                                    ),
-                                    onPressed: () {
-                                      choosePax('1-4');
-                                    },
-                                    child: const Text(
-                                      '1-4',
-                                      style: TextStyle(
-                                          fontFamily: 'Josefin Sans',
-                                          fontSize: 20,
-                                          color: Colors.black),
-                                    ),
-                                  ))),
-                        ],
+                      Container(
+                        width: 130,
+                        height: 45,
+                        margin: const EdgeInsets.only(top: 13, right: 200),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1.5),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.transparent),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                                onTap: () => setState(() => _itemCount++),
+                                child: const Icon(
+                                  Icons.remove,
+                                  color: Colors.black,
+                                  size: 20,
+                                )),
+                            Container(
+                              width: 75,
+                              height: 45,
+                              margin: const EdgeInsets.symmetric(horizontal: 2),
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                  border: Border.symmetric(
+                                      vertical: BorderSide(
+                                          color: Colors.black, width: 1.5)),
+                                  color: Colors.transparent),
+                              child: Text(
+                                '$hours Hours',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 20),
+                              ),
+                            ),
+                            InkWell(
+                                onTap: () => setState(() => _itemCount++),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                  size: 20,
+                                )),
+                          ],
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 52),
+                        padding: const EdgeInsets.only(top: 52, bottom: 15),
                         child: SizedBox(
                           width: 194,
                           height: 44,

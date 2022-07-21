@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/widgets/admin/menudata_page/button_component.dart';
+import 'package:talanoa_app/widgets/shared/menu_catalogue.dart';
 import 'package:dotted_border/dotted_border.dart';
 
 class AddMenu extends StatefulWidget {
@@ -89,23 +90,6 @@ class _AddMenuState extends State<AddMenu> {
                                 )),
                           ),
                         ))),
-                //   child: OutlinedButton(
-                //       onPressed: () {},
-                //       child: const Align(
-                //           alignment: Alignment.center,
-                //           child: Icon(
-                //             Icons.add,
-                //             color: Colors.black,
-                //             size: 35,
-                //           )),
-                //       style: OutlinedButton.styleFrom(
-                //           fixedSize: const Size(69, 68),
-
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(8),
-                //           ),
-                //           shadowColor: Colors.black)),
-                // )),
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -182,6 +166,22 @@ class _AddMenuState extends State<AddMenu> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: row2),
+                Padding(
+                  padding: const EdgeInsets.only(top: 52, bottom: 15),
+                  child: SizedBox(
+                    width: 194,
+                    height: 44,
+                    child: FormHelper.submitButton(
+                      "Done",
+                      () {},
+                      btnColor: HexColor("#F1ECE1"),
+                      borderColor: Colors.grey,
+                      txtColor: Colors.black,
+                      borderRadius: 10,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

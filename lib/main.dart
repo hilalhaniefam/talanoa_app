@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/account_services/login_page.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/coffee.dart';
 
 void main() {
   runApp(const MyApp());

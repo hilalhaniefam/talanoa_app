@@ -15,7 +15,7 @@ class _AboutusState extends State<Aboutus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 60,
         leading: IconButton(
           onPressed: _handleBack,
           icon: const Icon(Icons.arrow_back),

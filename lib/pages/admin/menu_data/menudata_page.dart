@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/admin/menu_data/addmenu_page.dart';
-import 'package:talanoa_app/widgets/admin/menudata_page/button_component.dart';
+import 'package:talanoa_app/widgets/shared/menu_catalogue.dart';
 
 class Menudata extends StatefulWidget {
   const Menudata({Key? key}) : super(key: key);

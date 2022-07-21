@@ -84,7 +84,7 @@ class _Profile extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
+        toolbarHeight: 60,
         leading: IconButton(
           onPressed: _handleBack,
           icon: const Icon(Icons.arrow_back),
