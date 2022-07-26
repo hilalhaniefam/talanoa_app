@@ -34,7 +34,7 @@ class _MenudataState extends State<FlavouredTea> {
               child: const Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'FlavouredTea',
+                  'Flavoured Tea',
                   style: TextStyle(
                     fontFamily: 'Josefin Sans',
                     fontSize: 25,

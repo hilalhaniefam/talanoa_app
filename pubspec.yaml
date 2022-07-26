@@ -39,6 +39,8 @@ dependencies:
   http: ^0.13.4
   intl: ^0.17.0
   pinput: ^2.2.11
+  dio: ^4.0.6
+  dio_cookie_manager: ^2.0.0
   shared_preferences: ^2.0.15
   smooth_page_indicator: ^1.0.0+2
   snippet_coder_utils: ^1.0.12
@@ -46,7 +48,9 @@ dependencies:
   dotted_border: ^2.0.0+2
   flutter_progress_hud: ^2.0.2
   url_launcher: ^6.1.5
-
+  image_picker: ^0.8.4+6
+  path_provider: ^2.0.8
+  
 dev_dependencies:
   flutter_lints: ^1.0.0
   flutter_test:

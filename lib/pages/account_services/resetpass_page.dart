@@ -94,7 +94,7 @@ class _ResetpassPageState extends State<ResetpassPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 139, right: 115),
+                  padding: EdgeInsets.only(top: 139, right: 65),
                   child: Text(
                     'FORGOT PASSWORD',
                     textAlign: TextAlign.left,

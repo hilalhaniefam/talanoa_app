@@ -175,6 +175,7 @@ class _NewpassPageState extends State<NewpassPage> {
                                   if (value!.isEmpty) {
                                     return 'Please re-enter your password';
                                   }
+                                  return null;
                                 },
                                 controller: formValue['confPassword'],
                                 obscureText: true,

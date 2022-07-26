@@ -167,7 +167,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(top: 10, right: 30),
+                        padding: const EdgeInsets.only(top: 10, right: 30),
                         child: SizedBox(
                             width: 130,
                             height: 45,
@@ -309,7 +309,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(top: 10, right: 30),
+                        padding: const EdgeInsets.only(top: 10, right: 30),
                         child: SizedBox(
                             width: 130,
                             height: 45,

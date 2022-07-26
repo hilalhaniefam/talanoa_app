@@ -33,7 +33,7 @@ class _AboutusState extends State<Aboutus> {
             width: MediaQuery.of(context).size.width,
             height: 50,
             decoration: BoxDecoration(color: HexColor('#B9C5B2')),
-            child: Align(
+            child: const Align(
                 alignment: Alignment.center,
                 child: Text(
                   'About Us',
@@ -59,7 +59,7 @@ class _AboutusState extends State<Aboutus> {
           const SizedBox(
             height: 21,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 33, top: 30, right: 34),
             child: Text(
               'Talanoa Kopi and Space merupakan kedai kopi yang dibangun pada 8 oktober 2020. Design dari Talanoa Kopi & Space sendiri menganut gaya industrial namun sejuk karena banyak tanaman yang ada di Talanoa Kopi & Space.',
@@ -72,7 +72,7 @@ class _AboutusState extends State<Aboutus> {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 33, top: 38, right: 34),
             child: Text(
               'Impian kami adalah dapat membuat pelanggan yang pernah ke Talanoa Kopi & Space menjadi kebiasaan untuk berkunjung atau memesan online. Talanoa Kopi & Space.',

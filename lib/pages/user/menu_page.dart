@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/widgets/shared/menu_catalogue.dart';
+import 'package:talanoa_app/widgets/admin/menu_button.dart';
+import 'package:talanoa_app/pages/admin/menu_data/listmenu_catalogue.dart';
 import 'package:talanoa_app/widgets/shared/waves.dart';
 
 class MenuPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class _MenudataState extends State<MenuPage> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 50,
+            height: 35,
             decoration: BoxDecoration(color: HexColor('#B9C5B2')),
             child: const Align(
               alignment: Alignment.center,
@@ -50,13 +51,21 @@ class _MenudataState extends State<MenuPage> {
             child: Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: menu1,
-                ),
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: menuCategories1
+                        .map((menu1) => buildMenuCategories(
+                            title: menu1['name'].toString(),
+                            onClicked: () => Navigator.pushNamed(
+                                context, menu1['to'].toString())))
+                        .toList()),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: menu2,
-                ),
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: menuCategories2
+                        .map((menu2) => buildMenuCategories(
+                            title: menu2['name'].toString(),
+                            onClicked: () => Navigator.pushNamed(
+                                context, menu2['to'].toString())))
+                        .toList()),
               ]),
             ]),
           ),

@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/account_services/login_page.dart';
+import 'package:talanoa_app/pages/admin/menu_data/listmenu_catalogue.dart';
 import 'package:talanoa_app/pages/user/menu_catalogue/coffee.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/dessert.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/flavouredtea.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/maincourse.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/mocktail.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/noncoffee.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/toasted_bread.dart';
+import 'package:talanoa_app/pages/user/menu_catalogue/snack.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,11 +22,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: LoginPage(ipurl),
       home: const LoginPage(),
       title: 'Talanoa App',
       theme: ThemeData(
           primaryColor: HexColor('A7B79F'), fontFamily: 'Josefin Sans'),
+      routes: {
+        '/coffee': (context) => const Coffee(),
+        '/non-coffee': (context) => const NonCoffee(),
+        '/mocktail': (context) => const Mocktail(),
+        '/flavoured-tea': (context) => const FlavouredTea(),
+        '/main-course': (context) => const MainCourse(),
+        '/toasted-bread': (context) => const ToastedBread(),
+        '/dessert': (context) => const Dessert(),
+        '/snack': (context) => const Snack()
+      },
     );
   }
 }

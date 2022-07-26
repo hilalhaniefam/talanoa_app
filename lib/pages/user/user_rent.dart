@@ -126,7 +126,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                 child: Text(
                   '$hours Hours',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  style: const TextStyle(color: Colors.black, fontSize: 20),
                 ),
               ),
               InkWell(
@@ -418,7 +418,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                               child: Text(
                                 '$hours Hours',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black, fontSize: 20),
                               ),
                             ),

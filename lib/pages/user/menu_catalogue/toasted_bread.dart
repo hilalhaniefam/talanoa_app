@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/widgets/shared/waves.dart';
 
-class RotiBakar extends StatefulWidget {
-  const RotiBakar({Key? key}) : super(key: key);
+class ToastedBread extends StatefulWidget {
+  const ToastedBread({Key? key}) : super(key: key);
 
   @override
-  State<RotiBakar> createState() => _MenudataState();
+  State<ToastedBread> createState() => _MenudataState();
 }
 
-class _MenudataState extends State<RotiBakar> {
+class _MenudataState extends State<ToastedBread> {
   _handleBack() => Navigator.of(context).pop();
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _MenudataState extends State<RotiBakar> {
               child: const Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'RotiBakar',
+                  'Toasted Bread',
                   style: TextStyle(
                     fontFamily: 'Josefin Sans',
                     fontSize: 25,
