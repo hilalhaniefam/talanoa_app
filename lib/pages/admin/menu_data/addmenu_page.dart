@@ -40,12 +40,6 @@ class _AddMenuState extends State<AddMenu> {
         imageFile = File(pickedFile.path);
       });
     }
-    // if (imgFile == null) return;
-    // File tmpFile = File(imgFile.path);
-    // tmpFile = await tmpFile.copy(tmpFile.path);
-    // setState(() {
-    // file = File(imgFile!.path);
-    // });
   }
 
   Color setTypeButtonColor(type) {
