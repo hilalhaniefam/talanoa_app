@@ -67,14 +67,14 @@ class _AddMenuState extends State<AddMenu> {
       var fileName = imageFile!.path.split('/').last;
       var formData = FormData.fromMap(
         {
+          'type': type,
+          'name': name,
+          'description': description,
           "imageFile": await MultipartFile.fromFile(
             imageFile!.path,
             filename: fileName,
             contentType: MediaType('image', 'jpg'),
           ),
-          'type': type,
-          'name': name,
-          'description': description
         },
       );
       final SharedPreferences sharedPreferences =
@@ -84,15 +84,37 @@ class _AddMenuState extends State<AddMenu> {
       final token = userData['accessToken'];
       debugPrint(token);
       var dio = Dio();
-      var response = await dio.post(
+      Response response = await dio.post(
         ip,
         data: formData,
-        options: Options(headers: {"Authorization": "Bearer $token"}),
+        options: Options(
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            },
+            headers: {"Authorization": "Bearer $token"}),
       );
       var responseBody = response.data;
+      var data = responseBody;
+      print(response.statusCode);
       print(responseBody);
-    } on DioError catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(e.toString()));
+      if (response.statusCode == 200) {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString('newMenu', data['payload']);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackbar(data['message'].toString()));
+      } else {
+        if (data['message'].isNotEmpty) {
+          // throw data['message'];
+          ScaffoldMessenger.of(context)
+              .showSnackBar(CustomSnackbar(data['message'].toString()));
+        } else {
+          throw data['error'];
+        }
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
