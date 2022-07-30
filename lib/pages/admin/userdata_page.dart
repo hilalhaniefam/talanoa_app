@@ -17,7 +17,7 @@ class _UserdataState extends State<Userdata> {
 
   List<dynamic> users = [];
 
-  Future<http.Response> fetchUsers() async {
+  Future<http.Response> getUsers() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var userData =
@@ -37,7 +37,7 @@ class _UserdataState extends State<Userdata> {
   @override
   void initState() {
     super.initState();
-    fetchUsers();
+    getUsers();
   }
 
   @override
@@ -76,62 +76,65 @@ class _UserdataState extends State<Userdata> {
         backgroundColor: HexColor('#B9C5B2'),
       ),
       backgroundColor: HexColor('A7B79F'),
-      body: ListView(
-        padding: const EdgeInsets.only(bottom: 29),
-        children: users.map((data) {
-          return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              margin: const EdgeInsets.only(left: 36, top: 29, right: 78),
-              color: HexColor('F1ECE1'),
-              child: SizedBox(
-                  width: 261,
-                  height: 111,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 34, top: 22),
-                          child: Text(
-                            data['name'],
-                            style: const TextStyle(
-                                fontFamily: 'Josefin Sans',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
+      body: RefreshIndicator(
+        onRefresh: getUsers,
+        child: ListView(
+          padding: const EdgeInsets.only(bottom: 29),
+          children: users.map((data) {
+            return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: const EdgeInsets.only(left: 36, top: 29, right: 78),
+                color: HexColor('F1ECE1'),
+                child: SizedBox(
+                    width: 261,
+                    height: 111,
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 34, top: 22),
+                            child: Text(
+                              data['name'],
+                              style: const TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 34, top: 6),
-                          child: Text(
-                            data['phone'],
-                            style: const TextStyle(
-                                fontFamily: 'Josefin Sans',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 34, top: 6),
+                            child: Text(
+                              data['phone'],
+                              style: const TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 34, top: 6),
-                          child: Text(
-                            data['email'],
-                            style: const TextStyle(
-                                fontFamily: 'Josefin Sans',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 34, top: 6),
+                            child: Text(
+                              data['email'],
+                              style: const TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )));
-        }).toList(),
+                      ],
+                    )));
+          }).toList(),
+        ),
       ),
     );
   }

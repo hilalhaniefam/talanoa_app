@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/account_services/login_page.dart';
-import 'package:talanoa_app/pages/admin/menu_data/listmenu_catalogue.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/coffee.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/dessert.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/flavouredtea.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/maincourse.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/mocktail.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/noncoffee.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/toasted_bread.dart';
-import 'package:talanoa_app/pages/user/menu_catalogue/snack.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_coffee.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_dessert.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_flavouredtea.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_maincourse.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_mocktail.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_noncoffee.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_snack.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_toasted_bread.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_coffee.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_dessert.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_flavouredtea.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_maincourse.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_mocktail.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_noncoffee.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_toasted_bread.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_snack.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,14 +34,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: HexColor('A7B79F'), fontFamily: 'Josefin Sans'),
       routes: {
-        '/coffee': (context) => const Coffee(),
-        '/non-coffee': (context) => const NonCoffee(),
-        '/mocktail': (context) => const Mocktail(),
-        '/flavoured-tea': (context) => const FlavouredTea(),
-        '/main-course': (context) => const MainCourse(),
-        '/toasted-bread': (context) => const ToastedBread(),
-        '/dessert': (context) => const Dessert(),
-        '/snack': (context) => const Snack()
+        //usser menu page
+        '/user/coffee': (context) => const Coffee(),
+        '/user/non-coffee': (context) => const NonCoffee(),
+        '/user/mocktail': (context) => const Mocktail(),
+        '/user/flavoured-tea': (context) => const FlavouredTea(),
+        '/user/main-course': (context) => const MainCourse(),
+        '/user/toasted-bread': (context) => const ToastedBread(),
+        '/user/dessert': (context) => const Dessert(),
+        '/user/snack': (context) => const Snack(),
+
+        //admin menu page
+        '/coffee': (context) => const AdminCoffee(),
+        '/non-coffee': (context) => const AdminNonCoffee(),
+        '/mocktail': (context) => const AdminMocktail(),
+        '/flavoured-tea': (context) => const AdminFlavouredTea(),
+        '/main-course': (context) => const AdminMainCourse(),
+        '/toasted-bread': (context) => const AdminToastedBread(),
+        '/dessert': (context) => const AdminDessert(),
+        '/snack': (context) => const AdminSnack(),
       },
     );
   }

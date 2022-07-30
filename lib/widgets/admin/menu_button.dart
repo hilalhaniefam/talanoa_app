@@ -30,7 +30,7 @@ Widget buildMenuCategories({
         Align(
             alignment: Alignment.center,
             child: SizedBox(
-              width: 120,
+              width: 134,
               height: 80,
               child: ElevatedButton(
                   onPressed: onClicked,
@@ -46,7 +46,7 @@ Widget buildMenuCategories({
                   ),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       primary: HexColor('#F1ECE1'),
                       shadowColor: Colors.black)),

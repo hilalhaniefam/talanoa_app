@@ -10,7 +10,7 @@ import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/widgets/admin/get_image.dart';
 import 'package:talanoa_app/widgets/admin/menu_button.dart';
-import 'package:talanoa_app/pages/admin/menu_data/listmenu_catalogue.dart';
+import 'package:talanoa_app/widgets/shared/listmenu_catalogue.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class AddMenu extends StatefulWidget {
@@ -57,7 +57,10 @@ class _AddMenuState extends State<AddMenu> {
 
   void addMenu(String type, String name, String description) async {
     try {
-      debugPrint(imageFile!.path);
+      if (imageFile == null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackbar('Please insert an image!'));
+      }
       var fileName = imageFile!.path.split('/').last;
       var formData = FormData.fromMap(
         {
@@ -84,7 +87,7 @@ class _AddMenuState extends State<AddMenu> {
         options: Options(
             followRedirects: false,
             validateStatus: (status) {
-              return status! < 500;
+              return status! <= 500;
             },
             headers: {"Authorization": "Bearer $token"}),
       );
@@ -92,21 +95,8 @@ class _AddMenuState extends State<AddMenu> {
       var data = responseBody;
       print(response.statusCode);
       print(responseBody);
-      if (response.statusCode == 200) {
-        SharedPreferences sharedPreferences =
-            await SharedPreferences.getInstance();
-        sharedPreferences.setString('newMenu', data['payload']);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(CustomSnackbar(data['message'].toString()));
-      } else {
-        if (data['message'].isNotEmpty) {
-          // throw data['message'];
-          ScaffoldMessenger.of(context)
-              .showSnackBar(CustomSnackbar(data['message'].toString()));
-        } else {
-          throw data['error'];
-        }
-      }
+      ScaffoldMessenger.of(context)
+          .showSnackBar(CustomSnackbar(data['message']));
     } catch (e) {
       print(e);
     }
@@ -115,212 +105,202 @@ class _AddMenuState extends State<AddMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 60,
-          leading: IconButton(
-            onPressed: _handleBack,
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-          ),
-          elevation: 0,
-          backgroundColor: HexColor('#B9C5B2'),
+      appBar: AppBar(
+        toolbarHeight: 60,
+        leading: IconButton(
+          onPressed: _handleBack,
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.black,
         ),
-        backgroundColor: HexColor('A7B79F'),
-        body: Builder(
-          builder: (context) => SingleChildScrollView(
-            key: formKey,
-            child: Center(
+        elevation: 0,
+        backgroundColor: HexColor('#B9C5B2'),
+      ),
+      backgroundColor: HexColor('A7B79F'),
+      body: SingleChildScrollView(
+        key: formKey,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 35,
+              decoration: BoxDecoration(color: HexColor('#B9C5B2')),
+              child: Text(
+                'Menu Data',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    shadows: [
+                      Shadow(
+                          color: Colors.black.withOpacity(0.3),
+                          offset: const Offset(5, 5),
+                          blurRadius: 15),
+                    ],
+                    fontFamily: 'Josefin Sans',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 28,
+                    color: Colors.black),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(10, 23, 18, 30),
               child: Column(
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 35,
-                    decoration: BoxDecoration(color: HexColor('#B9C5B2')),
-                    child: Text(
-                      'Menu Data',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          shadows: [
-                            Shadow(
-                                color: Colors.black.withOpacity(0.3),
-                                offset: const Offset(5, 5),
-                                blurRadius: 15),
-                          ],
-                          fontFamily: 'Josefin Sans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 28,
-                          color: Colors.black),
-                    ),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 11),
+                          child: Text(
+                            'Add Photo',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: HexColor('#343434')),
+                          ))),
+                  ImgPicker.inputImage(
+                      onTap: () {
+                        pickImage();
+                      },
+                      child: imageFile == null
+                          ? const Center(
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.black,
+                                size: 35,
+                              ),
+                            )
+                          : Center(
+                              child: Image.file(
+                                imageFile!,
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 11),
+                          child: Text(
+                            'Add Product Name',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: HexColor('#343434')),
+                          ))),
+                  SizedBox(
+                      width: 330,
+                      height: 50,
+                      child: TextFormField(
+                        controller: formValue['productName'],
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0)),
+                        ),
+                        style: const TextStyle(
+                            fontFamily: 'Josefin Sans', fontSize: 17),
+                      )),
+                  const SizedBox(
+                    height: 26,
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(10, 23, 18, 30),
-                    child: Column(
-                      children: [
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 32, bottom: 11),
-                                child: Text(
-                                  'Add Photo',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: HexColor('#343434')),
-                                ))),
-                        ImgPicker.inputImage(
-                            onTap: () {
-                              pickImage();
-                            },
-                            child: imageFile == null
-                                ? const Center(
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.black,
-                                      size: 35,
-                                    ),
-                                  )
-                                : Center(
-                                    child: Image.file(
-                                      imageFile!,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 32, bottom: 11),
-                                child: Text(
-                                  'Add Product Name',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: HexColor('#343434')),
-                                ))),
-                        SizedBox(
-                            width: 330,
-                            height: 50,
-                            child: TextFormField(
-                              controller: formValue['productName'],
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0)),
-                              ),
-                              style: const TextStyle(
-                                  fontFamily: 'Josefin Sans', fontSize: 17),
-                            )),
-                        const SizedBox(
-                          height: 26,
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 11),
+                          child: Text(
+                            'Add Description',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: HexColor('#343434')),
+                          ))),
+                  SizedBox(
+                      width: 330,
+                      child: TextFormField(
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
+                        controller: formValue['description'],
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 16, right: 16, top: 12.17, bottom: 12.12),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0)),
                         ),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 32, bottom: 11),
-                                child: Text(
-                                  'Add Description',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: HexColor('#343434')),
-                                ))),
-                        SizedBox(
-                            width: 330,
-                            child: TextFormField(
-                              maxLines: null,
-                              keyboardType: TextInputType.multiline,
-                              controller: formValue['description'],
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.only(
-                                    left: 16,
-                                    right: 16,
-                                    top: 12.17,
-                                    bottom: 12.12),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0)),
-                              ),
-                              style: const TextStyle(
-                                  fontFamily: 'Josefin Sans', fontSize: 17),
-                            )),
-                        const SizedBox(
-                          height: 26,
-                        ),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 32, bottom: 11),
-                                child: Text(
-                                  'Choose Category',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: HexColor('#343434')),
-                                ))),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: categories1
-                                .map((category) => Row(
-                                      children: [
-                                        buildButtonChooseCategory(
-                                            backgroundColor: setTypeButtonColor(
-                                                category['type']),
-                                            title: category['name'].toString(),
-                                            onClicked: () {
-                                              chooseCategory(category['type']);
-                                            }),
-                                      ],
-                                    ))
-                                .toList()),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: categories2
-                                .map((category2) => Row(
-                                      children: [
-                                        buildButtonChooseCategory(
-                                            backgroundColor: setTypeButtonColor(
-                                                category2['type']),
-                                            title: category2['name'].toString(),
-                                            onClicked: () {
-                                              chooseCategory(category2['type']);
-                                            })
-                                      ],
-                                    ))
-                                .toList()),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 52, bottom: 15),
-                          child: SizedBox(
-                            width: 194,
-                            height: 44,
-                            child: FormHelper.submitButton(
-                              "Done",
-                              () {
-                                addMenu(
-                                  formValue['type'].toString(),
-                                  formValue['productName'].text.toString(),
-                                  formValue['description'].text.toString(),
-                                );
-                              },
-                              btnColor: HexColor("#F1ECE1"),
-                              borderColor: Colors.grey,
-                              txtColor: Colors.black,
-                              borderRadius: 10,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
+                        style: const TextStyle(
+                            fontFamily: 'Josefin Sans', fontSize: 17),
+                      )),
+                  const SizedBox(
+                    height: 26,
+                  ),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 11),
+                          child: Text(
+                            'Choose Category',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: HexColor('#343434')),
+                          ))),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: categories1
+                          .map((category) => Row(
+                                children: [
+                                  buildButtonChooseCategory(
+                                      backgroundColor:
+                                          setTypeButtonColor(category['type']),
+                                      title: category['name'].toString(),
+                                      onClicked: () {
+                                        chooseCategory(category['type']);
+                                      }),
+                                ],
+                              ))
+                          .toList()),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: categories2
+                          .map((category2) => Row(
+                                children: [
+                                  buildButtonChooseCategory(
+                                      backgroundColor:
+                                          setTypeButtonColor(category2['type']),
+                                      title: category2['name'].toString(),
+                                      onClicked: () {
+                                        chooseCategory(category2['type']);
+                                      })
+                                ],
+                              ))
+                          .toList()),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 52, bottom: 15),
+                    child: SizedBox(
+                      width: 194,
+                      height: 44,
+                      child: FormHelper.submitButton(
+                        "Done",
+                        () {
+                          addMenu(
+                            formValue['type'].toString(),
+                            formValue['productName'].text.toString(),
+                            formValue['description'].text.toString(),
+                          );
+                        },
+                        btnColor: HexColor("#F1ECE1"),
+                        borderColor: Colors.grey,
+                        txtColor: Colors.black,
+                        borderRadius: 10,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }

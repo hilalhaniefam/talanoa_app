@@ -10,6 +10,8 @@ import 'package:talanoa_app/pages/account_services/new_account/register_page.dar
 import 'package:talanoa_app/pages/account_services/resetpass_page.dart';
 import 'package:talanoa_app/pages/admin/admin_page.dart';
 import 'package:talanoa_app/pages/user/user_page.dart';
+import 'package:talanoa_app/widgets/form_account_services/form_login.dart';
+import 'package:talanoa_app/widgets/shared/linear_gradient.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
@@ -102,21 +104,11 @@ class _LoginPageState extends State<LoginPage> {
             child: Builder(
                 builder: (context) => Center(
                         child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    HexColor('#F1ECE1'),
-                                    HexColor("#A7B79F"),
-                                  ]),
-                            ),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                          linearGradient(
+                            context: context,
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -131,93 +123,25 @@ class _LoginPageState extends State<LoginPage> {
                                       height: 227,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 20,
-                                      left: 44,
-                                      right: 43,
-                                    ),
-                                    child: TextFormField(
-                                      controller: formValue['email'],
-                                      onChanged: (value) {
+                                  formLogin(
+                                      emailCon: formValue['email'],
+                                      emailonChanged: (value) {
                                         setState(() {
                                           errorFormStatus['email'] = false;
                                         });
                                       },
-                                      decoration: InputDecoration(
-                                        errorText: errorFormStatus['email']
-                                            ? 'Please enter your email'
-                                            : null,
-                                        errorStyle: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 16,
-                                            top: 12.17,
-                                            bottom: 12.12),
-                                        labelText: 'Email',
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            borderSide: const BorderSide(
-                                                color: Colors.black,
-                                                width: 2.0)),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                      style: const TextStyle(
-                                          fontFamily: 'Josefin Sans',
-                                          fontSize: 17),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                      top: 16.17,
-                                      left: 44,
-                                      right: 43,
-                                    ),
-                                    child: TextFormField(
-                                      onChanged: (value) {
+                                      emailerrorText: errorFormStatus['email']
+                                          ? 'Please enter your email'
+                                          : null,
+                                      passCon: formValue['password'],
+                                      passonChanged: (value) {
                                         setState(() {
                                           errorFormStatus['password'] = false;
                                         });
                                       },
-                                      controller: formValue['password'],
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                        errorText: errorFormStatus['password']
-                                            ? 'Please enter your password'
-                                            : null,
-                                        errorStyle: const TextStyle(
-                                          fontSize: 11,
-                                        ),
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 16,
-                                            top: 12.17,
-                                            bottom: 12.12),
-                                        labelText: 'Password',
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            borderSide: const BorderSide(
-                                                color: Colors.black,
-                                                width: 2.0)),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                      style: const TextStyle(
-                                          fontFamily: 'Josefin Sans',
-                                          fontSize: 17),
-                                    ),
-                                  ),
+                                      passerrorText: errorFormStatus['password']
+                                          ? 'Please enter your password'
+                                          : null),
                                   Align(
                                     alignment: Alignment.bottomRight,
                                     child: Padding(
@@ -335,9 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                 ]),
-                          ),
-                        ],
-                      ),
-                    )))));
+                          )
+                        ]))))));
   }
 }

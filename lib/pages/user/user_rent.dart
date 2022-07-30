@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/widgets/carousel/carousel_reservation.dart';
+import 'package:talanoa_app/widgets/user/carousel/carousel_reservation.dart';
 
 class UserRentPage extends StatefulWidget {
   const UserRentPage({Key? key}) : super(key: key);
