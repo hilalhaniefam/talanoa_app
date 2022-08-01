@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/admin/reservasi/ongoing_res.dart';
+import 'package:talanoa_app/widgets/shared/app_bar.dart';
 
 class Reservasidata extends StatefulWidget {
   const Reservasidata({Key? key}) : super(key: key);
@@ -15,38 +16,7 @@ class _ReservasidataState extends State<Reservasidata> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 110,
-        leading: IconButton(
-          onPressed: _handleBack,
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.black,
-        ),
-        title: Title(
-            color: Colors.black,
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 32, top: 55),
-                child: Text(
-                  'Reservation Data',
-                  style: TextStyle(
-                      shadows: [
-                        Shadow(
-                            color: Colors.black.withOpacity(0.3),
-                            offset: const Offset(5, 5),
-                            blurRadius: 15),
-                      ],
-                      fontFamily: 'Josefin Sans',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 28,
-                      color: Colors.black),
-                ),
-              ),
-            )),
-        elevation: 0,
-        backgroundColor: HexColor('#B9C5B2'),
-      ),
+      appBar: appBarAdmin(backButton: _handleBack, title: 'Reservation Page'),
       backgroundColor: HexColor('A7B79F'),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Align(

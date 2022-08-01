@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/admin/menu_data/menudata_page.dart';
-import 'package:talanoa_app/pages/admin/rentarea_page.dart';
-import 'package:talanoa_app/pages/admin/reservasi_page.dart';
+import 'package:talanoa_app/pages/admin/rent_area/rentarea_page.dart';
+import 'package:talanoa_app/pages/admin/reservasi/reservasi_page.dart';
 import 'package:talanoa_app/pages/admin/userdata_page.dart';
 
 class AdminPage extends StatefulWidget {

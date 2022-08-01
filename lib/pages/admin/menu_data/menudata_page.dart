@@ -17,7 +17,7 @@ class _MenudataState extends State<Menudata> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(backButton: _handleBack),
+      appBar: appBarAdmin(backButton: _handleBack, title: 'Menu Data'),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -25,28 +25,8 @@ class _MenudataState extends State<Menudata> {
         child: Column(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width,
-              height: 35,
-              color: HexColor('#B9C5B2'),
-              child: Text(
-                'Menu Data',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    shadows: [
-                      Shadow(
-                          color: Colors.black.withOpacity(0.3),
-                          offset: const Offset(5, 5),
-                          blurRadius: 15),
-                    ],
-                    fontFamily: 'Josefin Sans',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 28,
-                    color: Colors.black),
-              ),
-            ),
-            Container(
               margin:
-                  const EdgeInsets.symmetric(horizontal: 45.0, vertical: 54),
+                  const EdgeInsets.symmetric(horizontal: 45.0, vertical: 47),
               child: Column(children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

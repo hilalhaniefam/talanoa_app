@@ -8,6 +8,8 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/new_account/account_registered_pages.dart';
+import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
+import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class CodeVerifAccPage extends StatefulWidget {
@@ -88,19 +90,12 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: _handleBack,
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-          ),
-          elevation: 0,
-          backgroundColor: HexColor('#F1ECE1'),
-        ),
+        appBar: appBar(backButton: _handleBack),
         body: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
+            padding: const EdgeInsets.only(left: 30, right: 20),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
@@ -118,8 +113,8 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
                 const SizedBox(
                   height: 70,
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 107),
+                const Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     'CODE VERIFICATION',
                     textAlign: TextAlign.left,
@@ -132,7 +127,7 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
                 ),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 20, 20, 20),
+                    padding: const EdgeInsets.only(top: 20, bottom: 10),
                     child: Text(
                       'You will recive an email with a verification code for double security',
                       style: TextStyle(
@@ -146,16 +141,13 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
                 ),
                 Align(
                     alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 10, 20, 20),
-                      child: Text(
-                        'Enter the verification code sent to ${widget.email}',
-                        style: TextStyle(
-                          fontFamily: 'Josefin Sans',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18,
-                          color: HexColor('#484848'),
-                        ),
+                    child: Text(
+                      'Enter the verification code sent to ${widget.email}',
+                      style: TextStyle(
+                        fontFamily: 'Josefin Sans',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: HexColor('#484848'),
                       ),
                     )),
                 Padding(
@@ -187,7 +179,6 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(
                       top: 7.17,
-                      right: 34,
                     ),
                     child: RichText(
                       text: const TextSpan(
@@ -203,26 +194,16 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                SizedBox(
-                  width: 150,
-                  height: 40,
-                  child: FormHelper.submitButton(
-                    "Verify Code",
-                    () {
+                submitButton(
+                    onTap: () {
                       verifyOtp(otpCon.text, widget.userId);
                     },
-                    btnColor: HexColor("#F1ECE1"),
-                    borderColor: Colors.grey,
-                    txtColor: Colors.black,
-                    borderRadius: 10,
-                    fontSize: 20,
-                  ),
-                ),
+                    title: 'Verify Code'),
                 Align(
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      top: 38,
+                      top: 20,
                     ),
                     child: RichText(
                       text: TextSpan(

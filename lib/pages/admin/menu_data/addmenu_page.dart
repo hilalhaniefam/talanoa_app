@@ -10,6 +10,8 @@ import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/widgets/admin/get_image.dart';
 import 'package:talanoa_app/widgets/admin/menu_button.dart';
+import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
+import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/shared/listmenu_catalogue.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
@@ -105,43 +107,14 @@ class _AddMenuState extends State<AddMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 60,
-        leading: IconButton(
-          onPressed: _handleBack,
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.black,
-        ),
-        elevation: 0,
-        backgroundColor: HexColor('#B9C5B2'),
-      ),
+      appBar: appBarAdmin(backButton: _handleBack, title: 'Menu Data'),
       backgroundColor: HexColor('A7B79F'),
       body: SingleChildScrollView(
         key: formKey,
         child: Column(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width,
-              height: 35,
-              decoration: BoxDecoration(color: HexColor('#B9C5B2')),
-              child: Text(
-                'Menu Data',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    shadows: [
-                      Shadow(
-                          color: Colors.black.withOpacity(0.3),
-                          offset: const Offset(5, 5),
-                          blurRadius: 15),
-                    ],
-                    fontFamily: 'Josefin Sans',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 28,
-                    color: Colors.black),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(10, 23, 18, 30),
+              margin: const EdgeInsets.fromLTRB(30, 23, 18, 30),
               child: Column(
                 children: [
                   Align(
@@ -155,24 +128,27 @@ class _AddMenuState extends State<AddMenu> {
                                 fontWeight: FontWeight.w600,
                                 color: HexColor('#343434')),
                           ))),
-                  ImgPicker.inputImage(
-                      onTap: () {
-                        pickImage();
-                      },
-                      child: imageFile == null
-                          ? const Center(
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                            )
-                          : Center(
-                              child: Image.file(
-                                imageFile!,
-                                fit: BoxFit.cover,
-                              ),
-                            )),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ImgPicker.inputImage(
+                        onTap: () {
+                          pickImage();
+                        },
+                        child: imageFile == null
+                            ? const Center(
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                  size: 35,
+                                ),
+                              )
+                            : Center(
+                                child: Image.file(
+                                  imageFile!,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                  ),
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -185,7 +161,6 @@ class _AddMenuState extends State<AddMenu> {
                                 color: HexColor('#343434')),
                           ))),
                   SizedBox(
-                      width: 330,
                       height: 50,
                       child: TextFormField(
                         controller: formValue['productName'],
@@ -213,22 +188,21 @@ class _AddMenuState extends State<AddMenu> {
                                 color: HexColor('#343434')),
                           ))),
                   SizedBox(
-                      width: 330,
                       child: TextFormField(
-                        maxLines: null,
-                        keyboardType: TextInputType.multiline,
-                        controller: formValue['description'],
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(
-                              left: 16, right: 16, top: 12.17, bottom: 12.12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0)),
-                        ),
-                        style: const TextStyle(
-                            fontFamily: 'Josefin Sans', fontSize: 17),
-                      )),
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    controller: formValue['description'],
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(
+                          left: 16, right: 16, top: 12.17, bottom: 12.12),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                              color: Colors.black, width: 2.0)),
+                    ),
+                    style: const TextStyle(
+                        fontFamily: 'Josefin Sans', fontSize: 17),
+                  )),
                   const SizedBox(
                     height: 26,
                   ),
@@ -244,7 +218,7 @@ class _AddMenuState extends State<AddMenu> {
                                 color: HexColor('#343434')),
                           ))),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: categories1
                           .map((category) => Row(
                                 children: [
@@ -259,7 +233,7 @@ class _AddMenuState extends State<AddMenu> {
                               ))
                           .toList()),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: categories2
                           .map((category2) => Row(
                                 children: [
@@ -274,27 +248,16 @@ class _AddMenuState extends State<AddMenu> {
                               ))
                           .toList()),
                   Padding(
-                    padding: const EdgeInsets.only(top: 52, bottom: 15),
-                    child: SizedBox(
-                      width: 194,
-                      height: 44,
-                      child: FormHelper.submitButton(
-                        "Done",
-                        () {
-                          addMenu(
-                            formValue['type'].toString(),
-                            formValue['productName'].text.toString(),
-                            formValue['description'].text.toString(),
-                          );
-                        },
-                        btnColor: HexColor("#F1ECE1"),
-                        borderColor: Colors.grey,
-                        txtColor: Colors.black,
-                        borderRadius: 10,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.only(top: 52, bottom: 15),
+                      child: submitButton(
+                          onTap: () {
+                            addMenu(
+                              formValue['type'].toString(),
+                              formValue['productName'].text.toString(),
+                              formValue['description'].text.toString(),
+                            );
+                          },
+                          title: 'Done')),
                 ],
               ),
             ),

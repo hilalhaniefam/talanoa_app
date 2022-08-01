@@ -6,7 +6,7 @@ class ImgPicker {
       Container(
         width: 69,
         height: 68,
-        margin: const EdgeInsets.only(right: 258, bottom: 25),
+        margin: const EdgeInsets.only(bottom: 25),
         child: DottedBorder(
             color: Colors.black,
             radius: const Radius.circular(8),

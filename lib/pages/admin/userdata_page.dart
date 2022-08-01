@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
+import 'package:talanoa_app/widgets/shared/app_bar.dart';
 
 class Userdata extends StatefulWidget {
   const Userdata({Key? key}) : super(key: key);
@@ -43,38 +44,7 @@ class _UserdataState extends State<Userdata> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 110,
-        leading: IconButton(
-          onPressed: _handleBack,
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.black,
-        ),
-        title: Title(
-            color: Colors.black,
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 75, top: 55),
-                child: Text(
-                  'User Data',
-                  style: TextStyle(
-                      shadows: [
-                        Shadow(
-                            color: Colors.black.withOpacity(0.3),
-                            offset: const Offset(5, 5),
-                            blurRadius: 15),
-                      ],
-                      fontFamily: 'Josefins Sans',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 28,
-                      color: Colors.black),
-                ),
-              ),
-            )),
-        elevation: 0,
-        backgroundColor: HexColor('#B9C5B2'),
-      ),
+      appBar: appBarAdmin(backButton: _handleBack, title: 'User Data'),
       backgroundColor: HexColor('A7B79F'),
       body: RefreshIndicator(
         onRefresh: getUsers,

@@ -5,16 +5,19 @@ const String wavesImg2 = 'assets/images/Vector2.png';
 
 Container waves() {
   return Container(
-    height: 90,
+    height: 69,
     decoration: const BoxDecoration(
-      image: DecorationImage(fit: BoxFit.fill, image: AssetImage(wavesImg)),
+      image: DecorationImage(
+          fit: BoxFit.fill,
+          image: AssetImage(wavesImg),
+          alignment: Alignment.bottomCenter),
     ),
   );
 }
 
 Container waves2() {
   return Container(
-    height: 90,
+    height: 69,
     decoration: const BoxDecoration(
       image: DecorationImage(fit: BoxFit.fill, image: AssetImage(wavesImg2)),
     ),

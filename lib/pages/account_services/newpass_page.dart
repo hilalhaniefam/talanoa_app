@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/account_services/updatedpass_page.dart';
+import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 
@@ -71,6 +72,8 @@ class _NewpassPageState extends State<NewpassPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        padding: const EdgeInsets.only(
+                            top: 110, left: 30, right: 20),
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
                         decoration: BoxDecoration(
@@ -85,8 +88,8 @@ class _NewpassPageState extends State<NewpassPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 139, right: 155),
+                            const Align(
+                              alignment: Alignment.centerLeft,
                               child: Text(
                                 'NEW PASSWORD',
                                 style: TextStyle(
@@ -99,7 +102,7 @@ class _NewpassPageState extends State<NewpassPage> {
                             Center(
                                 child: Padding(
                               padding:
-                                  const EdgeInsets.fromLTRB(30, 20, 20, 20),
+                                  const EdgeInsets.only(top: 20, bottom: 10),
                               child: Text(
                                 'Your identity has been verified! Set your new password',
                                 style: TextStyle(
@@ -113,17 +116,8 @@ class _NewpassPageState extends State<NewpassPage> {
                             Padding(
                               padding: const EdgeInsets.only(
                                 top: 16.17,
-                                left: 30,
-                                right: 43,
                               ),
                               child: TextFormField(
-                                // onChanged: (value) {
-                                //   for (String key in errorFormStatus.keys) {
-                                //     setState(() {
-                                //       errorFormStatus[key] = false;
-                                //     });
-                                //   }
-                                // },
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'Please enter your password';
@@ -167,8 +161,6 @@ class _NewpassPageState extends State<NewpassPage> {
                             Padding(
                               padding: const EdgeInsets.only(
                                 top: 16.17,
-                                left: 30,
-                                right: 43,
                               ),
                               child: TextFormField(
                                 validator: (value) {
@@ -208,25 +200,15 @@ class _NewpassPageState extends State<NewpassPage> {
                             const SizedBox(
                               height: 50,
                             ),
-                            SizedBox(
-                              width: 150,
-                              height: 40,
-                              child: FormHelper.submitButton(
-                                "Done",
-                                () {
+                            submitButton(
+                                onTap: () {
                                   formKey.currentState!.validate();
                                   updatePass(
                                       formValue['password'].text,
                                       formValue['confPassword'].text,
                                       widget.email);
                                 },
-                                btnColor: HexColor("#F1ECE1"),
-                                borderColor: Colors.grey,
-                                txtColor: Colors.black,
-                                borderRadius: 10,
-                                fontSize: 20,
-                              ),
-                            ),
+                                title: 'Done'),
                           ],
                         ),
                       )

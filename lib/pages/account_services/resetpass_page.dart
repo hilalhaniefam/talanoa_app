@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/account_services/codeverif_resetpass_page.dart';
+import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 
@@ -79,6 +80,7 @@ class _ResetpassPageState extends State<ResetpassPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
+            padding: const EdgeInsets.only(left: 30, right: 20),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
@@ -93,11 +95,13 @@ class _ResetpassPageState extends State<ResetpassPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 139, right: 65),
+                const SizedBox(
+                  height: 110,
+                ),
+                const Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     'FORGOT PASSWORD',
-                    textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'Josefin Sans',
                         fontWeight: FontWeight.w700,
@@ -107,7 +111,7 @@ class _ResetpassPageState extends State<ResetpassPage> {
                 ),
                 Center(
                     child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 20, 20, 20),
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Text(
                     'Provide your email address for which you want to reset your password',
                     style: TextStyle(
@@ -120,20 +124,17 @@ class _ResetpassPageState extends State<ResetpassPage> {
                 )),
                 Align(
                     alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 20, 20, 13),
-                      child: Text(
-                        'Please enter your email address',
-                        style: TextStyle(
-                          fontFamily: 'Josefin Sans',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: HexColor('#1A1A1A'),
-                        ),
+                    child: Text(
+                      'Please enter your email address',
+                      style: TextStyle(
+                        fontFamily: 'Josefin Sans',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: HexColor('#1A1A1A'),
                       ),
                     )),
                 Padding(
-                  padding: const EdgeInsets.only(left: 31, right: 32),
+                  padding: const EdgeInsets.only(top: 30),
                   child: TextFormField(
                     controller: emailCon,
                     decoration: InputDecoration(
@@ -158,30 +159,19 @@ class _ResetpassPageState extends State<ResetpassPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                SizedBox(
-                  width: 150,
-                  height: 40,
-                  child: FormHelper.submitButton(
-                    "SEND",
-                    () {
+                submitButton(
+                    onTap: () {
                       sendOtpForgotPass(
                         emailCon.text.toString(),
                         userId,
                       );
-                      // Navigator.pushNamed(context, '/codeverif');
                     },
-                    btnColor: HexColor("#F1ECE1"),
-                    borderColor: Colors.grey,
-                    txtColor: Colors.black,
-                    borderRadius: 10,
-                    fontSize: 20,
-                  ),
-                ),
+                    title: 'SEND'),
                 Align(
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      top: 27,
+                      top: 20,
                     ),
                     child: RichText(
                       text: TextSpan(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/widgets/admin/get_menu.dart';
+import 'package:talanoa_app/widgets/shared/get_menu.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/shared/listmenu_catalogue.dart';
 import 'package:talanoa_app/widgets/shared/menu_catalogue.dart';
@@ -30,9 +30,8 @@ class _MenudataState extends State<AdminCoffee> {
     print(response.body);
     setState(() {
       listMenu = listMenuByType = data['payload'];
-      listMenuByType = listMenu
-          .where(((category) => category['type'] == 'Coffee'))
-          .toList();
+      listMenuByType =
+          listMenu.where(((category) => category['type'] == 'Coffee')).toList();
     });
     print('INI LISTMENU:');
     print(listMenu);
@@ -62,7 +61,7 @@ class _MenudataState extends State<AdminCoffee> {
                 title: 'Coffee',
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 20),
-                  child: rowItem(context: context, list: listMenuByType),
+                  child: rowItemAdmin(context: context, list: listMenuByType),
                 ),
                 context: context,
               )),

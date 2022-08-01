@@ -27,7 +27,10 @@ Widget buildListMenu({
           ),
         ),
         Expanded(
-          child: child,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 40, left: 10),
+            child: child,
+          ),
         ),
         waves2(),
       ],
