@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
+import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
+import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class Profile extends StatefulWidget {
@@ -83,19 +84,10 @@ class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 60,
-        leading: IconButton(
-          onPressed: _handleBack,
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.black,
-        ),
-        elevation: 0,
-        backgroundColor: HexColor('#B9C5B2'),
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: formKey,
+      appBar: appBar(backButton: _handleBack),
+      body: Form(
+        key: formKey,
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -118,7 +110,7 @@ class _Profile extends State<Profile> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height - 145,
+                height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(color: HexColor('A7B79F')),
                 child: Column(children: [
                   const Padding(
@@ -244,24 +236,12 @@ class _Profile extends State<Profile> {
                   const SizedBox(
                     height: 265,
                   ),
-                  SizedBox(
-                    width: 150,
-                    height: 40,
-                    child: Center(
-                      child: FormHelper.submitButton(
-                        "Update",
-                        () {
-                          updateUser(
-                              formValue['name'].text, formValue['phone'].text);
-                        },
-                        btnColor: HexColor("#F1ECE1"),
-                        borderColor: Colors.grey,
-                        txtColor: Colors.black,
-                        borderRadius: 10,
-                        fontSize: 20,
-                      ),
-                    ),
-                  )
+                  submitButton(
+                      onTap: () {
+                        updateUser(
+                            formValue['name'].text, formValue['phone'].text);
+                      },
+                      title: 'Update')
                 ]),
               )
             ],

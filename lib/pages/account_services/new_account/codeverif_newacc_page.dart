@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/new_account/account_registered_pages.dart';
@@ -90,7 +89,15 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(backButton: _handleBack),
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: _handleBack,
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+          elevation: 0,
+          backgroundColor: HexColor('#F1ECE1'),
+        ),
         body: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [

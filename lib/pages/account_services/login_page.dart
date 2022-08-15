@@ -11,6 +11,7 @@ import 'package:talanoa_app/pages/account_services/resetpass_page.dart';
 import 'package:talanoa_app/pages/admin/admin_page.dart';
 import 'package:talanoa_app/pages/user/user_page.dart';
 import 'package:talanoa_app/widgets/form_account_services/form_login.dart';
+import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
 import 'package:talanoa_app/widgets/shared/linear_gradient.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -182,12 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                                   const SizedBox(
                                     height: 80,
                                   ),
-                                  SizedBox(
-                                    width: 150,
-                                    height: 40,
-                                    child: FormHelper.submitButton(
-                                      "Login",
-                                      () {
+                                  submitButton(
+                                      onTap: () {
                                         final progress =
                                             ProgressHUD.of(context);
                                         progress?.show();
@@ -203,13 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                                           formValue['password'].text.toString(),
                                         );
                                       },
-                                      btnColor: HexColor("#F1ECE1"),
-                                      borderColor: Colors.grey,
-                                      txtColor: Colors.black,
-                                      borderRadius: 10,
-                                      fontSize: 20,
-                                    ),
-                                  ),
+                                      title: 'Login'),
                                   const Padding(
                                       padding:
                                           EdgeInsets.only(top: 10, bottom: 10),

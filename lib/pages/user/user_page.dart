@@ -8,7 +8,7 @@ import 'package:talanoa_app/pages/user/user_res.dart';
 import 'package:talanoa_app/widgets/user/profile.dart';
 import 'package:talanoa_app/widgets/user/sidebar/navbar.dart';
 import 'package:talanoa_app/widgets/shared/waves.dart';
-import 'package:talanoa_app/api_services/location_url.dart';
+import 'package:talanoa_app/api_services/launch_url.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -172,12 +172,9 @@ class _UserPageState extends State<UserPage> {
                                 ),
                               ),
                               style: ButtonStyle(
-                                  foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white),
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.white),
+                                          HexColor('F1ECE1')),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       const RoundedRectangleBorder(
@@ -213,12 +210,9 @@ class _UserPageState extends State<UserPage> {
                                     ),
                                   ),
                                   style: ButtonStyle(
-                                      foregroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.white),
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
-                                              Colors.white),
+                                              HexColor('F1ECE1')),
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                           const RoundedRectangleBorder(
@@ -241,7 +235,7 @@ class _UserPageState extends State<UserPage> {
                             height: 80,
                             child: ElevatedButton(
                               onPressed: () {
-                                launchUrl_();
+                                launchLocation();
                               },
                               child: const Text(
                                 "Location",
@@ -254,12 +248,9 @@ class _UserPageState extends State<UserPage> {
                                 ),
                               ),
                               style: ButtonStyle(
-                                  foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white),
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.white),
+                                          HexColor('F1ECE1')),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       const RoundedRectangleBorder(
@@ -295,12 +286,9 @@ class _UserPageState extends State<UserPage> {
                                     ),
                                   ),
                                   style: ButtonStyle(
-                                      foregroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.white),
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
-                                              Colors.white),
+                                              HexColor('F1ECE1')),
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                           const RoundedRectangleBorder(

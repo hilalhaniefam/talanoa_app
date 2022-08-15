@@ -11,10 +11,22 @@ class UserRentPage extends StatefulWidget {
   State<UserRentPage> createState() => _UserReservationPageState();
 }
 
-int _itemCount = 0;
-String hours = _itemCount.toString();
+// String hours = _itemCount.toString();
 
 class _UserReservationPageState extends State<UserRentPage> {
+  int _count = 0;
+  void _incrementCount() {
+    setState(() {
+      _count++;
+    });
+  }
+
+  void _decrementCount() {
+    setState(() {
+      _count--;
+    });
+  }
+
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -95,50 +107,50 @@ class _UserReservationPageState extends State<UserRentPage> {
     return "$hour : $minute";
   }
 
-  itemCount() {
-    _itemCount != 0
-        ? Container(
-            width: 130,
-            height: 45,
-            margin: const EdgeInsets.only(top: 13, right: 200),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1.5),
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.transparent),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              InkWell(
-                onTap: () => setState(() => _itemCount++),
-                child: const Icon(
-                  Icons.remove,
-                  color: Colors.black,
-                  size: 20,
-                ),
-              ),
-              Container(
-                width: 75,
-                height: 45,
-                margin: const EdgeInsets.symmetric(horizontal: 2),
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                    border: Border.symmetric(
-                        vertical: BorderSide(color: Colors.black, width: 1.5)),
-                    color: Colors.transparent),
-                child: Text(
-                  '$hours Hours',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.black, fontSize: 20),
-                ),
-              ),
-              InkWell(
-                  onTap: () => setState(() => _itemCount++),
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.black,
-                    size: 20,
-                  ))
-            ]))
-        : Container();
-  }
+  // itemCount() {
+  //   _itemCount != 0
+  //       ? Container(
+  //           width: 130,
+  //           height: 45,
+  //           margin: const EdgeInsets.only(top: 13, right: 200),
+  //           decoration: BoxDecoration(
+  //               border: Border.all(color: Colors.black, width: 1.5),
+  //               borderRadius: BorderRadius.circular(10),
+  //               color: Colors.transparent),
+  //           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+  //             InkWell(
+  //               onTap: () => setState(() => _itemCount++),
+  //               child: const Icon(
+  //                 Icons.remove,
+  //                 color: Colors.black,
+  //                 size: 20,
+  //               ),
+  //             ),
+  //             Container(
+  //               width: 75,
+  //               height: 45,
+  //               margin: const EdgeInsets.symmetric(horizontal: 2),
+  //               alignment: Alignment.center,
+  //               decoration: const BoxDecoration(
+  //                   border: Border.symmetric(
+  //                       vertical: BorderSide(color: Colors.black, width: 1.5)),
+  //                   color: Colors.transparent),
+  //               child: Text(
+  //                 '$hours Hours',
+  //                 textAlign: TextAlign.center,
+  //                 style: const TextStyle(color: Colors.black, fontSize: 20),
+  //               ),
+  //             ),
+  //             InkWell(
+  //                 onTap: () => setState(() => _itemCount++),
+  //                 child: const Icon(
+  //                   Icons.add,
+  //                   color: Colors.black,
+  //                   size: 20,
+  //                 ))
+  //           ]))
+  //       : Container();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -399,7 +411,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                                onTap: () => setState(() => _itemCount++),
+                                onTap: _decrementCount,
                                 child: const Icon(
                                   Icons.remove,
                                   color: Colors.black,
@@ -416,14 +428,14 @@ class _UserReservationPageState extends State<UserRentPage> {
                                           color: Colors.black, width: 1.5)),
                                   color: Colors.transparent),
                               child: Text(
-                                '$hours Hours',
+                                '$_count Hours',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 20),
                               ),
                             ),
                             InkWell(
-                                onTap: () => setState(() => _itemCount++),
+                                onTap: _incrementCount,
                                 child: const Icon(
                                   Icons.add,
                                   color: Colors.black,

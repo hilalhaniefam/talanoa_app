@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/user/carousel_reservation.dart';
 
 class UserReservationPage extends StatefulWidget {
@@ -95,19 +96,8 @@ class _UserReservationPageState extends State<UserReservationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 60,
-          leading: IconButton(
-            onPressed: _handleBack,
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-          ),
-          elevation: 0,
-          backgroundColor: HexColor('#B9C5B2'),
-        ),
-        body: SingleChildScrollView(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        appBar: appBar(backButton: _handleBack),
+        body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
             width: MediaQuery.of(context).size.width,
             height: 50,
@@ -125,263 +115,265 @@ class _UserReservationPageState extends State<UserReservationPage> {
               ),
             ),
           ),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 145,
-              decoration: BoxDecoration(color: HexColor('A7B79F')),
-              child: Column(children: [
-                Padding(
-                    padding: const EdgeInsets.only(top: 29),
-                    child: CarouselSlider.builder(
-                      options: CarouselOptions(
-                          onPageChanged: ((index, reason) =>
-                              setState(() => activeIndex = index)),
-                          height: 229,
-                          enlargeCenterPage: true,
-                          enableInfiniteScroll: false),
-                      itemCount: imgListAssets.length,
-                      itemBuilder: (context, index, realIndex) {
-                        final imgList = imgListAssets[index];
-                        return buildImage(imgList, index);
-                      },
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                buildIndicator(imgListAssets),
-                const Padding(
-                    padding: EdgeInsets.only(top: 10, left: 47),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Type',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: 'Josefin Sans',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+          Expanded(
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(color: HexColor('A7B79F')),
+                child: Column(children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 29),
+                      child: CarouselSlider.builder(
+                        options: CarouselOptions(
+                            onPageChanged: ((index, reason) =>
+                                setState(() => activeIndex = index)),
+                            height: 229,
+                            enlargeCenterPage: true,
+                            enableInfiniteScroll: false),
+                        itemCount: imgListAssets.length,
+                        itemBuilder: (context, index, realIndex) {
+                          final imgList = imgListAssets[index];
+                          return buildImage(imgList, index);
+                        },
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  buildIndicator(imgListAssets),
+                  const Padding(
+                      padding: EdgeInsets.only(top: 10, left: 47),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Type',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(top: 10, right: 30),
-                        child: SizedBox(
-                            width: 130,
-                            height: 45,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    setTypeButtonColor('Indoor')),
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
-                                        color: Colors.black, width: 1.5)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
-                              ),
-                              onPressed: () {
-                                chooseType('Indoor');
-                              },
-                              child: const Text(
-                                'Indoor',
-                                style: TextStyle(
-                                    fontFamily: 'Josefin Sans',
-                                    fontSize: 20,
-                                    color: Colors.black),
-                              ),
-                            ))),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 40),
-                        child: SizedBox(
-                            width: 130,
-                            height: 45,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    setTypeButtonColor('Outdoor')),
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
-                                        color: Colors.black, width: 1.5)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
-                              ),
-                              onPressed: () {
-                                chooseType('Outdoor');
-                              },
-                              child: const Text(
-                                'Outdoor',
-                                style: TextStyle(
-                                    fontFamily: 'Josefin Sans',
-                                    fontSize: 20,
-                                    color: Colors.black),
-                              ),
-                            ))),
-                  ],
-                ),
-                const Padding(
-                    padding: EdgeInsets.only(top: 13, left: 47),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Date & Time',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: 'Josefin Sans',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 30),
+                          child: SizedBox(
+                              width: 130,
+                              height: 45,
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      setTypeButtonColor('Indoor')),
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: Colors.black, width: 1.5)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                ),
+                                onPressed: () {
+                                  chooseType('Indoor');
+                                },
+                                child: const Text(
+                                  'Indoor',
+                                  style: TextStyle(
+                                      fontFamily: 'Josefin Sans',
+                                      fontSize: 20,
+                                      color: Colors.black),
+                                ),
+                              ))),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 10, left: 40),
+                          child: SizedBox(
+                              width: 130,
+                              height: 45,
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      setTypeButtonColor('Outdoor')),
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: Colors.black, width: 1.5)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                ),
+                                onPressed: () {
+                                  chooseType('Outdoor');
+                                },
+                                child: const Text(
+                                  'Outdoor',
+                                  style: TextStyle(
+                                      fontFamily: 'Josefin Sans',
+                                      fontSize: 20,
+                                      color: Colors.black),
+                                ),
+                              ))),
+                    ],
+                  ),
+                  const Padding(
+                      padding: EdgeInsets.only(top: 13, left: 47),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Date & Time',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(top: 10, right: 30),
-                        child: SizedBox(
-                            width: 130,
-                            height: 45,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
-                                        color: Colors.black, width: 1.5)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
-                              ),
-                              onPressed: () => _selectDate(context),
-                              child: Text(
-                                formatDate(selectedDate),
-                                style: const TextStyle(
-                                    fontFamily: 'Josefin Sans',
-                                    fontSize: 18,
-                                    color: Colors.black),
-                              ),
-                            ))),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 40),
-                        child: SizedBox(
-                            width: 130,
-                            height: 45,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
-                                        color: Colors.black, width: 1.5)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
-                              ),
-                              onPressed: () => _selectTime(context),
-                              child: Text(
-                                formatTime(selectedTime),
-                                style: const TextStyle(
-                                    fontFamily: 'Josefin Sans',
-                                    fontSize: 20,
-                                    color: Colors.black),
-                              ),
-                            ))),
-                  ],
-                ),
-                const Padding(
-                    padding: EdgeInsets.only(top: 13, left: 47),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Pax',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: 'Josefin Sans',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 30),
+                          child: SizedBox(
+                              width: 130,
+                              height: 45,
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: Colors.black, width: 1.5)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                ),
+                                onPressed: () => _selectDate(context),
+                                child: Text(
+                                  formatDate(selectedDate),
+                                  style: const TextStyle(
+                                      fontFamily: 'Josefin Sans',
+                                      fontSize: 18,
+                                      color: Colors.black),
+                                ),
+                              ))),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 10, left: 40),
+                          child: SizedBox(
+                              width: 130,
+                              height: 45,
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: Colors.black, width: 1.5)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                ),
+                                onPressed: () => _selectTime(context),
+                                child: Text(
+                                  formatTime(selectedTime),
+                                  style: const TextStyle(
+                                      fontFamily: 'Josefin Sans',
+                                      fontSize: 20,
+                                      color: Colors.black),
+                                ),
+                              ))),
+                    ],
+                  ),
+                  const Padding(
+                      padding: EdgeInsets.only(top: 13, left: 47),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Pax',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: 'Josefin Sans',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(top: 10, right: 30),
-                        child: SizedBox(
-                            width: 130,
-                            height: 45,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    setPaxButtonColor('1-4')),
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
-                                        color: Colors.black, width: 1.5)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
-                              ),
-                              onPressed: () {
-                                choosePax('1-4');
-                              },
-                              child: const Text(
-                                '1-4',
-                                style: TextStyle(
-                                    fontFamily: 'Josefin Sans',
-                                    fontSize: 20,
-                                    color: Colors.black),
-                              ),
-                            ))),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 40),
-                        child: SizedBox(
-                            width: 130,
-                            height: 45,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    setPaxButtonColor('5-7')),
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(
-                                        color: Colors.black, width: 1.5)),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
-                              ),
-                              onPressed: () {
-                                choosePax('5-7');
-                              },
-                              child: const Text(
-                                '5-7',
-                                style: TextStyle(
-                                    fontFamily: 'Josefin Sans',
-                                    fontSize: 20,
-                                    color: Colors.black),
-                              ),
-                            ))),
-                  ],
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: SizedBox(
-                      width: 194,
-                      height: 44,
-                      child: FormHelper.submitButton(
-                        "Book",
-                        () {},
-                        btnColor: HexColor("#F1ECE1"),
-                        borderColor: Colors.grey,
-                        txtColor: Colors.black,
-                        borderRadius: 10,
-                        fontSize: 20,
-                      ),
-                    )),
-              ]))
-        ])));
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 30),
+                          child: SizedBox(
+                              width: 130,
+                              height: 45,
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      setPaxButtonColor('1-4')),
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: Colors.black, width: 1.5)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                ),
+                                onPressed: () {
+                                  choosePax('1-4');
+                                },
+                                child: const Text(
+                                  '1-4',
+                                  style: TextStyle(
+                                      fontFamily: 'Josefin Sans',
+                                      fontSize: 20,
+                                      color: Colors.black),
+                                ),
+                              ))),
+                      Padding(
+                          padding: const EdgeInsets.only(top: 10, left: 40),
+                          child: SizedBox(
+                              width: 130,
+                              height: 45,
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      setPaxButtonColor('5-7')),
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: Colors.black, width: 1.5)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                ),
+                                onPressed: () {
+                                  choosePax('5-7');
+                                },
+                                child: const Text(
+                                  '5-7',
+                                  style: TextStyle(
+                                      fontFamily: 'Josefin Sans',
+                                      fontSize: 20,
+                                      color: Colors.black),
+                                ),
+                              ))),
+                    ],
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: SizedBox(
+                        width: 194,
+                        height: 44,
+                        child: FormHelper.submitButton(
+                          "Book",
+                          () {},
+                          btnColor: HexColor("#F1ECE1"),
+                          borderColor: Colors.grey,
+                          txtColor: Colors.black,
+                          borderRadius: 10,
+                          fontSize: 20,
+                        ),
+                      )),
+                ])),
+          )
+        ]));
   }
 }

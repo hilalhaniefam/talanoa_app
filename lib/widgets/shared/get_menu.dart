@@ -45,8 +45,9 @@ Widget rowItemAdmin({
                 imageFile == null
                     ? Container(
                         color: HexColor('A7B79F'),
-                        width: 180,
+                        width: 60,
                         height: 61,
+                        child: const Text('Image Not Found'),
                       )
                     : Image.network(
                         imageFile,

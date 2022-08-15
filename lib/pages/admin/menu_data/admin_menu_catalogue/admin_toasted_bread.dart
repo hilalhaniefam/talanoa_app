@@ -57,7 +57,7 @@ class _MenudataState extends State<AdminToastedBread> {
               height: MediaQuery.of(context).size.height,
               color: HexColor('A7B79F'),
               child: buildListMenu(
-                  title: 'Toasted Bread',
+                  title: 'Toast',
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 20),
                     child: rowItemAdmin(

@@ -6,7 +6,7 @@ final List<Map<String, String>> menuCategories1 = [
 ];
 final List<Map<String, String>> menuCategories2 = [
   {'name': 'Main Course', 'to': '/main-course'},
-  {'name': 'Toasted Bread', 'to': '/toasted-bread'},
+  {'name': 'Toast', 'to': '/toasted-bread'},
   {'name': 'Dessert', 'to': '/dessert'},
   {'name': 'Snack', 'to': '/snack'},
 ];
@@ -19,7 +19,7 @@ final List<Map<String, String>> userMenuCategories1 = [
 ];
 final List<Map<String, String>> userMenuCategories2 = [
   {'name': 'Main Course', 'to': '/user/main-course'},
-  {'name': 'Toasted Bread', 'to': '/user/toasted-bread'},
+  {'name': 'Toast', 'to': '/user/toasted-bread'},
   {'name': 'Dessert', 'to': '/user/dessert'},
   {'name': 'Snack', 'to': '/user/snack'},
 ];
@@ -36,17 +36,6 @@ List<Map<String, String>> categories2 = [
   {'name': 'DS', 'type': 'Dessert'},
   {'name': 'SK', 'type': 'Snack'},
 ];
-
-// List<String> typeCategory = [
-//   'Coffee',
-//   'Non Coffee',
-//   'Mocktail',
-//   'Flavoured Tea',
-//   'Main Course',
-//   'Toasted Bread',
-//   'Dessert',
-//   'Snack',
-// ];
 
 List<dynamic> listMenu = [];
 List<dynamic> listMenuByType = [];

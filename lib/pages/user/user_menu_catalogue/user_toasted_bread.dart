@@ -56,7 +56,7 @@ class _MenudataState extends State<ToastedBread> {
             height: MediaQuery.of(context).size.height,
             color: HexColor('A7B79F'),
             child: buildListMenu(
-                title: 'Toasted Bread',
+                title: 'Toast',
                 child: rowItemUser(context: context, list: listMenuByType),
                 context: context)));
   }

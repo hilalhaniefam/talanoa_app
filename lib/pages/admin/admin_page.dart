@@ -188,7 +188,7 @@ class _AdminState extends State<AdminPage> {
                           shadowColor: Colors.black)),
                 )),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             Align(
                 alignment: Alignment.center,

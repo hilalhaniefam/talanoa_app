@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
+import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/new_account/codeverif_newacc_page.dart';
@@ -410,23 +410,17 @@ class RegisterPageState extends State<RegisterPage> {
                       height: 40,
                     ),
                     Center(
-                      child: FormHelper.submitButton(
-                        "Sign Up",
-                        () {
-                          register(
-                            formValue['name']!.text.toString(),
-                            formValue['email']!.text.toString().toLowerCase(),
-                            formValue['phone']!.text.toString(),
-                            formValue['password']!.text.toString(),
-                            formValue['confPass']!.text.toString(),
-                          );
-                        },
-                        btnColor: HexColor("#F1ECE1"),
-                        borderColor: Colors.grey,
-                        txtColor: Colors.black,
-                        borderRadius: 10,
-                        fontSize: 20,
-                      ),
+                      child: submitButton(
+                          onTap: () {
+                            register(
+                              formValue['name']!.text.toString(),
+                              formValue['email']!.text.toString().toLowerCase(),
+                              formValue['phone']!.text.toString(),
+                              formValue['password']!.text.toString(),
+                              formValue['confPass']!.text.toString(),
+                            );
+                          },
+                          title: 'Sign Up'),
                     ),
                   ],
                 ),
