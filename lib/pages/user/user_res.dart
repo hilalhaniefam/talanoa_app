@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -10,6 +9,7 @@ import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:talanoa_app/widgets/user/carousel_reservation.dart';
+import 'package:talanoa_app/widgets/user/reserve_helper.dart';
 
 class UserReservationPage extends StatefulWidget {
   const UserReservationPage({Key? key}) : super(key: key);
@@ -22,22 +22,10 @@ class _UserReservationPageState extends State<UserReservationPage> {
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Map formValue = {'type': '', 'pax': ''};
-
   final List<String> imgListAssets = [
     'assets/images/indoor_res_75k.png',
     'assets/images/indoor_res_100k.png',
   ];
-
-  Color setTypeButtonColor(type) {
-    if (formValue['type'] == type) return Colors.white;
-    return Colors.transparent;
-  }
-
-  Color setPaxButtonColor(pax) {
-    if (formValue['pax'] == pax) return Colors.white;
-    return Colors.transparent;
-  }
 
   void chooseType(type) {
     print(type);
@@ -79,28 +67,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
     }
   }
 
-  String formatDate(DateTime date) {
-    String day = date.day.toString();
-    if (day.length < 2) day = '0' + day;
-
-    String month = date.month.toString();
-    if (month.length < 2) month = '0' + month;
-
-    String year = date.year.toString();
-    return "$day/$month/$year";
-  }
-
-  String formatTime(TimeOfDay time) {
-    String hour = time.hour.toString();
-    if (hour.length < 2) hour = '0' + hour;
-
-    String minute = time.minute.toString();
-    if (minute.length < 2) minute = '0' + minute;
-    return "$hour : $minute";
-  }
-
-  void addReserve(
-      String type, String date, String time, String rentalHour) async {
+  void addReserve(String type, String date, String time, String pax) async {
     try {
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
@@ -108,23 +75,16 @@ class _UserReservationPageState extends State<UserReservationPage> {
           jsonDecode(sharedPreferences.getString('userData').toString())
               as Map<String, dynamic>;
       String token = userData['accessToken'];
-      Response response = await post(Uri.parse('$ipurl/reservation/add'),
-          body: {
-            'type': type,
-            'date': date,
-            'time': time,
-            'rentalHour': rentalHour
-          },
-          headers: {
-            'Authorization': 'Bearer $token'
-          });
+      Response response = await post(Uri.parse('$ipurl/reservetable/add'),
+          body: {'type': type, 'date': date, 'time': time, 'pax': pax},
+          headers: {'Authorization': 'Bearer $token'});
       print(response.body);
       var data = jsonDecode(response.body.toString());
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.setString(
-            'reservationData', jsonEncode(data['payload']));
+            'reservetableData', jsonEncode(data['payload']));
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(data['message'].toString()));
       } else {
@@ -411,7 +371,13 @@ class _UserReservationPageState extends State<UserReservationPage> {
                         height: 44,
                         child: FormHelper.submitButton(
                           "Book",
-                          () {},
+                          () {
+                            addReserve(
+                                formValue['type'],
+                                formatDate(selectedDate),
+                                formatTime(selectedTime),
+                                formValue['pax']);
+                          },
                           btnColor: HexColor("#F1ECE1"),
                           borderColor: Colors.grey,
                           txtColor: Colors.black,

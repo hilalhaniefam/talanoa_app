@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Map formValue = {'type': ''};
+Map formValue = {'type': '', 'pax': ''};
 
 Color setTypeButtonColor(type) {
   if (formValue['type'] == type) return Colors.white;
