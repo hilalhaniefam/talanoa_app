@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
+import 'package:talanoa_app/widgets/user/rent_helper.dart';
+import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:talanoa_app/widgets/user/carousel_reservation.dart';
 
 class UserRentPage extends StatefulWidget {
@@ -10,8 +17,6 @@ class UserRentPage extends StatefulWidget {
   @override
   State<UserRentPage> createState() => _UserReservationPageState();
 }
-
-// String hours = _itemCount.toString();
 
 class _UserReservationPageState extends State<UserRentPage> {
   int _count = 0;
@@ -29,23 +34,10 @@ class _UserReservationPageState extends State<UserRentPage> {
 
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  Map formValue = {'type': '', 'pax': ''};
-
   final List<String> imgListAssets = [
     'assets/images/indoor_res_75k.png',
     'assets/images/indoor_res_100k.png',
   ];
-
-  Color setTypeButtonColor(type) {
-    if (formValue['type'] == type) return Colors.white;
-    return Colors.transparent;
-  }
-
-  Color setPaxButtonColor(pax) {
-    if (formValue['pax'] == pax) return Colors.white;
-    return Colors.transparent;
-  }
 
   void chooseType(type) {
     print(type);
@@ -61,13 +53,13 @@ class _UserReservationPageState extends State<UserRentPage> {
     });
   }
 
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
+        firstDate: DateTime.now().add(const Duration(days: 1)),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       setState(() {
@@ -107,50 +99,43 @@ class _UserReservationPageState extends State<UserRentPage> {
     return "$hour : $minute";
   }
 
-  // itemCount() {
-  //   _itemCount != 0
-  //       ? Container(
-  //           width: 130,
-  //           height: 45,
-  //           margin: const EdgeInsets.only(top: 13, right: 200),
-  //           decoration: BoxDecoration(
-  //               border: Border.all(color: Colors.black, width: 1.5),
-  //               borderRadius: BorderRadius.circular(10),
-  //               color: Colors.transparent),
-  //           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-  //             InkWell(
-  //               onTap: () => setState(() => _itemCount++),
-  //               child: const Icon(
-  //                 Icons.remove,
-  //                 color: Colors.black,
-  //                 size: 20,
-  //               ),
-  //             ),
-  //             Container(
-  //               width: 75,
-  //               height: 45,
-  //               margin: const EdgeInsets.symmetric(horizontal: 2),
-  //               alignment: Alignment.center,
-  //               decoration: const BoxDecoration(
-  //                   border: Border.symmetric(
-  //                       vertical: BorderSide(color: Colors.black, width: 1.5)),
-  //                   color: Colors.transparent),
-  //               child: Text(
-  //                 '$hours Hours',
-  //                 textAlign: TextAlign.center,
-  //                 style: const TextStyle(color: Colors.black, fontSize: 20),
-  //               ),
-  //             ),
-  //             InkWell(
-  //                 onTap: () => setState(() => _itemCount++),
-  //                 child: const Icon(
-  //                   Icons.add,
-  //                   color: Colors.black,
-  //                   size: 20,
-  //                 ))
-  //           ]))
-  //       : Container();
-  // }
+  void addRent(String type, String date, String time, String rentalHour) async {
+    try {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      Map<String, dynamic> userData =
+          jsonDecode(sharedPreferences.getString('userData').toString())
+              as Map<String, dynamic>;
+      String token = userData['accessToken'];
+      Response response = await post(Uri.parse('$ipurl/rentarea/add'), body: {
+        'type': type,
+        'date': date,
+        'time': time,
+        'rentalHour': rentalHour
+      }, headers: {
+        'Authorization': 'Bearer $token'
+      });
+      print(response.body);
+      var data = jsonDecode(response.body.toString());
+      if (response.statusCode == 200) {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString(
+            'rentAreaData', jsonEncode(data['payload']));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackbar(data['message'].toString()));
+      } else {
+        if (data['message'].isNotEmpty) {
+          throw data['message'];
+        } else {
+          throw data['error'];
+        }
+      }
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(e.toString()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,8 +213,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 13, right: 30),
+                              padding: const EdgeInsets.only(top: 13, right: 5),
                               child: SizedBox(
                                   width: 130,
                                   height: 45,
@@ -258,7 +242,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                                     ),
                                   ))),
                           Padding(
-                              padding: const EdgeInsets.only(top: 13, left: 40),
+                              padding: const EdgeInsets.only(top: 13, left: 32),
                               child: SizedBox(
                                   width: 130,
                                   height: 45,
@@ -289,34 +273,37 @@ class _UserReservationPageState extends State<UserRentPage> {
                         ],
                       ),
                       Padding(
-                          padding: const EdgeInsets.only(top: 13, right: 200),
-                          child: SizedBox(
-                              width: 130,
-                              height: 45,
-                              child: OutlinedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      setTypeButtonColor('Whole Area')),
-                                  side: MaterialStateProperty.all(
-                                      const BorderSide(
-                                          color: Colors.black, width: 1.5)),
-                                  shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0))),
-                                ),
-                                onPressed: () {
-                                  chooseType('Whole Area');
-                                },
-                                child: const Text(
-                                  'Whole Area',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontFamily: 'Josefin Sans',
-                                      fontSize: 18,
-                                      color: Colors.black),
-                                ),
-                              ))),
+                          padding: const EdgeInsets.only(top: 13, left: 47),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox(
+                                width: 130,
+                                height: 45,
+                                child: OutlinedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        setTypeButtonColor('Whole Area')),
+                                    side: MaterialStateProperty.all(
+                                        const BorderSide(
+                                            color: Colors.black, width: 1.5)),
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0))),
+                                  ),
+                                  onPressed: () {
+                                    chooseType('Whole Area');
+                                  },
+                                  child: const Text(
+                                    'Whole Area',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontFamily: 'Josefin Sans',
+                                        fontSize: 18,
+                                        color: Colors.black),
+                                  ),
+                                )),
+                          )),
                       const Padding(
                           padding: EdgeInsets.only(top: 16, left: 47),
                           child: Align(
@@ -335,8 +322,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 13, right: 30),
+                              padding: const EdgeInsets.only(top: 13, right: 5),
                               child: SizedBox(
                                   width: 130,
                                   height: 45,
@@ -360,7 +346,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                                     ),
                                   ))),
                           Padding(
-                              padding: const EdgeInsets.only(top: 13, left: 40),
+                              padding: const EdgeInsets.only(top: 13, left: 32),
                               child: SizedBox(
                                   width: 130,
                                   height: 45,
@@ -399,49 +385,54 @@ class _UserReservationPageState extends State<UserRentPage> {
                               ),
                             ),
                           )),
-                      Container(
-                        width: 130,
-                        height: 45,
-                        margin: const EdgeInsets.only(top: 13, right: 200),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1.5),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.transparent),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                                onTap: _decrementCount,
-                                child: const Icon(
-                                  Icons.remove,
-                                  color: Colors.black,
-                                  size: 20,
-                                )),
-                            Container(
-                              width: 75,
-                              height: 45,
-                              margin: const EdgeInsets.symmetric(horizontal: 2),
-                              alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                  border: Border.symmetric(
-                                      vertical: BorderSide(
-                                          color: Colors.black, width: 1.5)),
-                                  color: Colors.transparent),
-                              child: Text(
-                                '$_count Hours',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 20),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: 130,
+                          height: 45,
+                          margin: const EdgeInsets.only(top: 13, left: 47),
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black, width: 1.5),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.transparent),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                  onTap: _decrementCount,
+                                  child: const Icon(
+                                    Icons.remove,
+                                    color: Colors.black,
+                                    size: 20,
+                                  )),
+                              Container(
+                                width: 75,
+                                height: 45,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 2),
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(
+                                    border: Border.symmetric(
+                                        vertical: BorderSide(
+                                            color: Colors.black, width: 1.5)),
+                                    color: Colors.transparent),
+                                child: Text(
+                                  '$_count',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 20),
+                                ),
                               ),
-                            ),
-                            InkWell(
-                                onTap: _incrementCount,
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.black,
-                                  size: 20,
-                                )),
-                          ],
+                              InkWell(
+                                  onTap: _incrementCount,
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.black,
+                                    size: 20,
+                                  )),
+                            ],
+                          ),
                         ),
                       ),
                       Padding(
@@ -451,7 +442,13 @@ class _UserReservationPageState extends State<UserRentPage> {
                           height: 44,
                           child: FormHelper.submitButton(
                             "Book",
-                            () {},
+                            () {
+                              addRent(
+                                  formValue['type'],
+                                  formatDate(selectedDate),
+                                  formatTime(selectedTime),
+                                  '$_count Hours');
+                            },
                             btnColor: HexColor("#F1ECE1"),
                             borderColor: Colors.grey,
                             txtColor: Colors.black,

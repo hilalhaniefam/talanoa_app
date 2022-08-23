@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/account_services/updatedpass_page.dart';
+import 'package:talanoa_app/pages/account_services/forgot_pass/updatepass_success.dart';
 import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';

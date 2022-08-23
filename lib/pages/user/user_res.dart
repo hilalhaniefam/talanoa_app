@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
+import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:talanoa_app/widgets/user/carousel_reservation.dart';
 
 class UserReservationPage extends StatefulWidget {
@@ -91,6 +97,47 @@ class _UserReservationPageState extends State<UserReservationPage> {
     String minute = time.minute.toString();
     if (minute.length < 2) minute = '0' + minute;
     return "$hour : $minute";
+  }
+
+  void addReserve(
+      String type, String date, String time, String rentalHour) async {
+    try {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      Map<String, dynamic> userData =
+          jsonDecode(sharedPreferences.getString('userData').toString())
+              as Map<String, dynamic>;
+      String token = userData['accessToken'];
+      Response response = await post(Uri.parse('$ipurl/reservation/add'),
+          body: {
+            'type': type,
+            'date': date,
+            'time': time,
+            'rentalHour': rentalHour
+          },
+          headers: {
+            'Authorization': 'Bearer $token'
+          });
+      print(response.body);
+      var data = jsonDecode(response.body.toString());
+      if (response.statusCode == 200) {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString(
+            'reservationData', jsonEncode(data['payload']));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackbar(data['message'].toString()));
+      } else {
+        if (data['message'].isNotEmpty) {
+          throw data['message'];
+        } else {
+          throw data['error'];
+        }
+      }
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(e.toString()));
+    }
   }
 
   @override
