@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/widgets/user/sidebar/aboutus.dart';
-import 'package:talanoa_app/widgets/user/sidebar/helpcenter.dart';
-import 'package:talanoa_app/widgets/user/sidebar/history.dart';
+import 'package:talanoa_app/pages/user/sidebar/aboutus.dart';
+import 'package:talanoa_app/pages/user/sidebar/helpcenter.dart';
+import 'package:talanoa_app/pages/user/sidebar/history.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);

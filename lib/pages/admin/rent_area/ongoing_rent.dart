@@ -1,7 +1,10 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/ipurl.dart';
+import 'package:talanoa_app/widgets/admin/list_data_rentarea.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
 
 class RentOngoing extends StatefulWidget {
@@ -11,66 +14,53 @@ class RentOngoing extends StatefulWidget {
 }
 
 class _OngoingState extends State<RentOngoing> {
-  bool isApicallprocess = false;
+  List<dynamic> rentarea = [];
+
+  Future<void> getRentArea() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var userData =
+        jsonDecode(sharedPreferences.getString('userData').toString());
+    String token = userData['accessToken'];
+    Response response = await get(Uri.parse('$ipurl/rentarea/get'),
+        headers: {'Authorization': 'Bearer $token'});
+    var data = jsonDecode(response.body.toString());
+    print(response.body);
+    setState(() {
+      rentarea = data['payload'];
+    });
+    print(rentarea);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getRentArea();
+  }
+
   _handleBack() => Navigator.of(context).pop();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBarAdmin(backButton: _handleBack, title: 'Ongoing'),
         backgroundColor: HexColor('A7B79F'),
-        body: SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-              const SizedBox(
-                height: 25,
-              ),
-              SizedBox(
-                  height: 500,
-                  child: Card(
-                    child: FutureBuilder(
-                        future: getUserData(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.data == null) {
-                            return const Center(child: Text('Loading...'));
-                          } else {
-                            return ListView.builder(
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, i) {
-                                  return ListTile(
-                                      title: Text(
-                                        snapshot.data[i].name,
-                                        style: const TextStyle(
-                                            fontFamily: 'Sansation'),
-                                      ),
-                                      subtitle: Text(snapshot.data[i].username),
-                                      trailing: Text(snapshot.data[i].email));
-                                });
-                          }
-                        }),
-                  ))
-            ])));
+        body: RefreshIndicator(
+          onRefresh: getRentArea,
+          child: ListView(
+            padding: const EdgeInsets.only(bottom: 20),
+            children: rentarea.map(
+              (rentdata) {
+                return listCardRentArea(
+                    name: rentdata['name'],
+                    phone: rentdata['phone'],
+                    type: rentdata['type'],
+                    time: rentdata['time'],
+                    date: rentdata['date'],
+                    rentalHour: rentdata['rentalHour']);
+              },
+            ).toList(),
+          ),
+        ));
   }
-}
-
-getUserData() async {
-  var response = await http.get(
-    Uri.https('jsonplaceholder.typicode.com', 'users'),
-  );
-  var jsonData = jsonDecode(response.body);
-  List<User> users = [];
-
-  for (var u in jsonData) {
-    User user = User(u['name'], u['email'], u['username']);
-    users.add(user);
-  }
-  // ignore: avoid_print
-  print(users.length);
-  return users;
-}
-
-class User {
-  String name, email, username;
-  User(this.name, this.email, this.username);
 }

@@ -19,7 +19,7 @@ class UserRentPage extends StatefulWidget {
 }
 
 class _UserReservationPageState extends State<UserRentPage> {
-  int _count = 0;
+  int _count = 1;
   void _incrementCount() {
     setState(() {
       _count++;
@@ -35,8 +35,8 @@ class _UserReservationPageState extends State<UserRentPage> {
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final List<String> imgListAssets = [
-    'assets/images/indoor_res_75k.png',
-    'assets/images/indoor_res_100k.png',
+    'assets/images/indoor&outdoor.png',
+    'assets/images/wholearea.png',
   ];
 
   void chooseType(type) {

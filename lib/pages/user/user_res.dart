@@ -41,13 +41,13 @@ class _UserReservationPageState extends State<UserReservationPage> {
     });
   }
 
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
+        firstDate: DateTime.now().add(const Duration(days: 1)),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       setState(() {
@@ -165,7 +165,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                          padding: const EdgeInsets.only(top: 10, right: 30),
+                          padding: const EdgeInsets.only(top: 10, right: 5),
                           child: SizedBox(
                               width: 130,
                               height: 45,
@@ -193,7 +193,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                                 ),
                               ))),
                       Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 40),
+                          padding: const EdgeInsets.only(top: 10, left: 32),
                           child: SizedBox(
                               width: 130,
                               height: 45,
@@ -240,7 +240,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                          padding: const EdgeInsets.only(top: 10, right: 30),
+                          padding: const EdgeInsets.only(top: 10, right: 5),
                           child: SizedBox(
                               width: 130,
                               height: 45,
@@ -264,7 +264,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                                 ),
                               ))),
                       Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 40),
+                          padding: const EdgeInsets.only(top: 10, left: 32),
                           child: SizedBox(
                               width: 130,
                               height: 45,
@@ -307,7 +307,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                          padding: const EdgeInsets.only(top: 10, right: 30),
+                          padding: const EdgeInsets.only(top: 10, right: 5),
                           child: SizedBox(
                               width: 130,
                               height: 45,

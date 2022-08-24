@@ -5,8 +5,8 @@ import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/pages/user/menu_page.dart';
 import 'package:talanoa_app/pages/user/user_rent.dart';
 import 'package:talanoa_app/pages/user/user_res.dart';
-import 'package:talanoa_app/widgets/user/profile.dart';
-import 'package:talanoa_app/widgets/user/sidebar/navbar.dart';
+import 'package:talanoa_app/pages/user/sidebar/profile.dart';
+import 'package:talanoa_app/pages/user/sidebar/navbar.dart';
 import 'package:talanoa_app/widgets/shared/waves.dart';
 import 'package:talanoa_app/api_services/launch_url.dart';
 

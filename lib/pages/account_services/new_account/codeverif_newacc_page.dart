@@ -8,7 +8,6 @@ import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/new_account/newacc_success.dart';
 import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
-import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class CodeVerifAccPage extends StatefulWidget {
