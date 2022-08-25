@@ -106,10 +106,12 @@ Widget listCardRentArea({
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     IconButton(
+                      iconSize: 20,
                       icon: const Icon(Icons.check),
                       onPressed: () {/* ... */},
                     ),
                     IconButton(
+                      iconSize: 20,
                       icon: const Icon(Icons.cancel_outlined),
                       onPressed: () {/* ... */},
                     ),

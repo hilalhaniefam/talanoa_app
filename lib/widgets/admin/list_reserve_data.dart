@@ -8,6 +8,8 @@ Widget listCardReserve({
   required time,
   required date,
   required pax,
+  required void Function() completed,
+  required void Function() cenceled,
 }) =>
     Card(
         shape: RoundedRectangleBorder(
@@ -106,12 +108,14 @@ Widget listCardReserve({
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     IconButton(
+                      iconSize: 20,
                       icon: const Icon(Icons.check),
-                      onPressed: () {/* ... */},
+                      onPressed: completed,
                     ),
                     IconButton(
+                      iconSize: 20,
                       icon: const Icon(Icons.cancel_outlined),
-                      onPressed: () {/* ... */},
+                      onPressed: cenceled,
                     ),
                   ],
                 ),

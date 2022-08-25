@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
-import 'package:talanoa_app/widgets/admin/list_data_reserve.dart';
+import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
 
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
@@ -102,6 +102,8 @@ class _HistoryState extends State<History> {
                 children: reserves.map(
                   (resdata) {
                     return listCardReserve(
+                        cenceled: () {},
+                        completed: () {},
                         name: resdata['name'],
                         phone: resdata['phone'],
                         type: resdata['type'],

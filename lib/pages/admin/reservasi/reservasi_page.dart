@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/admin/reservasi/cenceled_res.dart';
+import 'package:talanoa_app/pages/admin/reservasi/canceled_res.dart';
 import 'package:talanoa_app/pages/admin/reservasi/completed_res.dart';
 import 'package:talanoa_app/pages/admin/reservasi/ongoing_res.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
@@ -36,7 +36,7 @@ class _ReservasidataState extends State<Reservasidata> {
         ),
         buttonAdmin(
             title: 'Cenceled',
-            page: const ReservasiCenceled(),
+            page: const ReservasiCanceled(),
             context: context),
         const SizedBox(
           height: 50,

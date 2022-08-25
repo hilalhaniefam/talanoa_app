@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/api_services/api_services.dart';
+import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/user_model.dart';
-import 'package:talanoa_app/widgets/admin/search_user.dart';
+import 'package:talanoa_app/widgets/admin/list_user_data.dart';
+import 'package:talanoa_app/widgets/admin/searchbar/search_user.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
 
 class Userdata extends StatefulWidget {
@@ -32,7 +33,9 @@ class _UserdataState extends State<Userdata> {
             var data = snapshot.data;
             if (!snapshot.hasData) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: Colors.grey,
+                ),
               );
             }
             return RefreshIndicator(
@@ -42,63 +45,10 @@ class _UserdataState extends State<Userdata> {
               child: ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        margin:
-                            const EdgeInsets.only(left: 36, top: 29, right: 78),
-                        color: HexColor('F1ECE1'),
-                        child: SizedBox(
-                          width: 261,
-                          height: 111,
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 34, top: 22),
-                                  child: Text(
-                                    data[index].name,
-                                    style: const TextStyle(
-                                        fontFamily: 'Josefin Sans',
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 34, top: 6),
-                                  child: Text(
-                                    data[index].phone,
-                                    style: const TextStyle(
-                                        fontFamily: 'Josefin Sans',
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 34, top: 6),
-                                  child: Text(
-                                    data[index].email,
-                                    style: const TextStyle(
-                                        fontFamily: 'Josefin Sans',
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ));
+                    return listCardUsers(
+                        name: data[index].name,
+                        phone: data[index].phone,
+                        email: data[index].email);
                   }),
             );
           },

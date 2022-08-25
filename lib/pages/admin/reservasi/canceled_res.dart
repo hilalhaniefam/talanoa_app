@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
-import 'package:talanoa_app/api_services/rentarea_model.dart';
-import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
-import 'package:talanoa_app/widgets/admin/searchbar/search_rentarea_data.dart';
+import 'package:talanoa_app/api_services/reservation_model.dart';
+import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
+import 'package:talanoa_app/widgets/admin/searchbar/search_reservation_data.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
 
-class RentOngoing extends StatefulWidget {
-  const RentOngoing({Key? key}) : super(key: key);
+class ReservasiCanceled extends StatefulWidget {
+  const ReservasiCanceled({Key? key}) : super(key: key);
   @override
-  State<RentOngoing> createState() => _OngoingState();
+  State<ReservasiCanceled> createState() => _CanceledState();
 }
 
-class _OngoingState extends State<RentOngoing> {
+class _CanceledState extends State<ReservasiCanceled> {
   _handleBack() => Navigator.of(context).pop();
-  final GetRent _rentData = GetRent();
+  final GetReservation _reserveData = GetReservation();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBarAdminWithSearch(
             backButton: _handleBack,
-            title: 'Ongoing',
+            title: 'Cenceled',
             onPressed: () {
-              showSearch(context: context, delegate: SearchOngoing());
+              showSearch(context: context, delegate: SearchCanceled());
             }),
         backgroundColor: HexColor('A7B79F'),
-        body: FutureBuilder<List<RentData>>(
-            future: _rentData.getAllRent(statusRent: 'Ongoing'),
+        body: FutureBuilder<List<Reserve>>(
+            future: _reserveData.getAllReserve(statusReserve: 'Canceled'),
             builder: (context, AsyncSnapshot snapshot) {
               var data = snapshot.data;
               if (!snapshot.hasData) {
@@ -39,18 +39,20 @@ class _OngoingState extends State<RentOngoing> {
               }
               return RefreshIndicator(
                   onRefresh: () async {
-                    _rentData.getAllRent(statusRent: 'Ongoing');
+                    _reserveData.getAllReserve(statusReserve: 'Canceled');
                   },
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardRentArea(
+                        return listCardReserve(
+                            completed: () {},
+                            cenceled: () {},
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            rentalHour: data[index].rentalHour);
+                            pax: data[index].pax);
                       }));
             }));
   }

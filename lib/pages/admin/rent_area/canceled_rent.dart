@@ -6,28 +6,27 @@ import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
 import 'package:talanoa_app/widgets/admin/searchbar/search_rentarea_data.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
 
-class RentOngoing extends StatefulWidget {
-  const RentOngoing({Key? key}) : super(key: key);
+class Rentareacanceled extends StatefulWidget {
+  const Rentareacanceled({Key? key}) : super(key: key);
   @override
-  State<RentOngoing> createState() => _OngoingState();
+  State<Rentareacanceled> createState() => _CanceledState();
 }
 
-class _OngoingState extends State<RentOngoing> {
-  _handleBack() => Navigator.of(context).pop();
+class _CanceledState extends State<Rentareacanceled> {
   final GetRent _rentData = GetRent();
-
+  _handleBack() => Navigator.of(context).pop();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBarAdminWithSearch(
             backButton: _handleBack,
-            title: 'Ongoing',
+            title: 'Cenceled',
             onPressed: () {
-              showSearch(context: context, delegate: SearchOngoing());
+              showSearch(context: context, delegate: SearchCanceled());
             }),
         backgroundColor: HexColor('A7B79F'),
         body: FutureBuilder<List<RentData>>(
-            future: _rentData.getAllRent(statusRent: 'Ongoing'),
+            future: _rentData.getAllRent(statusRent: 'Canceled'),
             builder: (context, AsyncSnapshot snapshot) {
               var data = snapshot.data;
               if (!snapshot.hasData) {
@@ -39,7 +38,7 @@ class _OngoingState extends State<RentOngoing> {
               }
               return RefreshIndicator(
                   onRefresh: () async {
-                    _rentData.getAllRent(statusRent: 'Ongoing');
+                    _rentData.getAllRent(statusRent: 'Canceled');
                   },
                   child: ListView.builder(
                       itemCount: data.length,

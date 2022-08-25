@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/admin/rent_area/cenceled_rent.dart';
+import 'package:talanoa_app/pages/admin/rent_area/canceled_rent.dart';
 import 'package:talanoa_app/pages/admin/rent_area/completed_rent.dart';
 import 'package:talanoa_app/pages/admin/rent_area/ongoing_rent.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
@@ -37,7 +37,7 @@ class _RentareaState extends State<RentArea> {
           ),
           buttonAdmin(
               title: 'Cenceled',
-              page: const Rentareacenceled(),
+              page: const Rentareacanceled(),
               context: context),
           const SizedBox(
             height: 50,
