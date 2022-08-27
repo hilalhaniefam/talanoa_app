@@ -1,12 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/api_services/ipurl.dart';
-import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
+import 'package:talanoa_app/pages/user/sidebar/history_pages/user_rentarea_history.dart';
+import 'package:talanoa_app/pages/user/sidebar/history_pages/user_reservation_history.dart';
 
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
@@ -16,107 +11,55 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  bool isApicallprocess = false;
   _handleBack() => Navigator.of(context).pop();
-  List<dynamic> reserves = [];
+  int _selectedIndex = 0;
+  final screens = [const UserReservationHistory(), const UserRentAreaHistory()];
 
-  Future<void> getReserve() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var userData =
-        jsonDecode(sharedPreferences.getString('userData').toString());
-    String token = userData['accessToken'];
-    Response response = await get(Uri.parse('$ipurl/reservetable/get'),
-        headers: {'Authorization': 'Bearer $token'});
-    var data = jsonDecode(response.body.toString());
-    print(response.body);
+  void _onItemTapped(int index) {
     setState(() {
-      reserves = data['payload'];
+      _selectedIndex = index;
     });
-    print(reserves);
-  }
-
-  // Future<void> getRentArea() async {
-  //   final SharedPreferences sharedPreferences =
-  //       await SharedPreferences.getInstance();
-  //   var userData =
-  //       jsonDecode(sharedPreferences.getString('userData').toString());
-  //   String token = userData['accessToken'];
-  //   Response response = await get(Uri.parse('$ipurl/rentarea/get'),
-  //       headers: {'Authorization': 'Bearer $token'});
-  //   var data = jsonDecode(response.body.toString());
-  //   print(response.body);
-  //   setState(() {
-  //     reserves = data['payload'];
-  //   });
-  //   print(reserves);
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    getReserve();
-    // getRentArea();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 60,
-        leading: IconButton(
-          onPressed: _handleBack,
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.black,
+        appBar: AppBar(
+          toolbarHeight: 60,
+          leading: IconButton(
+            onPressed: _handleBack,
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+          elevation: 0,
+          backgroundColor: HexColor('#B9C5B2'),
         ),
-        elevation: 0,
-        backgroundColor: HexColor('#B9C5B2'),
-      ),
-      backgroundColor: HexColor('#A7B79F'),
-      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          decoration: BoxDecoration(color: HexColor('#B9C5B2')),
-          child: const Align(
-              alignment: Alignment.center,
-              child: Text(
-                'History',
-                style: TextStyle(
-                  fontFamily: 'Josefin Sans',
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                ),
-              )),
-        ),
-        Expanded(
-            child: ProgressHUD(
-                child: Builder(
-          builder: (context) => Center(
-              child: RefreshIndicator(
-            onRefresh: getReserve,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: ListView(
-                children: reserves.map(
-                  (resdata) {
-                    return listCardReserve(
-                        cenceled: () {},
-                        completed: () {},
-                        name: resdata['name'],
-                        phone: resdata['phone'],
-                        type: resdata['type'],
-                        time: resdata['time'],
-                        date: resdata['date'],
-                        pax: '${resdata['pax']} person');
-                  },
-                ).toList(),
+        backgroundColor: HexColor('#A7B79F'),
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            // sets the background color of the `BottomNavigationBar`
+            canvasColor: HexColor('#B9C5B2'),
+            // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+            primaryColor: HexColor('#B9C5B2'),
+          ),
+          child: BottomNavigationBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.table_bar_outlined),
+                label: 'Reservation',
+                backgroundColor: HexColor('#A7B79F'),
               ),
-            ),
-          )),
-        ))),
-      ]),
-    );
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.meeting_room_outlined),
+                label: 'Rent Area',
+                backgroundColor: HexColor('#A7B79F'),
+              )
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.black,
+            onTap: _onItemTapped,
+          ),
+        ),
+        body: screens[_selectedIndex]);
   }
 }

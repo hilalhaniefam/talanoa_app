@@ -5,6 +5,7 @@ class User {
   String? phone;
   int? role;
   bool? isVerified;
+  String? accessToken;
 
   User(
       {this.userId,
@@ -12,7 +13,8 @@ class User {
       this.email,
       this.phone,
       this.role,
-      this.isVerified});
+      this.isVerified,
+      this.accessToken});
 
   User.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -21,6 +23,7 @@ class User {
     phone = json['phone'];
     role = json['role'];
     isVerified = json['isVerified'];
+    accessToken = json['accessToken'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +34,7 @@ class User {
     data['phone'] = phone;
     data['role'] = role;
     data['isVerified'] = isVerified;
+    data['accessToken'] = accessToken;
     return data;
   }
 }

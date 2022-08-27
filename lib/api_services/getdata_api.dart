@@ -70,6 +70,38 @@ class GetReservation {
     }
     return results;
   }
+
+  Future<List<Reserve>> getAllReserveByUserId(
+      {String? query, String? userId}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var userData =
+        jsonDecode(sharedPreferences.getString('userData').toString());
+    String token = userData['accessToken'];
+    var response = await http.get(
+        Uri.parse('$ipurl/get-all-reservation')
+            .replace(query: userData['userId']),
+        headers: {'Authorization': 'Bearer $token'});
+    print('INI USER ID');
+    print(userData['userId']);
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseBody = jsonDecode(response.body);
+        List<dynamic> data = responseBody['payload']['reserveTable'];
+        print(data);
+        results = data.map((data) => Reserve.fromJson(data)).toList();
+        if (query != null) {
+          results = results
+              .where((u) => u.name!.toLowerCase().contains(query.toLowerCase()))
+              .toList();
+        }
+      } else {
+        print('API error');
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+    return results;
+  }
 }
 
 class GetRent {
@@ -95,6 +127,66 @@ class GetRent {
               .where((u) => u.name!.toLowerCase().contains(query.toLowerCase()))
               .toList();
         }
+      } else {
+        print('API error');
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+    return results;
+  }
+
+  Future<List<RentData>> getAllRentByUserId(
+      {String? query, String? userId}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var userData =
+        jsonDecode(sharedPreferences.getString('userData').toString());
+    String token = userData['accessToken'];
+    var response = await http.get(
+        Uri.parse('$ipurl/get-all-reservation')
+            .replace(query: userData['userId']),
+        headers: {'Authorization': 'Bearer $token'});
+    print('INI USER ID');
+    print(userData['userId']);
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseBody = jsonDecode(response.body);
+        List<dynamic> data = responseBody['payload']['rentArea'];
+        print(data);
+        results = data.map((data) => RentData.fromJson(data)).toList();
+        if (query != null) {
+          results = results
+              .where((u) => u.name!.toLowerCase().contains(query.toLowerCase()))
+              .toList();
+        }
+      } else {
+        print('API error');
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+    return results;
+  }
+}
+
+class GetAllReservation {
+  var data = [];
+  List<User> results = [];
+
+  Future<List<User>> getAllReservationByUserId({String? userId}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var userData =
+        jsonDecode(sharedPreferences.getString('userData').toString());
+    String token = userData['accessToken'];
+    var bodyParam = userId;
+    var response = await http.get(Uri.parse('$ipurl/users'),
+        headers: {'Authorization': 'Bearer $token'});
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseBody = jsonDecode(response.body);
+        List<dynamic> data = responseBody['payload'];
+        print(data);
+        results = data.map((data) => User.fromJson(data)).toList();
       } else {
         print('API error');
       }
