@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
+import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/user/rent_helper.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 import 'package:talanoa_app/widgets/user/carousel_reservation.dart';
@@ -113,16 +114,7 @@ class _UserReservationPageState extends State<UserRentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 60,
-          leading: IconButton(
-            onPressed: _handleBack,
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-          ),
-          elevation: 0,
-          backgroundColor: HexColor('#B9C5B2'),
-        ),
+        appBar: appBar(backButton: _handleBack),
         body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
             width: MediaQuery.of(context).size.width,
@@ -168,6 +160,16 @@ class _UserReservationPageState extends State<UserRentPage> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        width: 300,
+                        child: Text(
+                          'We will send a message to your whatsapp number to confirm payment after you make a reservation',
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                       const Padding(
                           padding: EdgeInsets.only(top: 10, left: 47),
                           child: Align(
@@ -344,72 +346,72 @@ class _UserReservationPageState extends State<UserRentPage> {
                                   ))),
                         ],
                       ),
-                      const Padding(
-                          padding: EdgeInsets.only(top: 16, left: 47),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Rental Time',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'Josefin Sans',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          width: 130,
-                          height: 45,
-                          margin: const EdgeInsets.only(top: 13, left: 47),
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.transparent),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                  onTap: _decrementCount,
-                                  child: const Icon(
-                                    Icons.remove,
-                                    color: Colors.black,
-                                    size: 20,
-                                  )),
-                              Container(
-                                width: 75,
-                                height: 45,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 2),
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                    border: Border.symmetric(
-                                        vertical: BorderSide(
-                                            color: Colors.black, width: 1.5)),
-                                    color: Colors.transparent),
-                                child: Text(
-                                  '$_count',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 20),
-                                ),
-                              ),
-                              InkWell(
-                                  onTap: _incrementCount,
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.black,
-                                    size: 20,
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // const Padding(
+                      //     padding: EdgeInsets.only(top: 16, left: 47),
+                      //     child: Align(
+                      //       alignment: Alignment.topLeft,
+                      //       child: Text(
+                      //         'Rental Time',
+                      //         textAlign: TextAlign.left,
+                      //         style: TextStyle(
+                      //           fontFamily: 'Josefin Sans',
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.w400,
+                      //         ),
+                      //       ),
+                      //     )),
+                      // Align(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Container(
+                      //     width: 130,
+                      //     height: 45,
+                      //     margin: const EdgeInsets.only(top: 13, left: 47),
+                      //     decoration: BoxDecoration(
+                      //         border:
+                      //             Border.all(color: Colors.black, width: 1.5),
+                      //         borderRadius: BorderRadius.circular(10),
+                      //         color: Colors.transparent),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: [
+                      //         InkWell(
+                      //             onTap: _decrementCount,
+                      //             child: const Icon(
+                      //               Icons.remove,
+                      //               color: Colors.black,
+                      //               size: 20,
+                      //             )),
+                      //         Container(
+                      //           width: 75,
+                      //           height: 45,
+                      //           margin:
+                      //               const EdgeInsets.symmetric(horizontal: 2),
+                      //           alignment: Alignment.center,
+                      //           decoration: const BoxDecoration(
+                      //               border: Border.symmetric(
+                      //                   vertical: BorderSide(
+                      //                       color: Colors.black, width: 1.5)),
+                      //               color: Colors.transparent),
+                      //           child: Text(
+                      //             '$_count',
+                      //             textAlign: TextAlign.center,
+                      //             style: const TextStyle(
+                      //                 color: Colors.black, fontSize: 20),
+                      //           ),
+                      //         ),
+                      //         InkWell(
+                      //             onTap: _incrementCount,
+                      //             child: const Icon(
+                      //               Icons.add,
+                      //               color: Colors.black,
+                      //               size: 20,
+                      //             )),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 52, bottom: 15),
+                        padding: const EdgeInsets.only(top: 40, bottom: 15),
                         child: SizedBox(
                           width: 194,
                           height: 44,
