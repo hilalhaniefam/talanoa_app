@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/rentarea_model.dart';
+import 'package:talanoa_app/api_services/updatedata_api.dart';
 import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
 import 'package:talanoa_app/widgets/admin/searchbar/search_rentarea_data.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
@@ -15,6 +16,7 @@ class RentOngoing extends StatefulWidget {
 class _OngoingState extends State<RentOngoing> {
   _handleBack() => Navigator.of(context).pop();
   final GetRent _rentData = GetRent();
+  final RentAreaUpdate _update = RentAreaUpdate();
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +46,29 @@ class _OngoingState extends State<RentOngoing> {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardRentArea(
-                            name: data[index].name,
-                            phone: data[index].phone,
-                            type: data[index].type,
-                            time: data[index].time,
-                            date: data[index].date,
-                            rentalHour: data[index].rentalHour);
+                        return rentOngoingCard(
+                          name: data[index].name,
+                          phone: data[index].phone,
+                          type: data[index].type,
+                          time: data[index].time,
+                          date: data[index].date,
+                          canceled: () {
+                            _update.rentAreaCanceled(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                            setState(() {
+                              _rentData.getAllRent(statusRent: 'Ongoing');
+                            });
+                          },
+                          completed: () {
+                            _update.rentAreaCompleted(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                            setState(() {
+                              _rentData.getAllRent(statusRent: 'Ongoing');
+                            });
+                          },
+                        );
                       }));
             }));
   }

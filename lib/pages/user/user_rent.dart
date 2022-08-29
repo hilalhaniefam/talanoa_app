@@ -20,19 +20,6 @@ class UserRentPage extends StatefulWidget {
 }
 
 class _UserReservationPageState extends State<UserRentPage> {
-  int _count = 1;
-  void _incrementCount() {
-    setState(() {
-      _count++;
-    });
-  }
-
-  void _decrementCount() {
-    setState(() {
-      _count--;
-    });
-  }
-
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final List<String> imgListAssets = [
@@ -73,7 +60,7 @@ class _UserReservationPageState extends State<UserRentPage> {
     }
   }
 
-  void addRent(String type, String date, String time, String rentalHour) async {
+  void addRent(String type, String date, String time) async {
     try {
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
@@ -85,7 +72,6 @@ class _UserReservationPageState extends State<UserRentPage> {
         'type': type,
         'date': date,
         'time': time,
-        'rentalHour': rentalHour
       }, headers: {
         'Authorization': 'Bearer $token'
       });
@@ -419,10 +405,10 @@ class _UserReservationPageState extends State<UserRentPage> {
                             "Book",
                             () {
                               addRent(
-                                  formValue['type'],
-                                  formatDate(selectedDate),
-                                  formatTime(selectedTime),
-                                  '$_count Hours');
+                                formValue['type'],
+                                formatDate(selectedDate),
+                                formatTime(selectedTime),
+                              );
                             },
                             btnColor: HexColor("#F1ECE1"),
                             borderColor: Colors.grey,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/rentarea_model.dart';
-import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
+import 'package:talanoa_app/widgets/user/list_history.dart';
 
 class UserRentAreaHistory extends StatefulWidget {
   const UserRentAreaHistory({Key? key}) : super(key: key);
@@ -49,13 +49,12 @@ class _UserRentAreaHistoryState extends State<UserRentAreaHistory> {
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  return listCardRentAreaHistory(
+                  return rentOngoingCardHistory(
                     name: data[index].name,
                     phone: data[index].phone,
                     type: data[index].type,
                     time: data[index].time,
                     date: data[index].date,
-                    rentalHour: data[index].rentalHour,
                   );
                 },
               );

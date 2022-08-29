@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/reservation_model.dart';
-import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
+import 'package:talanoa_app/widgets/user/list_history.dart';
 
 class UserReservationHistory extends StatefulWidget {
   const UserReservationHistory({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class _UserReservationHistoryState extends State<UserReservationHistory> {
               child: ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  return listCardReserveHistory(
+                  return resCardHistory(
                     name: data[index].name,
                     phone: data[index].phone,
                     type: data[index].type,

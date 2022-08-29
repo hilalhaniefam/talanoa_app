@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/reservation_model.dart';
+import 'package:talanoa_app/api_services/updatedata_api.dart';
 import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
 import 'package:talanoa_app/widgets/admin/searchbar/search_reservation_data.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
@@ -16,6 +17,7 @@ class _OngoingState extends State<ReservasiOngoing> {
   _handleBack() => Navigator.of(context).pop();
 
   final GetReservation _reserveData = GetReservation();
+  final ReserveUpdate _update = ReserveUpdate();
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +42,38 @@ class _OngoingState extends State<ReservasiOngoing> {
               }
               return RefreshIndicator(
                   onRefresh: () async {
-                    _reserveData.getAllReserve(statusReserve: 'Ongoing');
+                    setState(() {
+                      _reserveData.getAllReserve(statusReserve: 'Ongoing');
+                    });
                   },
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardReserve(
-                            completed: () {},
-                            cenceled: () {},
+                        return resOngoingCard(
+                            completed: () {
+                              _update.reservationCompleted(
+                                  transactionId: data[index].transactionId,
+                                  context: context);
+                              setState(() {
+                                _reserveData.getAllReserve(
+                                    statusReserve: 'Ongoing');
+                              });
+                            },
+                            canceled: () {
+                              _update.reservationCanceled(
+                                  transactionId: data[index].transactionId,
+                                  context: context);
+                              setState(() {
+                                _reserveData.getAllReserve(
+                                    statusReserve: 'Ongoing');
+                              });
+                            },
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: '${data[index].pax} person');
                       }));
             }));
   }

@@ -78,9 +78,9 @@ class SearchOngoing extends SearchDelegate {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardReserve(
+                        return resOngoingCard(
                             completed: () {},
-                            cenceled: () {},
+                            canceled: () {},
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
@@ -171,15 +171,14 @@ class SearchCompleted extends SearchDelegate {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardReserve(
-                            completed: () {},
-                            cenceled: () {},
+                        return resDeletableCard(
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: data[index].pax,
+                            delete: () {});
                       }));
             }));
   }
@@ -264,15 +263,14 @@ class SearchCanceled extends SearchDelegate {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardReserve(
-                            completed: () {},
-                            cenceled: () {},
+                        return resDeletableCard(
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: data[index].pax,
+                            delete: () {});
                       }));
             }));
   }

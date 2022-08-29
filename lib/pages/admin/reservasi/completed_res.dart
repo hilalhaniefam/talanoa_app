@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/delete_api.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/reservation_model.dart';
 import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
@@ -16,6 +17,7 @@ class _CompletedState extends State<ReservasiCompleted> {
   _handleBack() => Navigator.of(context).pop();
 
   final GetReservation _reserveData = GetReservation();
+  final ReserveDelete _delete = ReserveDelete();
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +47,16 @@ class _CompletedState extends State<ReservasiCompleted> {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardReserve(
-                            completed: () {},
-                            cenceled: () {},
+                        return resDeletableCard(
+                            delete: () {
+                              _delete.reservationDelete(
+                                  transactionId: data[index].transactionId,
+                                  context: context);
+                              setState(() {
+                                _reserveData.getAllReserve(
+                                    statusReserve: 'Completed');
+                              });
+                            },
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,

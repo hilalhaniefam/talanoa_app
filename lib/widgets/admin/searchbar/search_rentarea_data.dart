@@ -3,7 +3,6 @@ import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/rentarea_model.dart';
 import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
-import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
 
 class SearchOngoing extends SearchDelegate {
   @override
@@ -77,13 +76,15 @@ class SearchOngoing extends SearchDelegate {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardRentArea(
-                            name: data[index].name,
-                            phone: data[index].phone,
-                            type: data[index].type,
-                            time: data[index].time,
-                            date: data[index].date,
-                            rentalHour: data[index].rentalHour);
+                        return rentOngoingCard(
+                          name: data[index].name,
+                          phone: data[index].phone,
+                          type: data[index].type,
+                          time: data[index].time,
+                          date: data[index].date,
+                          canceled: () {},
+                          completed: () {},
+                        );
                       }));
             }));
   }
@@ -166,13 +167,14 @@ class SearchCompleted extends SearchDelegate {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardRentArea(
-                            name: data[index].name,
-                            phone: data[index].phone,
-                            type: data[index].type,
-                            time: data[index].time,
-                            date: data[index].date,
-                            rentalHour: data[index].rentalHour);
+                        return rentDeletableCard(
+                          name: data[index].name,
+                          phone: data[index].phone,
+                          type: data[index].type,
+                          time: data[index].time,
+                          date: data[index].date,
+                          delete: () {},
+                        );
                       }));
             }));
   }
@@ -255,13 +257,14 @@ class SearchCanceled extends SearchDelegate {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardRentArea(
-                            name: data[index].name,
-                            phone: data[index].phone,
-                            type: data[index].type,
-                            time: data[index].time,
-                            date: data[index].date,
-                            rentalHour: data[index].rentalHour);
+                        return rentDeletableCard(
+                          name: data[index].name,
+                          phone: data[index].phone,
+                          type: data[index].type,
+                          time: data[index].time,
+                          date: data[index].date,
+                          delete: () {},
+                        );
                       }));
             }));
   }

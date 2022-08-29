@@ -44,13 +44,14 @@ class _CompletedState extends State<Rentareacompleted> {
                   child: ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return listCardRentArea(
-                            name: data[index].name,
-                            phone: data[index].phone,
-                            type: data[index].type,
-                            time: data[index].time,
-                            date: data[index].date,
-                            rentalHour: data[index].rentalHour);
+                        return rentDeletableCard(
+                          name: data[index].name,
+                          phone: data[index].phone,
+                          type: data[index].type,
+                          time: data[index].time,
+                          date: data[index].date,
+                          delete: () {},
+                        );
                       }));
             }));
   }

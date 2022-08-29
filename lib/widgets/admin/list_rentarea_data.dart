@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-Widget listCardRentArea({
+Widget rentOngoingCard({
   required name,
   required phone,
   required type,
   required time,
   required date,
-  required rentalHour,
+  required void Function() completed,
+  required void Function() canceled,
 }) =>
     Card(
         shape: RoundedRectangleBorder(
@@ -40,7 +41,7 @@ Widget listCardRentArea({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       phone,
                       style: const TextStyle(
@@ -53,7 +54,7 @@ Widget listCardRentArea({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       type,
                       style: const TextStyle(
@@ -66,7 +67,7 @@ Widget listCardRentArea({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       time,
                       style: const TextStyle(
@@ -79,7 +80,7 @@ Widget listCardRentArea({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       date,
                       style: const TextStyle(
@@ -89,18 +90,8 @@ Widget listCardRentArea({
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
-                    child: Text(
-                      rentalHour,
-                      style: const TextStyle(
-                          fontFamily: 'Josefin Sans',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -108,25 +99,25 @@ Widget listCardRentArea({
                     IconButton(
                       iconSize: 20,
                       icon: const Icon(Icons.check),
-                      onPressed: () {/* ... */},
+                      onPressed: completed,
                     ),
                     IconButton(
                       iconSize: 20,
                       icon: const Icon(Icons.cancel_outlined),
-                      onPressed: () {/* ... */},
+                      onPressed: canceled,
                     ),
                   ],
                 ),
               ],
             )));
 
-Widget listCardRentAreaHistory({
+Widget rentDeletableCard({
   required name,
   required phone,
   required type,
   required time,
   required date,
-  required rentalHour,
+  required void Function() delete,
 }) =>
     Card(
         shape: RoundedRectangleBorder(
@@ -140,7 +131,7 @@ Widget listCardRentAreaHistory({
         color: HexColor('F1ECE1'),
         child: SizedBox(
             width: 267,
-            height: 190,
+            height: 210,
             child: Column(
               children: [
                 Align(
@@ -159,7 +150,7 @@ Widget listCardRentAreaHistory({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       phone,
                       style: const TextStyle(
@@ -172,7 +163,7 @@ Widget listCardRentAreaHistory({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       type,
                       style: const TextStyle(
@@ -185,7 +176,7 @@ Widget listCardRentAreaHistory({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       time,
                       style: const TextStyle(
@@ -198,7 +189,7 @@ Widget listCardRentAreaHistory({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
+                    padding: const EdgeInsets.only(left: 34, top: 10),
                     child: Text(
                       date,
                       style: const TextStyle(
@@ -208,18 +199,15 @@ Widget listCardRentAreaHistory({
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 6),
-                    child: Text(
-                      rentalHour,
-                      style: const TextStyle(
-                          fontFamily: 'Josefin Sans',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 20,
+                      icon: const Icon(Icons.delete),
+                      onPressed: delete,
                     ),
-                  ),
+                  ],
                 ),
               ],
             )));
