@@ -50,14 +50,34 @@ class _UserReservationPageState extends State<UserRentPage> {
   }
 
   TimeOfDay selectedTime = TimeOfDay.now();
+  TimeOfDay firstTime = const TimeOfDay(hour: 14, minute: 00);
+  TimeOfDay endTime = const TimeOfDay(hour: 22, minute: 00);
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? pickedTime =
-        await showTimePicker(context: context, initialTime: selectedTime);
-    if (pickedTime != null && pickedTime != selectedTime) {
+        await showTimePicker(context: context, initialTime: firstTime);
+    if (pickedTime!.hour < firstTime.hour || pickedTime.hour > endTime.hour) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+          'Mohon maaf pada pukul ${formatTime(pickedTime)} di luar jam operasional, Talanoa kopi and space buka pukul 14:00 sampai dengan pukul 22:00'));
+      setState(() {
+        selectedTime = firstTime;
+      });
+    } else {
       setState(() {
         selectedTime = pickedTime;
       });
     }
+    if (pickedTime.hour == 22 && pickedTime.minute > 00) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+          'Mohon maaf pada pukul ${formatTime(pickedTime)} Talanoa kopi and space belum buka'));
+      setState(() {
+        selectedTime = firstTime;
+      });
+    }
+    // else {
+    //   setState(() {
+    //     selectedTime = pickedTime;
+    //   });
+    // }
   }
 
   void addRent(String type, String date, String time) async {
@@ -143,6 +163,9 @@ class _UserReservationPageState extends State<UserRentPage> {
                   height: 10,
                 ),
                 buildIndicator(imgListAssets),
+                const SizedBox(
+                  height: 10,
+                ),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(children: [
@@ -157,7 +180,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                         ),
                       ),
                       const Padding(
-                          padding: EdgeInsets.only(top: 10, left: 47),
+                          padding: EdgeInsets.only(top: 20, left: 47),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
@@ -332,72 +355,8 @@ class _UserReservationPageState extends State<UserRentPage> {
                                   ))),
                         ],
                       ),
-                      // const Padding(
-                      //     padding: EdgeInsets.only(top: 16, left: 47),
-                      //     child: Align(
-                      //       alignment: Alignment.topLeft,
-                      //       child: Text(
-                      //         'Rental Time',
-                      //         textAlign: TextAlign.left,
-                      //         style: TextStyle(
-                      //           fontFamily: 'Josefin Sans',
-                      //           fontSize: 18,
-                      //           fontWeight: FontWeight.w400,
-                      //         ),
-                      //       ),
-                      //     )),
-                      // Align(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Container(
-                      //     width: 130,
-                      //     height: 45,
-                      //     margin: const EdgeInsets.only(top: 13, left: 47),
-                      //     decoration: BoxDecoration(
-                      //         border:
-                      //             Border.all(color: Colors.black, width: 1.5),
-                      //         borderRadius: BorderRadius.circular(10),
-                      //         color: Colors.transparent),
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         InkWell(
-                      //             onTap: _decrementCount,
-                      //             child: const Icon(
-                      //               Icons.remove,
-                      //               color: Colors.black,
-                      //               size: 20,
-                      //             )),
-                      //         Container(
-                      //           width: 75,
-                      //           height: 45,
-                      //           margin:
-                      //               const EdgeInsets.symmetric(horizontal: 2),
-                      //           alignment: Alignment.center,
-                      //           decoration: const BoxDecoration(
-                      //               border: Border.symmetric(
-                      //                   vertical: BorderSide(
-                      //                       color: Colors.black, width: 1.5)),
-                      //               color: Colors.transparent),
-                      //           child: Text(
-                      //             '$_count',
-                      //             textAlign: TextAlign.center,
-                      //             style: const TextStyle(
-                      //                 color: Colors.black, fontSize: 20),
-                      //           ),
-                      //         ),
-                      //         InkWell(
-                      //             onTap: _incrementCount,
-                      //             child: const Icon(
-                      //               Icons.add,
-                      //               color: Colors.black,
-                      //               size: 20,
-                      //             )),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 40, bottom: 15),
+                        padding: const EdgeInsets.only(top: 30, bottom: 15),
                         child: SizedBox(
                           width: 194,
                           height: 44,
