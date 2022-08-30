@@ -41,7 +41,9 @@ class _OngoingState extends State<RentOngoing> {
               }
               return RefreshIndicator(
                   onRefresh: () async {
-                    _rentData.getAllRent(statusRent: 'Ongoing');
+                    setState(() {
+                      _rentData.getAllRent(statusRent: 'Ongoing');
+                    });
                   },
                   child: ListView.builder(
                       itemCount: data.length,

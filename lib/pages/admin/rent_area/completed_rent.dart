@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/delete_api.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/rentarea_model.dart';
 import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
@@ -15,6 +16,7 @@ class Rentareacompleted extends StatefulWidget {
 class _CompletedState extends State<Rentareacompleted> {
   _handleBack() => Navigator.of(context).pop();
   final GetRent _rentData = GetRent();
+  final RentAreaDelete _delete = RentAreaDelete();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,9 @@ class _CompletedState extends State<Rentareacompleted> {
               }
               return RefreshIndicator(
                   onRefresh: () async {
-                    _rentData.getAllRent(statusRent: 'Completed');
+                    setState(() {
+                      _rentData.getAllRent(statusRent: 'Completed');
+                    });
                   },
                   child: ListView.builder(
                       itemCount: data.length,
@@ -50,7 +54,14 @@ class _CompletedState extends State<Rentareacompleted> {
                           type: data[index].type,
                           time: data[index].time,
                           date: data[index].date,
-                          delete: () {},
+                          delete: () {
+                            _delete.rentDelete(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                            setState(() {
+                              _rentData.getAllRent(statusRent: 'Completed');
+                            });
+                          },
                         );
                       }));
             }));

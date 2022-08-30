@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
+import 'package:talanoa_app/api_services/rentarea_model.dart';
 import 'package:talanoa_app/api_services/reservation_model.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
@@ -45,9 +46,9 @@ class ReserveDelete {
 
 class RentAreaDelete {
   var data = [];
-  List<Reserve> results = [];
+  List<RentData> results = [];
 
-  Future<List<Reserve>> rentDelete(
+  Future<List<RentData>> rentDelete(
       {String? transactionId, required BuildContext context}) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
@@ -69,7 +70,7 @@ class RentAreaDelete {
         // results = data.map((data) => Reserve.fromJson(data)).toList();
         print('SUKSES');
         ScaffoldMessenger.of(context)
-            .showSnackBar(CustomSnackbar(data['message'].toString()));
+            .showSnackBar(CustomSnackbar(data['status'].toString()));
       } else {
         print('API error!');
       }

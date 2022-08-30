@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/api_services/delete_api.dart';
 import 'package:talanoa_app/api_services/getdata_api.dart';
 import 'package:talanoa_app/api_services/rentarea_model.dart';
 import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
@@ -14,6 +15,7 @@ class Rentareacanceled extends StatefulWidget {
 
 class _CanceledState extends State<Rentareacanceled> {
   final GetRent _rentData = GetRent();
+  final RentAreaDelete _delete = RentAreaDelete();
   _handleBack() => Navigator.of(context).pop();
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,14 @@ class _CanceledState extends State<Rentareacanceled> {
                           type: data[index].type,
                           time: data[index].time,
                           date: data[index].date,
-                          delete: () {},
+                          delete: () {
+                            _delete.rentDelete(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                            setState(() {
+                              _rentData.getAllRent(statusRent: 'Completed');
+                            });
+                          },
                         );
                       }));
             }));
