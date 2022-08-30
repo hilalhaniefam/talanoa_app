@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/pages/admin/admin_page.dart';
-import 'package:talanoa_app/pages/admin/rent_area/cenceled.dart';
-import 'package:talanoa_app/pages/admin/rent_area/completed.dart';
-import 'package:talanoa_app/pages/admin/rent_area/ongoing.dart';
-import 'package:talanoa_app/pages/admin/rentarea_page.dart';
-import 'package:talanoa_app/pages/admin/reservasi/cenceled.dart';
-import 'package:talanoa_app/pages/admin/reservasi/completed.dart';
-import 'package:talanoa_app/pages/admin/reservasi/ongoing.dart';
-import 'package:talanoa_app/pages/admin/reservasi_page.dart';
-import 'package:talanoa_app/pages/admin/userdata_page.dart';
-// import 'package:talanoa_app/pages/codeverif.dart';
-import 'package:talanoa_app/pages/login_page.dart';
-import 'package:talanoa_app/pages/registered.dart';
-import 'package:talanoa_app/widgets/profile/profile.dart';
-import 'package:talanoa_app/widgets/sidebar/aboutus.dart';
-import 'package:talanoa_app/pages/newpass.dart';
-import 'package:talanoa_app/pages/passupdate.dart';
-import 'package:talanoa_app/pages/register_pages.dart';
-import 'package:talanoa_app/pages/resetpass.dart';
-import 'package:talanoa_app/pages/user/userpage.dart';
-import 'package:talanoa_app/widgets/sidebar/helpcenter.dart';
-import 'package:talanoa_app/widgets/sidebar/history.dart';
+import 'package:talanoa_app/pages/account_services/login_page.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_coffee.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_dessert.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_flavouredtea.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_maincourse.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_mocktail.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_noncoffee.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_snack.dart';
+import 'package:talanoa_app/pages/admin/menu_data/admin_menu_catalogue/admin_toasted_bread.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_coffee.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_dessert.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_flavouredtea.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_maincourse.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_mocktail.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_noncoffee.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_toasted_bread.dart';
+import 'package:talanoa_app/pages/user/user_menu_catalogue/user_snack.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,35 +29,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: const LoginPage(),
       title: 'Talanoa App',
       theme: ThemeData(
-        primaryColor: HexColor('#E5E5E5'),
-      ),
+          primaryColor: HexColor('A7B79F'), fontFamily: 'Josefin Sans'),
       routes: {
-        '/register': (context) => const RegisterPage(),
-        '/registered': (context) => const Registered(),
-        '/resetpass': (context) => const ResetpassPage(),
-        // '/codeverif': (context) => CodeVerifPage(),
-        '/newpass': (context) => const NewpassPage(),
-        '/passupdate': (context) => const Passupdate(),
-        // Admin Page
-        '/admin': (context) => const AdminPage(),
-        '/userdata': (context) => const Userdata(),
-        '/reservasidata': (context) => const Reservasidata(),
-        '/reservasi/ongoing': (context) => const ReservasiOngoing(),
-        '/reservasi/completed': (context) => const ReservasiCompleted(),
-        '/reservasi/cenceled': (context) => const ReservasiCenceled(),
-        '/rentarea': (context) => const RentArea(),
-        '/rentarea/ongoing': (context) => const RentOngoing(),
-        '/rentarea/completed': (context) => const Rentareacompleted(),
-        '/rentarea/cenceled': (context) => const Rentareacenceled(),
-        //user
-        '/': (context) => const LoginPage(),
-        '/user': (context) => const UserPage(),
-        '/aboutus': (context) => const Aboutus(),
-        '/history': (context) => const History(),
-        '/helpcenter': (context) => const Helpcenter(),
-        '/profile': (context) => const Profile(),
+        //usser menu page
+        '/user/coffee': (context) => const Coffee(),
+        '/user/non-coffee': (context) => const NonCoffee(),
+        '/user/mocktail': (context) => const Mocktail(),
+        '/user/flavoured-tea': (context) => const FlavouredTea(),
+        '/user/main-course': (context) => const MainCourse(),
+        '/user/toasted-bread': (context) => const ToastedBread(),
+        '/user/dessert': (context) => const Dessert(),
+        '/user/snack': (context) => const Snack(),
+
+        //admin menu page
+        '/coffee': (context) => const AdminCoffee(),
+        '/non-coffee': (context) => const AdminNonCoffee(),
+        '/mocktail': (context) => const AdminMocktail(),
+        '/flavoured-tea': (context) => const AdminFlavouredTea(),
+        '/main-course': (context) => const AdminMainCourse(),
+        '/toasted-bread': (context) => const AdminToastedBread(),
+        '/dessert': (context) => const AdminDessert(),
+        '/snack': (context) => const AdminSnack(),
       },
     );
   }
