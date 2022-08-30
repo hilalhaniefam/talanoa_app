@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/api_services/getdata_api.dart';
+import 'package:talanoa_app/api_services/api_delete.dart';
+import 'package:talanoa_app/api_services/api_getdata.dart';
 import 'package:talanoa_app/api_services/rentarea_model.dart';
+import 'package:talanoa_app/api_services/updatedata_api.dart';
 import 'package:talanoa_app/widgets/admin/list_rentarea_data.dart';
 
 class SearchOngoing extends SearchDelegate {
@@ -54,6 +56,7 @@ class SearchOngoing extends SearchDelegate {
       );
 
   final GetRent _rentData = GetRent();
+  final RentAreaUpdate _update = RentAreaUpdate();
   @override
   Widget buildResults(BuildContext context) {
     return Container(
@@ -82,8 +85,16 @@ class SearchOngoing extends SearchDelegate {
                           type: data[index].type,
                           time: data[index].time,
                           date: data[index].date,
-                          canceled: () {},
-                          completed: () {},
+                          canceled: () {
+                            _update.rentAreaCanceled(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                          },
+                          completed: () {
+                            _update.rentAreaCompleted(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                          },
                         );
                       }));
             }));
@@ -145,6 +156,7 @@ class SearchCompleted extends SearchDelegate {
       );
 
   final GetRent _rentData = GetRent();
+  final RentAreaDelete _delete = RentAreaDelete();
   @override
   Widget buildResults(BuildContext context) {
     return Container(
@@ -173,7 +185,11 @@ class SearchCompleted extends SearchDelegate {
                           type: data[index].type,
                           time: data[index].time,
                           date: data[index].date,
-                          delete: () {},
+                          delete: () {
+                            _delete.rentDelete(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                          },
                         );
                       }));
             }));
@@ -235,6 +251,7 @@ class SearchCanceled extends SearchDelegate {
       );
 
   final GetRent _rentData = GetRent();
+  final RentAreaDelete _delete = RentAreaDelete();
   @override
   Widget buildResults(BuildContext context) {
     return Container(
@@ -263,7 +280,11 @@ class SearchCanceled extends SearchDelegate {
                           type: data[index].type,
                           time: data[index].time,
                           date: data[index].date,
-                          delete: () {},
+                          delete: () {
+                            _delete.rentDelete(
+                                transactionId: data[index].transactionId,
+                                context: context);
+                          },
                         );
                       }));
             }));

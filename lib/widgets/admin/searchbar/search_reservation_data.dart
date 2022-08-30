@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
-import 'package:talanoa_app/api_services/getdata_api.dart';
+import 'package:talanoa_app/api_services/api_delete.dart';
+import 'package:talanoa_app/api_services/api_getdata.dart';
 import 'package:talanoa_app/api_services/reservation_model.dart';
+import 'package:talanoa_app/api_services/updatedata_api.dart';
 import 'package:talanoa_app/widgets/admin/list_reserve_data.dart';
 
 class SearchOngoing extends SearchDelegate {
@@ -54,6 +56,7 @@ class SearchOngoing extends SearchDelegate {
       );
 
   final GetReservation _reserveData = GetReservation();
+  final ReserveUpdate _update = ReserveUpdate();
   @override
   Widget buildResults(BuildContext context) {
     return Container(
@@ -79,14 +82,22 @@ class SearchOngoing extends SearchDelegate {
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         return resOngoingCard(
-                            completed: () {},
-                            canceled: () {},
+                            completed: () {
+                              _update.reservationCompleted(
+                                  transactionId: data[index].transactionId,
+                                  context: context);
+                            },
+                            canceled: () {
+                              _update.reservationCanceled(
+                                  transactionId: data[index].transactionId,
+                                  context: context);
+                            },
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: '${data[index].pax} person');
                       }));
             }));
   }
@@ -147,6 +158,7 @@ class SearchCompleted extends SearchDelegate {
       );
 
   final GetReservation _reserveData = GetReservation();
+  final ReserveDelete _delete = ReserveDelete();
   @override
   Widget buildResults(BuildContext context) {
     return Container(
@@ -172,13 +184,17 @@ class SearchCompleted extends SearchDelegate {
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         return resDeletableCard(
+                            delete: () {
+                              _delete.reservationDelete(
+                                  transactionId: data[index].transactionId,
+                                  context: context);
+                            },
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax,
-                            delete: () {});
+                            pax: data[index].pax);
                       }));
             }));
   }
@@ -239,6 +255,7 @@ class SearchCanceled extends SearchDelegate {
       );
 
   final GetReservation _reserveData = GetReservation();
+  final ReserveDelete _delete = ReserveDelete();
   @override
   Widget buildResults(BuildContext context) {
     return Container(
@@ -264,13 +281,17 @@ class SearchCanceled extends SearchDelegate {
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         return resDeletableCard(
+                            delete: () {
+                              _delete.reservationDelete(
+                                  transactionId: data[index].transactionId,
+                                  context: context);
+                            },
                             name: data[index].name,
                             phone: data[index].phone,
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax,
-                            delete: () {});
+                            pax: data[index].pax);
                       }));
             }));
   }
