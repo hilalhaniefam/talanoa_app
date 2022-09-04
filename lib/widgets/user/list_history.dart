@@ -124,7 +124,7 @@ Widget rentOngoingCardHistory({
         color: HexColor('F1ECE1'),
         child: SizedBox(
             width: 267,
-            height: 190,
+            height: 175,
             child: Column(
               children: [
                 Align(

@@ -136,8 +136,7 @@ class GetRent {
     return results;
   }
 
-  Future<List<RentData>> getAllRentByUserId(
-      {String? query, String? userId}) async {
+  Future<List<RentData>> getAllRentByUserId({String? query}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var userData =
         jsonDecode(sharedPreferences.getString('userData').toString());
@@ -169,30 +168,30 @@ class GetRent {
   }
 }
 
-class GetAllReservation {
-  var data = [];
-  List<User> results = [];
+// class GetAllReservation {
+//   var data = [];
+//   List<User> results = [];
 
-  Future<List<User>> getAllReservationByUserId({String? userId}) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var userData =
-        jsonDecode(sharedPreferences.getString('userData').toString());
-    String token = userData['accessToken'];
-    var bodyParam = userId;
-    var response = await http.get(Uri.parse('$ipurl/users'),
-        headers: {'Authorization': 'Bearer $token'});
-    try {
-      if (response.statusCode == 200) {
-        Map<String, dynamic> responseBody = jsonDecode(response.body);
-        List<dynamic> data = responseBody['payload'];
-        print(data);
-        results = data.map((data) => User.fromJson(data)).toList();
-      } else {
-        print('API error');
-      }
-    } on Exception catch (e) {
-      print(e);
-    }
-    return results;
-  }
-}
+//   Future<List<User>> getAllReservationByUserId({String? userId}) async {
+//     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//     var userData =
+//         jsonDecode(sharedPreferences.getString('userData').toString());
+//     String token = userData['accessToken'];
+//     var bodyParam = userId;
+//     var response = await http.get(Uri.parse('$ipurl/users'),
+//         headers: {'Authorization': 'Bearer $token'});
+//     try {
+//       if (response.statusCode == 200) {
+//         Map<String, dynamic> responseBody = jsonDecode(response.body);
+//         List<dynamic> data = responseBody['payload'];
+//         print(data);
+//         results = data.map((data) => User.fromJson(data)).toList();
+//       } else {
+//         print('API error');
+//       }
+//     } on Exception catch (e) {
+//       print(e);
+//     }
+//     return results;
+//   }
+// }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/widgets/shared/get_menu.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
@@ -18,7 +19,9 @@ class Coffee extends StatefulWidget {
 }
 
 class _MenudataState extends State<Coffee> {
+  bool _loading = false;
   Future<void> getMenuByCategories() async {
+    _loading = false;
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var userData =
@@ -29,6 +32,7 @@ class _MenudataState extends State<Coffee> {
     var data = jsonDecode(response.body.toString());
     print(response.body);
     setState(() {
+      _loading = true;
       listMenu = listMenuByType = data['payload'];
       listMenuByType =
           listMenu.where(((category) => category['type'] == 'Coffee')).toList();
@@ -51,12 +55,13 @@ class _MenudataState extends State<Coffee> {
     return Scaffold(
         appBar: appBar(backButton: _handleBack),
         body: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: HexColor('A7B79F'),
-            child: buildListMenu(
-                title: 'Coffee',
-                child: rowItemUser(context: context, list: listMenuByType),
-                context: context)));
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: HexColor('A7B79F'),
+          child: buildListMenu(
+              title: 'Coffee',
+              child: rowItemUser(context: context, list: listMenuByType),
+              context: context),
+        ));
   }
 }

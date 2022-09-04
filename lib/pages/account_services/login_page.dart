@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         validateTextField(key);
       }
       for (String key in errorFormStatus.keys) {
-        if (errorFormStatus[key]) throw 'Please enter your email and password';
+        if (errorFormStatus[key]) throw 'Please complete the form!';
       }
       Response response = await post(Uri.parse('$ipurl/login'),
           body: {'email': email, 'password': password});

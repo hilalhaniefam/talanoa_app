@@ -22,7 +22,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final List<String> imgListAssets = [
+  final List<String> resSliderAssets = [
     'assets/images/indoor_res_75k.png',
     'assets/images/indoor_res_100k.png',
   ];
@@ -151,16 +151,16 @@ class _UserReservationPageState extends State<UserReservationPage> {
                           height: 229,
                           enlargeCenterPage: true,
                           enableInfiniteScroll: false),
-                      itemCount: imgListAssets.length,
-                      itemBuilder: (context, index, realIndex) {
-                        final imgList = imgListAssets[index];
+                      itemCount: resSliderAssets.length,
+                      itemBuilder: (context, index, resIndex) {
+                        final imgList = resSliderAssets[index];
                         return buildImage(imgList, index);
                       },
                     )),
                 const SizedBox(
                   height: 10,
                 ),
-                buildIndicator(imgListAssets),
+                buildIndicator(resSliderAssets),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
@@ -171,8 +171,22 @@ class _UserReservationPageState extends State<UserReservationPage> {
                         const SizedBox(
                           width: 300,
                           child: Text(
-                            'We will send a message to your whatsapp number to confirm payment after you make a reservation',
+                            '*If you have placed an order, the admin will contact you via WhatsApp',
                             textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const SizedBox(
+                          width: 300,
+                          child: Text(
+                            '*Operational Hours : 14.00 - 22.00',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
                           ),
                         ),
                         const Padding(

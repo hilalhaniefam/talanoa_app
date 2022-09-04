@@ -45,12 +45,22 @@ class _HistoryState extends State<History> {
           child: BottomNavigationBar(
             items: [
               BottomNavigationBarItem(
-                icon: const Icon(Icons.table_bar_outlined),
+                icon: const Icon(
+                  Icons.table_bar,
+                  size: 28,
+                ),
                 label: 'Reservation',
                 backgroundColor: HexColor('#A7B79F'),
               ),
               BottomNavigationBarItem(
-                icon: const Icon(Icons.meeting_room_outlined),
+                icon: Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Image.asset(
+                    'assets/images/Rent.png',
+                    width: 28,
+                    height: 28,
+                  ),
+                ),
                 label: 'Rent Area',
                 backgroundColor: HexColor('#A7B79F'),
               )

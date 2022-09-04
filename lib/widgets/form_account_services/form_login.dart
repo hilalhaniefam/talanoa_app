@@ -27,7 +27,7 @@ Column formLogin(
               ),
               contentPadding:
                   const EdgeInsets.only(left: 16, top: 12.17, bottom: 12.12),
-              labelText: 'Email',
+              labelText: 'Email Address',
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide:

@@ -85,6 +85,9 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
     sendOtp(widget.email);
   }
 
+  // Duration duration = const Duration(minutes: 2);
+  // String strDigits(int n) => n.toString().padLeft(2, '0');
+  // final second = strDigits(duration.inSeconds.remainder(60));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +100,7 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
           elevation: 0,
           backgroundColor: HexColor('#F1ECE1'),
         ),
-        body: SingleChildScrollView(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
             padding: const EdgeInsets.only(left: 30, right: 20),
             width: MediaQuery.of(context).size.width,
@@ -237,6 +238,6 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
               ],
             ),
           )
-        ])));
+        ]));
   }
 }

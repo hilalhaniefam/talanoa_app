@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:http/http.dart';
 import 'package:talanoa_app/widgets/shared/all_submit_button.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/pages/account_services/new_account/codeverif_newacc_page.dart';
+import 'package:talanoa_app/widgets/shared/linear_gradient.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -123,310 +125,308 @@ class RegisterPageState extends State<RegisterPage> {
           elevation: 0,
           backgroundColor: HexColor('#F1ECE1'),
         ),
-        body: SingleChildScrollView(
-            child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        HexColor('#F1ECE1'),
-                        HexColor("#A7B79F"),
-                      ]),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Image.asset(
-                        'assets/images/talanoa.png',
-                        width: 170,
-                        height: 227,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 44,
-                        right: 43,
-                      ),
-                      child: TextFormField(
-                        controller: formValue['name'],
-                        onChanged: (value) {
-                          setState(() {
-                            errorFormStatus['name'] = false;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          label: const Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Text(
-                                  'Name',
-                                ),
-                              ),
-                            ]),
-                          ),
-                          errorText: errorFormStatus['name']
-                              ? 'Please enter your name'
-                              : null,
-                          errorStyle: const TextStyle(
-                            fontSize: 11,
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                              left: 16, top: 12.17, bottom: 12.12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
+        body: ProgressHUD(
+          child: Builder(builder: (context) {
+            return Center(
+              child: linearGradient(
+                  child: SingleChildScrollView(
+                      child: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/images/talanoa.png',
+                            width: 170,
+                            height: 227,
                           ),
                         ),
-                        style: const TextStyle(
-                            fontFamily: 'Josefin Sans', fontSize: 15),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 44,
-                        right: 43,
-                      ),
-                      child: TextFormField(
-                        onChanged: (value) {
-                          setState(() {
-                            errorFormStatus['email'] = false;
-                          });
-                        },
-                        validator: (value) =>
-                            value != null && !EmailValidator.validate(value)
-                                ? 'Enter a Valid Email'
-                                : null,
-                        controller: formValue['email'],
-                        decoration: InputDecoration(
-                          label: const Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Text(
-                                  'Email',
-                                ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            left: 44,
+                            right: 43,
+                          ),
+                          child: TextFormField(
+                            controller: formValue['name'],
+                            onChanged: (value) {
+                              setState(() {
+                                errorFormStatus['name'] = false;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              label: const Text.rich(
+                                TextSpan(children: <InlineSpan>[
+                                  WidgetSpan(
+                                    child: Text(
+                                      'Full Name',
+                                    ),
+                                  ),
+                                ]),
                               ),
-                            ]),
-                          ),
-                          errorText: errorFormStatus['email']
-                              ? 'Please enter your email'
-                              : null,
-                          errorStyle: const TextStyle(
-                            fontSize: 11,
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                              left: 16, top: 12.17, bottom: 12.12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
+                              errorText: errorFormStatus['name']
+                                  ? 'Please enter your name'
+                                  : null,
+                              errorStyle: const TextStyle(
+                                fontSize: 11,
+                              ),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, top: 12.17, bottom: 12.12),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.black, width: 2.0)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Colors.black, width: 2.0),
+                              ),
+                            ),
+                            style: const TextStyle(
+                                fontFamily: 'Josefin Sans', fontSize: 15),
                           ),
                         ),
-                        style: const TextStyle(
-                            fontFamily: 'Josefin Sans', fontSize: 15),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 44,
-                        right: 43,
-                      ),
-                      child: TextFormField(
-                        keyboardType: const TextInputType.numberWithOptions(),
-                        controller: formValue['phone'],
-                        onChanged: (value) {
-                          setState(() {
-                            errorFormStatus['phone'] = false;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          prefixText: '+62 ',
-                          label: const Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Text(
-                                  'Phone',
-                                ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            left: 44,
+                            right: 43,
+                          ),
+                          child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                errorFormStatus['email'] = false;
+                              });
+                            },
+                            validator: (value) =>
+                                value != null && !EmailValidator.validate(value)
+                                    ? 'Enter a Valid Email'
+                                    : null,
+                            controller: formValue['email'],
+                            decoration: InputDecoration(
+                              label: const Text.rich(
+                                TextSpan(children: <InlineSpan>[
+                                  WidgetSpan(
+                                    child: Text(
+                                      'Email Address',
+                                    ),
+                                  ),
+                                ]),
                               ),
-                            ]),
-                          ),
-                          errorText: errorFormStatus['phone']
-                              ? 'Please enter your phone number'
-                              : null,
-                          errorStyle: const TextStyle(
-                            fontSize: 11,
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                              left: 16, top: 12.17, bottom: 12.12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
+                              errorText: errorFormStatus['email']
+                                  ? 'Please enter your email'
+                                  : null,
+                              errorStyle: const TextStyle(
+                                fontSize: 11,
+                              ),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, top: 12.17, bottom: 12.12),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.black, width: 2.0)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Colors.black, width: 2.0),
+                              ),
+                            ),
+                            style: const TextStyle(
+                                fontFamily: 'Josefin Sans', fontSize: 15),
                           ),
                         ),
-                        style: const TextStyle(
-                            fontFamily: 'Josefin Sans', fontSize: 15),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 16.17,
-                        left: 44,
-                        right: 43,
-                      ),
-                      child: TextFormField(
-                        onChanged: (value) {
-                          setState(() {
-                            errorFormStatus['password'] = false;
-                          });
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your password';
-                          } else {
-                            bool result = validatePass(value);
-                            if (result) {
-                              return null;
-                            } else {
-                              return 'Password is too weak!';
-                            }
-                          }
-                        },
-                        controller: formValue['password'],
-                        obscureText: hidePassword,
-                        decoration: InputDecoration(
-                          label: const Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Text(
-                                  'Password',
-                                ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                            left: 44,
+                            right: 43,
+                          ),
+                          child: TextFormField(
+                            keyboardType:
+                                const TextInputType.numberWithOptions(),
+                            controller: formValue['phone'],
+                            onChanged: (value) {
+                              setState(() {
+                                errorFormStatus['phone'] = false;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              prefixText: '+62 ',
+                              label: const Text.rich(
+                                TextSpan(children: <InlineSpan>[
+                                  WidgetSpan(
+                                    child: Text(
+                                      'Phone Number',
+                                    ),
+                                  ),
+                                ]),
                               ),
-                            ]),
-                          ),
-                          errorText: errorFormStatus['password']
-                              ? 'Please enter password'
-                              : null,
-                          errorStyle: const TextStyle(
-                            fontSize: 11,
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                              left: 16, top: 12.17, bottom: 12.12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
+                              errorText: errorFormStatus['phone']
+                                  ? 'Please enter your phone number'
+                                  : null,
+                              errorStyle: const TextStyle(
+                                fontSize: 11,
+                              ),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, top: 12.17, bottom: 12.12),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.black, width: 2.0)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Colors.black, width: 2.0),
+                              ),
+                            ),
+                            style: const TextStyle(
+                                fontFamily: 'Josefin Sans', fontSize: 15),
                           ),
                         ),
-                        style: const TextStyle(
-                            fontFamily: 'Josefin Sans', fontSize: 15),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 16.17,
-                        left: 44,
-                        right: 43,
-                      ),
-                      child: TextFormField(
-                        onChanged: (value) {
-                          setState(() {
-                            errorFormStatus['confPass'] = false;
-                          });
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please re-enter your password';
-                          }
-                          if (value != formValue['password'].text) {
-                            return 'Password not match';
-                          }
-                          return null;
-                        },
-                        controller: formValue['confPass'],
-                        obscureText: hidePassword,
-                        decoration: InputDecoration(
-                          label: const Text.rich(
-                            TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Text(
-                                  'Confirm Password',
-                                ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 16.17,
+                            left: 44,
+                            right: 43,
+                          ),
+                          child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                errorFormStatus['password'] = false;
+                              });
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your password';
+                              } else {
+                                bool result = validatePass(value);
+                                if (result) {
+                                  return null;
+                                } else {
+                                  return 'Password is too weak!';
+                                }
+                              }
+                            },
+                            controller: formValue['password'],
+                            obscureText: hidePassword,
+                            decoration: InputDecoration(
+                              label: const Text.rich(
+                                TextSpan(children: <InlineSpan>[
+                                  WidgetSpan(
+                                    child: Text(
+                                      'Password',
+                                    ),
+                                  ),
+                                ]),
                               ),
-                            ]),
-                          ),
-                          errorText: errorFormStatus['confPass']
-                              ? 'Please re-enter password'
-                              : null,
-                          errorStyle: const TextStyle(
-                            fontSize: 11,
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                              left: 16, top: 12.17, bottom: 12.12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
+                              errorText: errorFormStatus['password']
+                                  ? 'Please enter password'
+                                  : null,
+                              errorStyle: const TextStyle(
+                                fontSize: 11,
+                              ),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, top: 12.17, bottom: 12.12),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.black, width: 2.0)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Colors.black, width: 2.0),
+                              ),
+                            ),
+                            style: const TextStyle(
+                                fontFamily: 'Josefin Sans', fontSize: 15),
                           ),
                         ),
-                        style: const TextStyle(
-                            fontFamily: 'Josefin Sans', fontSize: 15),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 16.17,
+                            left: 44,
+                            right: 43,
+                          ),
+                          child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                errorFormStatus['confPass'] = false;
+                              });
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please re-enter your password';
+                              }
+                            },
+                            controller: formValue['confPass'],
+                            obscureText: hidePassword,
+                            decoration: InputDecoration(
+                              label: const Text.rich(
+                                TextSpan(children: <InlineSpan>[
+                                  WidgetSpan(
+                                    child: Text(
+                                      'Confirm Password',
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                              errorText: errorFormStatus['confPass']
+                                  ? 'Please re-enter password'
+                                  : null,
+                              errorStyle: const TextStyle(
+                                fontSize: 11,
+                              ),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 16, top: 12.17, bottom: 12.12),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.black, width: 2.0)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Colors.black, width: 2.0),
+                              ),
+                            ),
+                            style: const TextStyle(
+                                fontFamily: 'Josefin Sans', fontSize: 15),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        Center(
+                          child: submitButton(
+                              onTap: () async {
+                                final progress = ProgressHUD.of(context);
+                                progress?.show();
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  progress?.dismiss();
+                                });
+                                register(
+                                  formValue['name']!.text.toString(),
+                                  formValue['email']!
+                                      .text
+                                      .toString()
+                                      .toLowerCase(),
+                                  formValue['phone']!.text.toString(),
+                                  formValue['password']!.text.toString(),
+                                  formValue['confPass']!.text.toString(),
+                                );
+                              },
+                              title: 'Sign Up'),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Center(
-                      child: submitButton(
-                          onTap: () {
-                            register(
-                              formValue['name']!.text.toString(),
-                              formValue['email']!.text.toString().toLowerCase(),
-                              formValue['phone']!.text.toString(),
-                              formValue['password']!.text.toString(),
-                              formValue['confPass']!.text.toString(),
-                            );
-                          },
-                          title: 'Sign Up'),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        )));
+                  )),
+                  context: context),
+            );
+          }),
+        ));
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -10,7 +9,7 @@ import 'package:talanoa_app/api_services/ipurl.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';
 import 'package:talanoa_app/widgets/user/rent_helper.dart';
 import 'package:talanoa_app/widgets/shared/snackbar.dart';
-import 'package:talanoa_app/widgets/user/carousel_reservation.dart';
+import 'package:talanoa_app/widgets/user/carousel_rentarea.dart';
 
 class UserRentPage extends StatefulWidget {
   const UserRentPage({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class UserRentPage extends StatefulWidget {
 class _UserReservationPageState extends State<UserRentPage> {
   _handleBack() => Navigator.of(context).pop();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final List<String> imgListAssets = [
+  final List<String> rentSliderAssets = [
     'assets/images/indoor&outdoor.png',
     'assets/images/wholearea.png',
   ];
@@ -153,16 +152,16 @@ class _UserReservationPageState extends State<UserRentPage> {
                           height: 229,
                           enlargeCenterPage: true,
                           enableInfiniteScroll: false),
-                      itemCount: imgListAssets.length,
-                      itemBuilder: (context, index, realIndex) {
-                        final imgList = imgListAssets[index];
+                      itemCount: rentSliderAssets.length,
+                      itemBuilder: (context, index, rentIndex) {
+                        final imgList = rentSliderAssets[index];
                         return buildImage(imgList, index);
                       },
                     )),
                 const SizedBox(
                   height: 10,
                 ),
-                buildIndicator(imgListAssets),
+                buildIndicator(rentSliderAssets),
                 const SizedBox(
                   height: 10,
                 ),
@@ -175,8 +174,22 @@ class _UserReservationPageState extends State<UserRentPage> {
                       const SizedBox(
                         width: 300,
                         child: Text(
-                          'We will send a message to your whatsapp number to confirm payment after you make a reservation',
+                          '*If you have placed an order, the admin will contact you via WhatsApp',
                           textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        width: 300,
+                        child: Text(
+                          '*Operational Hours : 14.00 - 22.00',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700),
                         ),
                       ),
                       const Padding(
@@ -257,7 +270,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                         ],
                       ),
                       Padding(
-                          padding: const EdgeInsets.only(top: 13, left: 47),
+                          padding: const EdgeInsets.only(top: 13, left: 55),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: SizedBox(
