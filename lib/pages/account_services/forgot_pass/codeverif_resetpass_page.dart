@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class CodeVerifResetPassPage extends StatefulWidget {
 
 class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Duration duration = const Duration(seconds: 120);
+  Timer? timer;
   _handleBack() => Navigator.of(context).pop();
   String otp = '';
   TextEditingController otpCon = TextEditingController();
@@ -41,6 +44,9 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
         sharedPreferences.setString('userData', data['payload'].toString());
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(data['message'].toString()));
+        setState(() {
+          resetTimer();
+        });
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -65,12 +71,15 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
       print(response.body);
       print(response.statusCode);
       var data = jsonDecode(response.body.toString());
-      var user = jsonDecode(jsonEncode(data['payload']['user']));
+
+      print('user ni');
+      print(data);
       if (response.statusCode == 200) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.setString(
             'otpForgotPass', data['payload'].toString());
+        var user = jsonDecode(jsonEncode(data['payload']['user']));
         print('USER:');
         print(user);
         Navigator.of(context).push(MaterialPageRoute(
@@ -83,14 +92,54 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
         }
       }
     } catch (e) {
+      print('error');
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(e.toString()));
     }
   }
 
+  void startTimer() {
+    const count = Duration(seconds: 1);
+    timer = Timer.periodic(count, (timer) {
+      if (duration.inSeconds == 0) {
+        setState(() {
+          timer.cancel();
+        });
+      } else {
+        setState(() {
+          final seconds = duration.inSeconds + -1;
+          duration = Duration(seconds: seconds);
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void resetTimer() {
+    setState(() {
+      duration = const Duration(minutes: 2);
+      startTimer();
+    });
+  }
+
+  Widget buildTime() {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return Text(
+      '$minutes:$seconds minutes',
+    );
   }
 
   @override

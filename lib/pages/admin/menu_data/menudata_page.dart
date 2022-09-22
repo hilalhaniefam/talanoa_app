@@ -22,62 +22,64 @@ class _MenudataState extends State<Menudata> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: HexColor('A7B79F'),
-        child: Column(
-          children: [
-            Container(
-              margin:
-                  const EdgeInsets.symmetric(horizontal: 45.0, vertical: 47),
-              child: Column(children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: menuCategories1
-                            .map((menu1) => buildMenuCategories(
-                                title: menu1['name'].toString(),
-                                onClicked: () => Navigator.pushNamed(
-                                    context, menu1['to'].toString())))
-                            .toList(),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: menuCategories2
-                            .map((menu2) => buildMenuCategories(
-                                title: menu2['name'].toString(),
-                                onClicked: () => Navigator.pushNamed(
-                                    context, menu2['to'].toString())))
-                            .toList(),
-                      ),
-                    ]),
-                const SizedBox(
-                  height: 60,
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const AddMenu()));
-                      },
-                      child: const Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black,
-                            size: 35,
-                          )),
-                      style: ElevatedButton.styleFrom(
-                          fixedSize: const Size(55, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          primary: HexColor('#F1ECE1'),
-                          shadowColor: Colors.black)),
-                ),
-              ]),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 45.0, vertical: 47),
+                child: Column(children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: menuCategories1
+                              .map((menu1) => buildMenuCategories(
+                                  title: menu1['name'].toString(),
+                                  onClicked: () => Navigator.pushNamed(
+                                      context, menu1['to'].toString())))
+                              .toList(),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: menuCategories2
+                              .map((menu2) => buildMenuCategories(
+                                  title: menu2['name'].toString(),
+                                  onClicked: () => Navigator.pushNamed(
+                                      context, menu2['to'].toString())))
+                              .toList(),
+                        ),
+                      ]),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddMenu()));
+                        },
+                        child: const Align(
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.black,
+                              size: 35,
+                            )),
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(55, 55),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            primary: HexColor('#F1ECE1'),
+                            shadowColor: Colors.black)),
+                  ),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
     );

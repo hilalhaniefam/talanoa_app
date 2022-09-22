@@ -64,7 +64,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
         await showTimePicker(context: context, initialTime: selectedTime);
     if (pickedTime!.hour < firstTime.hour || pickedTime.hour > endTime.hour) {
       ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-          'Mohon maaf pada pukul ${formatTime(pickedTime)} di luar jam operasional, Talanoa kopi and space buka pukul 14:00 sampai dengan pukul 22:00'));
+          'Sorry, ${formatTime(pickedTime)} is outside operational hours'));
       setState(() {
         selectedTime = firstTime;
       });
@@ -75,7 +75,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
     }
     if (pickedTime.hour == 22 && pickedTime.minute > 00) {
       ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-          'Mohon maaf pada pukul ${formatTime(pickedTime)} Talanoa kopi and space belum buka'));
+          'Sorry, ${formatTime(pickedTime)} is outside operational hours'));
       setState(() {
         selectedTime = firstTime;
       });

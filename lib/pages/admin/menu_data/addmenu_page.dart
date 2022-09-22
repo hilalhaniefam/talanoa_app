@@ -106,7 +106,7 @@ class _AddMenuState extends State<AddMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarAdmin(backButton: _handleBack, title: 'Menu Data'),
+      appBar: appBarAdmin(backButton: _handleBack, title: 'Add Menu Data'),
       backgroundColor: HexColor('A7B79F'),
       body: SingleChildScrollView(
         key: formKey,

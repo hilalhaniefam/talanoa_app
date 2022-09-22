@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class CodeVerifAccPage extends StatefulWidget {
 }
 
 class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
+  Timer? timer;
+  Duration duration = const Duration(minutes: 2);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   _handleBack() => Navigator.of(context).pop();
   String otp = '';
@@ -37,6 +40,11 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
         sharedPreferences.setString('otpNewUser', data['payload'].toString());
+        ScaffoldMessenger.of(context)
+            .showSnackBar(CustomSnackbar(data['message'].toString()));
+        setState(() {
+          resetTimer();
+        });
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -79,15 +87,50 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
     }
   }
 
+  void startTimer() {
+    const count = Duration(seconds: 1);
+    timer = Timer.periodic(count, (timer) {
+      if (duration.inSeconds == 0) {
+        setState(() {
+          timer.cancel();
+        });
+      } else {
+        setState(() {
+          final seconds = duration.inSeconds + -1;
+          duration = Duration(seconds: seconds);
+        });
+      }
+    });
+  }
+
+  void resetTimer() {
+    setState(() {
+      duration = const Duration(minutes: 2);
+      startTimer();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    sendOtp(widget.email);
+    startTimer();
   }
 
-  // Duration duration = const Duration(minutes: 2);
-  // String strDigits(int n) => n.toString().padLeft(2, '0');
-  // final second = strDigits(duration.inSeconds.remainder(60));
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  Widget buildTime() {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return Text(
+      '$minutes:$seconds minutes',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,144 +143,138 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
           elevation: 0,
           backgroundColor: HexColor('#F1ECE1'),
         ),
-        body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Container(
-            padding: const EdgeInsets.only(left: 30, right: 20),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    HexColor('#F1ECE1'),
-                    HexColor("#A7B79F"),
-                  ]),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 70,
-                ),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'CODE VERIFICATION',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        fontFamily: 'Josefin Sans',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 25,
-                        color: Colors.black),
+        body: SingleChildScrollView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Container(
+              padding: const EdgeInsets.only(left: 30, right: 20),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      HexColor('#F1ECE1'),
+                      HexColor("#A7B79F"),
+                    ]),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 70,
                   ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Text(
-                      'You will recive an email with a verification code for double security',
-                      style: TextStyle(
-                        fontFamily: 'Josefin Sans',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        color: HexColor('#3D3D3D'),
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Enter the verification code sent to ${widget.email}',
+                      'CODE VERIFICATION',
+                      textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontFamily: 'Josefin Sans',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        color: HexColor('#484848'),
-                      ),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Pinput(
-                    controller: otpCon,
-                    length: 6,
-                    defaultPinTheme: PinTheme(
-                      width: 56,
-                      height: 56,
-                      textStyle: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
                           fontFamily: 'Josefin Sans',
-                          fontWeight: FontWeight.w400),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                            style: BorderStyle.solid),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 25,
+                          color: Colors.black),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 7.17,
-                    ),
-                    child: RichText(
-                      text: const TextSpan(
-                        text: '2:00 minutes',
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 10),
+                      child: Text(
+                        'You will recive an email with a verification code for double security',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
+                          fontFamily: 'Josefin Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          color: HexColor('#3D3D3D'),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                submitButton(
-                    onTap: () {
-                      verifyOtp(otpCon.text, widget.userId);
-                    },
-                    title: 'Verify Code'),
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 20,
-                    ),
-                    child: RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Enter the verification code sent to ${widget.email}',
+                        style: TextStyle(
+                          fontFamily: 'Josefin Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          color: HexColor('#484848'),
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Pinput(
+                      controller: otpCon,
+                      length: 6,
+                      defaultPinTheme: PinTheme(
+                        width: 56,
+                        height: 56,
+                        textStyle: const TextStyle(
+                            fontSize: 25,
                             color: Colors.black,
-                            fontSize: 20,
+                            fontFamily: 'Josefin Sans',
                             fontWeight: FontWeight.w400),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Resend Code',
-                            style: const TextStyle(
-                              fontFamily: 'Josefin Sans',
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(
                               color: Colors.black,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                sendOtp(widget.email);
-                              },
-                          ),
-                        ],
+                              width: 2,
+                              style: BorderStyle.solid),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ]));
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 7.17,
+                      ),
+                      child: buildTime(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  submitButton(
+                      onTap: () {
+                        verifyOtp(otpCon.text, widget.userId);
+                      },
+                      title: 'Verify Code'),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                      ),
+                      child: RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Resend Code',
+                              style: const TextStyle(
+                                fontFamily: 'Josefin Sans',
+                                color: Colors.black,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  sendOtp(widget.email);
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ]),
+        ));
   }
 }

@@ -125,7 +125,7 @@ class _NewpassPageState extends State<NewpassPage> {
                                     if (result) {
                                       return null;
                                     } else {
-                                      return 'Password is too weak!';
+                                      return 'Password must contain uppercase, lowercase and numbers';
                                     }
                                   }
                                 },
