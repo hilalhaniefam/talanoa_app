@@ -51,6 +51,7 @@ Widget rowItemAdmin({
                       )
                     : Image.network(
                         imageFile,
+                        width: 130,
                       ),
                 Container(
                   margin: const EdgeInsets.only(left: 17),
@@ -70,10 +71,13 @@ Widget rowItemAdmin({
                                 fontSize: 20, fontWeight: FontWeight.w400),
                           )),
                       const SizedBox(height: 6),
-                      Text(
-                        data['description'],
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w400),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          data['description'],
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w400),
+                        ),
                       ),
                     ],
                   ),

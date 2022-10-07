@@ -138,79 +138,148 @@ class _UserReservationPageState extends State<UserRentPage> {
               ),
             ),
           ),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 134,
-              decoration: BoxDecoration(color: HexColor('A7B79F')),
-              child: Column(children: [
-                Padding(
-                    padding: const EdgeInsets.only(top: 29),
-                    child: CarouselSlider.builder(
-                      options: CarouselOptions(
-                          onPageChanged: ((index, reason) =>
-                              setState(() => activeIndex = index)),
-                          height: 229,
-                          enlargeCenterPage: true,
-                          enableInfiniteScroll: false),
-                      itemCount: rentSliderAssets.length,
-                      itemBuilder: (context, index, rentIndex) {
-                        final imgList = rentSliderAssets[index];
-                        return buildImage(imgList, index);
-                      },
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                buildIndicator(rentSliderAssets),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const SizedBox(
-                        width: 300,
-                        child: Text(
-                          '*If you have placed an order, the admin will contact you via WhatsApp',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
+          Expanded(
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(color: HexColor('A7B79F')),
+                child: Column(children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 29),
+                      child: CarouselSlider.builder(
+                        options: CarouselOptions(
+                            onPageChanged: ((index, reason) =>
+                                setState(() => activeIndex = index)),
+                            height: 229,
+                            enlargeCenterPage: true,
+                            enableInfiniteScroll: false),
+                        itemCount: rentSliderAssets.length,
+                        itemBuilder: (context, index, rentIndex) {
+                          final imgList = rentSliderAssets[index];
+                          return buildImage(imgList, index);
+                        },
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  buildIndicator(rentSliderAssets),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const SizedBox(
-                        width: 300,
-                        child: Text(
-                          '*Operational Hours : 14.00 - 22.00',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
+                        const SizedBox(
+                          width: 300,
+                          child: Text(
+                            '*If you have placed an order, the admin will contact you via WhatsApp',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
+                          ),
                         ),
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.only(top: 20, left: 47),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Type',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'Josefin Sans',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const SizedBox(
+                          width: 300,
+                          child: Text(
+                            '*Operational Hours : 14.00 - 22.00',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.only(top: 20, left: 47),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Type',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
-                            ),
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(top: 13, right: 5),
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 13, right: 5),
+                                child: SizedBox(
+                                    width: 130,
+                                    height: 45,
+                                    child: OutlinedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                setTypeButtonColor('Indoor')),
+                                        side: MaterialStateProperty.all(
+                                            const BorderSide(
+                                                color: Colors.black,
+                                                width: 1.5)),
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0))),
+                                      ),
+                                      onPressed: () {
+                                        chooseType('Indoor');
+                                      },
+                                      child: const Text(
+                                        'Indoor',
+                                        style: TextStyle(
+                                            fontFamily: 'Josefin Sans',
+                                            fontSize: 20,
+                                            color: Colors.black),
+                                      ),
+                                    ))),
+                            Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 13, left: 32),
+                                child: SizedBox(
+                                    width: 130,
+                                    height: 45,
+                                    child: OutlinedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                setTypeButtonColor('Outdoor')),
+                                        side: MaterialStateProperty.all(
+                                            const BorderSide(
+                                                color: Colors.black,
+                                                width: 1.5)),
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0))),
+                                      ),
+                                      onPressed: () {
+                                        chooseType('Outdoor');
+                                      },
+                                      child: const Text(
+                                        'Outdoor',
+                                        style: TextStyle(
+                                            fontFamily: 'Josefin Sans',
+                                            fontSize: 20,
+                                            color: Colors.black),
+                                      ),
+                                    ))),
+                          ],
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 13, left: 55),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
                               child: SizedBox(
                                   width: 130,
                                   height: 45,
@@ -218,7 +287,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              setTypeButtonColor('Indoor')),
+                                              setTypeButtonColor('Whole Area')),
                                       side: MaterialStateProperty.all(
                                           const BorderSide(
                                               color: Colors.black, width: 1.5)),
@@ -228,172 +297,118 @@ class _UserReservationPageState extends State<UserRentPage> {
                                                   BorderRadius.circular(10.0))),
                                     ),
                                     onPressed: () {
-                                      chooseType('Indoor');
+                                      chooseType('Whole Area');
                                     },
                                     child: const Text(
-                                      'Indoor',
+                                      'Whole Area',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          fontFamily: 'Josefin Sans',
-                                          fontSize: 20,
-                                          color: Colors.black),
-                                    ),
-                                  ))),
-                          Padding(
-                              padding: const EdgeInsets.only(top: 13, left: 32),
-                              child: SizedBox(
-                                  width: 130,
-                                  height: 45,
-                                  child: OutlinedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              setTypeButtonColor('Outdoor')),
-                                      side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              color: Colors.black, width: 1.5)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0))),
-                                    ),
-                                    onPressed: () {
-                                      chooseType('Outdoor');
-                                    },
-                                    child: const Text(
-                                      'Outdoor',
-                                      style: TextStyle(
-                                          fontFamily: 'Josefin Sans',
-                                          fontSize: 20,
-                                          color: Colors.black),
-                                    ),
-                                  ))),
-                        ],
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 13, left: 55),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: SizedBox(
-                                width: 130,
-                                height: 45,
-                                child: OutlinedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        setTypeButtonColor('Whole Area')),
-                                    side: MaterialStateProperty.all(
-                                        const BorderSide(
-                                            color: Colors.black, width: 1.5)),
-                                    shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0))),
-                                  ),
-                                  onPressed: () {
-                                    chooseType('Whole Area');
-                                  },
-                                  child: const Text(
-                                    'Whole Area',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontFamily: 'Josefin Sans',
-                                        fontSize: 18,
-                                        color: Colors.black),
-                                  ),
-                                )),
-                          )),
-                      const Padding(
-                          padding: EdgeInsets.only(top: 16, left: 47),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Date & Time',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'Josefin Sans',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(top: 13, right: 5),
-                              child: SizedBox(
-                                  width: 130,
-                                  height: 45,
-                                  child: OutlinedButton(
-                                    style: ButtonStyle(
-                                      side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              color: Colors.black, width: 1.5)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0))),
-                                    ),
-                                    onPressed: () => _selectDate(context),
-                                    child: Text(
-                                      formatDate(selectedDate),
-                                      style: const TextStyle(
                                           fontFamily: 'Josefin Sans',
                                           fontSize: 18,
                                           color: Colors.black),
                                     ),
-                                  ))),
-                          Padding(
-                              padding: const EdgeInsets.only(top: 13, left: 32),
-                              child: SizedBox(
-                                  width: 130,
-                                  height: 45,
-                                  child: OutlinedButton(
-                                    style: ButtonStyle(
-                                      side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              color: Colors.black, width: 1.5)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0))),
-                                    ),
-                                    onPressed: () => _selectTime(context),
-                                    child: Text(
-                                      formatTime(selectedTime),
-                                      style: const TextStyle(
-                                          fontFamily: 'Josefin Sans',
-                                          fontSize: 20,
-                                          color: Colors.black),
-                                    ),
-                                  ))),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 15),
-                        child: SizedBox(
-                          width: 194,
-                          height: 44,
-                          child: FormHelper.submitButton(
-                            "Book",
-                            () {
-                              addRent(
-                                formValue['type'],
-                                formatDate(selectedDate),
-                                formatTime(selectedTime),
-                              );
-                            },
-                            btnColor: HexColor("#F1ECE1"),
-                            borderColor: Colors.grey,
-                            txtColor: Colors.black,
-                            borderRadius: 10,
-                            fontSize: 20,
+                                  )),
+                            )),
+                        const Padding(
+                            padding: EdgeInsets.only(top: 16, left: 47),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Date & Time',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 13, right: 5),
+                                child: SizedBox(
+                                    width: 130,
+                                    height: 45,
+                                    child: OutlinedButton(
+                                      style: ButtonStyle(
+                                        side: MaterialStateProperty.all(
+                                            const BorderSide(
+                                                color: Colors.black,
+                                                width: 1.5)),
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0))),
+                                      ),
+                                      onPressed: () => _selectDate(context),
+                                      child: Text(
+                                        formatDate(selectedDate),
+                                        style: const TextStyle(
+                                            fontFamily: 'Josefin Sans',
+                                            fontSize: 18,
+                                            color: Colors.black),
+                                      ),
+                                    ))),
+                            Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 13, left: 32),
+                                child: SizedBox(
+                                    width: 130,
+                                    height: 45,
+                                    child: OutlinedButton(
+                                      style: ButtonStyle(
+                                        side: MaterialStateProperty.all(
+                                            const BorderSide(
+                                                color: Colors.black,
+                                                width: 1.5)),
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0))),
+                                      ),
+                                      onPressed: () => _selectTime(context),
+                                      child: Text(
+                                        formatTime(selectedTime),
+                                        style: const TextStyle(
+                                            fontFamily: 'Josefin Sans',
+                                            fontSize: 20,
+                                            color: Colors.black),
+                                      ),
+                                    ))),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30, bottom: 15),
+                          child: SizedBox(
+                            width: 194,
+                            height: 44,
+                            child: FormHelper.submitButton(
+                              "Book",
+                              () {
+                                addRent(
+                                  formValue['type'],
+                                  formatDate(selectedDate),
+                                  formatTime(selectedTime),
+                                );
+                              },
+                              btnColor: HexColor("#F1ECE1"),
+                              borderColor: Colors.grey,
+                              txtColor: Colors.black,
+                              borderRadius: 10,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                    ),
                   ),
-                ),
-              ]))
+                ])),
+          )
         ]));
   }
 }
