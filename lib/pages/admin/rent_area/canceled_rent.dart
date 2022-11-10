@@ -40,7 +40,9 @@ class _CanceledState extends State<Rentareacanceled> {
               }
               return RefreshIndicator(
                   onRefresh: () async {
-                    _rentData.getAllRent(statusRent: 'Canceled');
+                    setState(() {
+                      _rentData.getAllRent(statusRent: 'Canceled');
+                    });
                   },
                   child: ListView.builder(
                       itemCount: data.length,
@@ -56,7 +58,7 @@ class _CanceledState extends State<Rentareacanceled> {
                                 transactionId: data[index].transactionId,
                                 context: context);
                             setState(() {
-                              _rentData.getAllRent(statusRent: 'Completed');
+                              _rentData.getAllRent(statusRent: 'Canceled');
                             });
                           },
                         );

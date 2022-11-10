@@ -42,7 +42,10 @@ class _CompletedState extends State<ReservasiCompleted> {
               }
               return RefreshIndicator(
                   onRefresh: () async {
-                    _reserveData.getAllReserve(statusReserve: 'Completed');
+                    setState(() async {
+                      await _reserveData.getAllReserve(
+                          statusReserve: 'Completed');
+                    });
                   },
                   child: ListView.builder(
                       itemCount: data.length,

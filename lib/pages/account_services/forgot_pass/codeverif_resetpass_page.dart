@@ -243,15 +243,7 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
                     padding: const EdgeInsets.only(
                       top: 7.17,
                     ),
-                    child: RichText(
-                      text: const TextSpan(
-                        text: '2:00 minutes',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
+                    child: buildTime(),
                   ),
                 ),
                 const SizedBox(
