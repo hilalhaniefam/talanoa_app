@@ -126,7 +126,7 @@ class NavBar extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15, top: 400),
+              padding: const EdgeInsets.only(left: 15, top: 300),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: TextButton.icon(

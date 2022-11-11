@@ -87,165 +87,167 @@ class _Profile extends State<Profile> {
       appBar: appBar(backButton: _handleBack),
       body: Form(
         key: formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 50,
-                decoration: BoxDecoration(color: HexColor('#B9C5B2')),
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Profile Account',
-                    style: TextStyle(
-                      fontFamily: 'Josefin Sans',
-                      fontSize: 25,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                    ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              decoration: BoxDecoration(color: HexColor('#B9C5B2')),
+              child: const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Profile Account',
+                  style: TextStyle(
+                    fontFamily: 'Josefin Sans',
+                    fontSize: 25,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(color: HexColor('A7B79F')),
-                child: Column(children: [
-                  const Padding(
-                      padding: EdgeInsets.only(top: 35, left: 20),
-                      child: Align(
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(color: HexColor('A7B79F')),
+                  child: Column(children: [
+                    const Padding(
+                        padding: EdgeInsets.only(top: 35, left: 20),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Full Name',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'Josefin Sans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        )),
+                    Form(
+                        child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 11,
+                        left: 20,
+                        right: 29,
+                      ),
+                      child: TextFormField(
+                        controller: formValue['name'],
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 16, top: 12.17, bottom: 12.12),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                                color: Colors.black, width: 2.0),
+                          ),
+                        ),
+                        style: const TextStyle(
+                            fontFamily: 'Josefin Sans', fontSize: 17),
+                      ),
+                    )),
+                    const Align(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          'Full Name',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 14, left: 20),
+                          child: Text(
+                            'Email Address',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'Josefin Sans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                      )),
-                  Form(
-                      child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 11,
-                      left: 20,
-                      right: 29,
-                    ),
-                    child: TextFormField(
-                      controller: formValue['name'],
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(
-                            left: 16, top: 12.17, bottom: 12.12),
-                        border: OutlineInputBorder(
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 11,
+                        left: 20,
+                        right: 29,
+                      ),
+                      child: TextFormField(
+                        readOnly: true,
+                        controller: formValue['email'],
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 16, top: 12.17, bottom: 12.12),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
-                        ),
-                      ),
-                      style: const TextStyle(
-                          fontFamily: 'Josefin Sans', fontSize: 17),
-                    ),
-                  )),
-                  const Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 14, left: 20),
-                        child: Text(
-                          'Email Address',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                                color: Colors.black, width: 2.0),
                           ),
                         ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 11,
-                      left: 20,
-                      right: 29,
+                        style: const TextStyle(
+                            fontFamily: 'Josefin Sans', fontSize: 17),
+                      ),
                     ),
-                    child: TextFormField(
-                      readOnly: true,
-                      controller: formValue['email'],
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(
-                            left: 16, top: 12.17, bottom: 12.12),
-                        border: OutlineInputBorder(
+                    const Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 14, left: 20),
+                          child: Text(
+                            'Phone Number',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: 'Josefin Sans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 11,
+                        left: 20,
+                        right: 29,
+                      ),
+                      child: TextFormField(
+                        keyboardType: const TextInputType.numberWithOptions(),
+                        controller: formValue['phone'],
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 16, top: 12.17, bottom: 12.12),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
-                        ),
-                      ),
-                      style: const TextStyle(
-                          fontFamily: 'Josefin Sans', fontSize: 17),
-                    ),
-                  ),
-                  const Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 14, left: 20),
-                        child: Text(
-                          'Phone Number',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontFamily: 'Josefin Sans',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                                color: Colors.black, width: 2.0),
                           ),
                         ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 11,
-                      left: 20,
-                      right: 29,
-                    ),
-                    child: TextFormField(
-                      keyboardType: const TextInputType.numberWithOptions(),
-                      controller: formValue['phone'],
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(
-                            left: 16, top: 12.17, bottom: 12.12),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
-                        ),
+                        style: const TextStyle(
+                            fontFamily: 'Josefin Sans', fontSize: 17),
                       ),
-                      style: const TextStyle(
-                          fontFamily: 'Josefin Sans', fontSize: 17),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 265,
-                  ),
-                  submitButton(
-                      onTap: () {
-                        updateUser(
-                            formValue['name'].text, formValue['phone'].text);
-                      },
-                      title: 'Update')
-                ]),
-              )
-            ],
-          ),
+                    const SizedBox(
+                      height: 200,
+                    ),
+                    submitButton(
+                        onTap: () {
+                          updateUser(
+                              formValue['name'].text, formValue['phone'].text);
+                        },
+                        title: 'Update')
+                  ]),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

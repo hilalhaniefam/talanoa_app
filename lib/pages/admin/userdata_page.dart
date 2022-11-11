@@ -40,7 +40,9 @@ class _UserdataState extends State<Userdata> {
             }
             return RefreshIndicator(
               onRefresh: () async {
-                _userList.getAllUsers();
+                setState(() {
+                  _userList.getAllUsers();
+                });
               },
               child: ListView.builder(
                   itemCount: data.length,
