@@ -54,7 +54,7 @@ class _CompletedState extends State<Rentareacompleted> {
                           type: data[index].type,
                           time: data[index].time,
                           date: data[index].date,
-                          delete: () {
+                          delete: () async {
                             _delete.rentDelete(
                                 transactionId: data[index].transactionId,
                                 context: context);

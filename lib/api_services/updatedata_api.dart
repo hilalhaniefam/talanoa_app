@@ -129,6 +129,7 @@ class RentAreaUpdate {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         // List<dynamic> data = responseBody['payload'];
+
         print('INI RESPONSEBODY');
         print(response.body);
         // results = data.map((data) => Reserve.fromJson(data)).toList();

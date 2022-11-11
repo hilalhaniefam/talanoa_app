@@ -50,7 +50,7 @@ class _OngoingState extends State<ReservasiOngoing> {
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         return resOngoingCard(
-                            completed: () {
+                            completed: () async {
                               _update.reservationCompleted(
                                   transactionId: data[index].transactionId,
                                   context: context);
@@ -59,7 +59,7 @@ class _OngoingState extends State<ReservasiOngoing> {
                                     statusReserve: 'Ongoing');
                               });
                             },
-                            canceled: () {
+                            canceled: () async {
                               _update.reservationCanceled(
                                   transactionId: data[index].transactionId,
                                   context: context);

@@ -54,15 +54,16 @@ class _OngoingState extends State<RentOngoing> {
                           type: data[index].type,
                           time: data[index].time,
                           date: data[index].date,
-                          canceled: () {
+                          canceled: () async {
                             _update.rentAreaCanceled(
-                                transactionId: data[index].transactionId,
-                                context: context);
+                              transactionId: data[index].transactionId,
+                              context: context,
+                            );
                             setState(() {
                               _rentData.getAllRent(statusRent: 'Ongoing');
                             });
                           },
-                          completed: () {
+                          completed: () async {
                             _update.rentAreaCompleted(
                                 transactionId: data[index].transactionId,
                                 context: context);

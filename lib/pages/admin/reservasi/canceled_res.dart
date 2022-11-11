@@ -49,7 +49,7 @@ class _CanceledState extends State<ReservasiCanceled> {
                       itemCount: data.length,
                       itemBuilder: (context, index) {
                         return resDeletableCard(
-                            delete: () {
+                            delete: () async {
                               _delete.reservationDelete(
                                   transactionId: data[index].transactionId,
                                   context: context);
