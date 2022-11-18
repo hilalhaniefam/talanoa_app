@@ -48,7 +48,8 @@ dependencies:
   dotted_border: ^2.0.0+2
   flutter_progress_hud: ^2.0.2
   url_launcher: ^6.1.5
-  image_picker: ^0.8.4+6
+  # image_picker: ^0.8.4+6
+  image_picker_android: 0.8.4+13
   path_provider: ^2.0.8
   
 dev_dependencies:

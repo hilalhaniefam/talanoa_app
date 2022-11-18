@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 import 'package:talanoa_app/widgets/shared/get_menu.dart';
 import 'package:talanoa_app/widgets/shared/app_bar.dart';

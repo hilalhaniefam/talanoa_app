@@ -359,6 +359,7 @@ class RegisterPageState extends State<RegisterPage> {
                               if (value!.isEmpty) {
                                 return 'Please re-enter your password';
                               }
+                              return null;
                             },
                             controller: formValue['confPass'],
                             obscureText: hidePassword,

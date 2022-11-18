@@ -94,7 +94,7 @@ Widget resCardHistory({
                   child: Padding(
                     padding: const EdgeInsets.only(left: 34, top: 6),
                     child: Text(
-                      '${pax} person',
+                      '$pax person',
                       style: const TextStyle(
                           fontFamily: 'Josefin Sans',
                           fontSize: 18,
