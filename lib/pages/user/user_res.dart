@@ -28,14 +28,12 @@ class _UserReservationPageState extends State<UserReservationPage> {
   ];
 
   void chooseType(type) {
-    print(type);
     setState(() {
       formValue = {...formValue, 'type': type};
     });
   }
 
   void choosePax(pax) {
-    print(pax);
     setState(() {
       formValue = {...formValue, 'pax': pax};
     });
@@ -249,7 +247,8 @@ class _UserReservationPageState extends State<UserReservationPage> {
                                         style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  setTypeButtonColor('Outdoor')),
+                                                  setTypeButtonColor(
+                                                      'Outdoor')),
                                           side: MaterialStateProperty.all(
                                               const BorderSide(
                                                   color: Colors.black,
@@ -430,7 +429,8 @@ class _UserReservationPageState extends State<UserReservationPage> {
                             ],
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(top: 40),
+                              padding:
+                                  const EdgeInsets.only(top: 32, bottom: 10),
                               child: SizedBox(
                                 width: 194,
                                 height: 44,

@@ -5,7 +5,7 @@ Widget listCardUsers({required name, required phone, required email}) => Card(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
     ),
-    margin: const EdgeInsets.only(left: 36, top: 29, right: 78),
+    margin: const EdgeInsets.only(left: 36, right: 36, top: 15),
     color: HexColor('F1ECE1'),
     child: SizedBox(
       width: 261,

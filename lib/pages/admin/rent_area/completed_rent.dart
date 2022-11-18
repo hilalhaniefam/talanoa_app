@@ -38,6 +38,10 @@ class _CompletedState extends State<Rentareacompleted> {
                     color: Colors.grey,
                   ),
                 );
+              } else {
+                if (snapshot.data.isEmpty) {
+                  return const Center(child: Text('Data Not Found'));
+                }
               }
               return RefreshIndicator(
                   onRefresh: () async {

@@ -45,10 +45,16 @@ class _UserReservationHistoryState extends State<UserReservationHistory> {
                   color: Colors.grey,
                 ),
               );
+            } else {
+              if (snapshot.data.isEmpty) {
+                return const Center(child: Text('Data Not Found'));
+              }
             }
             return RefreshIndicator(
               onRefresh: () async {
-                _reservation.getAllReserveByUserId();
+                setState(() {
+                  _reservation.getAllReserveByUserId();
+                });
               },
               child: ListView.builder(
                 itemCount: data.length,

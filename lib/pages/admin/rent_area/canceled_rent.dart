@@ -37,6 +37,10 @@ class _CanceledState extends State<Rentareacanceled> {
                     color: Colors.grey,
                   ),
                 );
+              } else {
+                if (snapshot.data.isEmpty) {
+                  return const Center(child: Text('Data Not Found'));
+                }
               }
               return RefreshIndicator(
                   onRefresh: () async {

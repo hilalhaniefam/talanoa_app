@@ -45,6 +45,10 @@ class _UserRentAreaHistoryState extends State<UserRentAreaHistory> {
                     color: Colors.grey,
                   ),
                 );
+              } else {
+                if (snapshot.data.isEmpty) {
+                  return const Center(child: Text('Data Not Found'));
+                }
               }
               return ListView.builder(
                 itemCount: data.length,
