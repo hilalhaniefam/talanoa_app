@@ -30,7 +30,7 @@ Widget buildMenuCategories({
         Align(
             alignment: Alignment.center,
             child: SizedBox(
-              width: 134,
+              width: 120,
               height: 80,
               child: ElevatedButton(
                   onPressed: onClicked,

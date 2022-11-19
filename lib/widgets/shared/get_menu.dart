@@ -59,7 +59,7 @@ Widget rowItemAdmin({
                     vertical: 10,
                     horizontal: 2,
                   ),
-                  width: 200,
+                  width: 150,
                   height: 115,
                   child: Column(
                     children: [
@@ -121,7 +121,7 @@ Widget rowItemUser({
                   vertical: 10,
                   horizontal: 2,
                 ),
-                width: 200,
+                width: 150,
                 height: 115,
                 child: Column(
                   children: [

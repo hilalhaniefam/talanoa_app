@@ -145,14 +145,14 @@ class _UserPageState extends State<UserPage> {
               height: 21,
             ),
             Container(
-                margin: const EdgeInsets.only(top: 30, left: 43, right: 44),
+                margin: const EdgeInsets.only(top: 30, left: 43, right: 40),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                            width: 134,
+                            width: 123,
                             height: 80,
                             child: ElevatedButton(
                               onPressed: () {
@@ -190,7 +190,7 @@ class _UserPageState extends State<UserPage> {
                               left: 20,
                             ),
                             child: SizedBox(
-                                width: 134,
+                                width: 123,
                                 height: 80,
                                 child: ElevatedButton(
                                   onPressed: () {
@@ -232,7 +232,7 @@ class _UserPageState extends State<UserPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                            width: 134,
+                            width: 123,
                             height: 80,
                             child: ElevatedButton(
                               onPressed: () {
@@ -266,7 +266,7 @@ class _UserPageState extends State<UserPage> {
                               left: 20,
                             ),
                             child: SizedBox(
-                                width: 134,
+                                width: 123,
                                 height: 80,
                                 child: ElevatedButton(
                                   onPressed: () {

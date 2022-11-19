@@ -27,7 +27,6 @@ class _UserReservationPageState extends State<UserRentPage> {
   ];
 
   void chooseType(type) {
-    print(type);
     setState(() {
       formValue = {...formValue, 'type': type};
     });
@@ -277,7 +276,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                           ],
                         ),
                         Padding(
-                            padding: const EdgeInsets.only(top: 13, left: 55),
+                            padding: const EdgeInsets.only(top: 13, left: 32),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: SizedBox(
