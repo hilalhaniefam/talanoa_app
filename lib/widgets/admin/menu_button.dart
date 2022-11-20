@@ -30,7 +30,7 @@ Widget buildMenuCategories({
         Align(
             alignment: Alignment.center,
             child: SizedBox(
-              width: 120,
+              width: 125,
               height: 80,
               child: ElevatedButton(
                   onPressed: onClicked,
@@ -39,7 +39,7 @@ Widget buildMenuCategories({
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontFamily: 'Josefin Sans',
-                      fontSize: 21,
+                      fontSize: 19,
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
                     ),

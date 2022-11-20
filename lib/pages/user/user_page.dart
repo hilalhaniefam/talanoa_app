@@ -167,7 +167,7 @@ class _UserPageState extends State<UserPage> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Josefin Sans',
-                                  fontSize: 19,
+                                  fontSize: 17,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w400,
                                 ),

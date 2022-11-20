@@ -30,7 +30,7 @@ class _MenudataState extends State<Menudata> {
                     const EdgeInsets.symmetric(horizontal: 45.0, vertical: 47),
                 child: Column(children: [
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,

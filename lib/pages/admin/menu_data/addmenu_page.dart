@@ -102,6 +102,7 @@ class _AddMenuState extends State<AddMenu> {
           imageFile = null;
           formValue['productName'].clear();
           formValue['description'].clear();
+          chooseCategory(null);
         });
       } else {
         ScaffoldMessenger.of(context)

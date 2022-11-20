@@ -32,6 +32,12 @@ class _UserReservationPageState extends State<UserRentPage> {
     });
   }
 
+  @override
+  void initState() {
+    selectedTime = firstTime;
+    super.initState();
+  }
+
   DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
 
   Future<void> _selectDate(BuildContext context) async {
@@ -71,11 +77,6 @@ class _UserReservationPageState extends State<UserRentPage> {
         selectedTime = firstTime;
       });
     }
-    // else {
-    //   setState(() {
-    //     selectedTime = pickedTime;
-    //   });
-    // }
   }
 
   void addRent(String type, String date, String time) async {
@@ -102,6 +103,9 @@ class _UserReservationPageState extends State<UserRentPage> {
             'rentAreaData', jsonEncode(data['payload']));
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(data['message'].toString()));
+        setState(() {
+          chooseType(null);
+        });
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -209,105 +213,123 @@ class _UserReservationPageState extends State<UserRentPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 13, right: 5),
-                                child: SizedBox(
-                                    width: 130,
-                                    height: 45,
-                                    child: OutlinedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                setTypeButtonColor('Indoor')),
-                                        side: MaterialStateProperty.all(
-                                            const BorderSide(
-                                                color: Colors.black,
-                                                width: 1.5)),
-                                        shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0))),
-                                      ),
-                                      onPressed: () {
-                                        chooseType('Indoor');
-                                      },
-                                      child: const Text(
-                                        'Indoor',
-                                        style: TextStyle(
-                                            fontFamily: 'Josefin Sans',
-                                            fontSize: 20,
-                                            color: Colors.black),
-                                      ),
-                                    ))),
-                            Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 13, left: 32),
-                                child: SizedBox(
-                                    width: 130,
-                                    height: 45,
-                                    child: OutlinedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                setTypeButtonColor('Outdoor')),
-                                        side: MaterialStateProperty.all(
-                                            const BorderSide(
-                                                color: Colors.black,
-                                                width: 1.5)),
-                                        shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0))),
-                                      ),
-                                      onPressed: () {
-                                        chooseType('Outdoor');
-                                      },
-                                      child: const Text(
-                                        'Outdoor',
-                                        style: TextStyle(
-                                            fontFamily: 'Josefin Sans',
-                                            fontSize: 20,
-                                            color: Colors.black),
-                                      ),
-                                    ))),
+                            Column(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 13),
+                                    child: SizedBox(
+                                        width: 130,
+                                        height: 45,
+                                        child: OutlinedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    setTypeButtonColor(
+                                                        'Indoor')),
+                                            side: MaterialStateProperty.all(
+                                                const BorderSide(
+                                                    color: Colors.black,
+                                                    width: 1.5)),
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0))),
+                                          ),
+                                          onPressed: () {
+                                            chooseType('Indoor');
+                                          },
+                                          child: const Text(
+                                            'Indoor',
+                                            style: TextStyle(
+                                                fontFamily: 'Josefin Sans',
+                                                fontSize: 20,
+                                                color: Colors.black),
+                                          ),
+                                        ))),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 13),
+                                    child: SizedBox(
+                                        width: 130,
+                                        height: 45,
+                                        child: OutlinedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    setTypeButtonColor(
+                                                        'Whole Area')),
+                                            side: MaterialStateProperty.all(
+                                                const BorderSide(
+                                                    color: Colors.black,
+                                                    width: 1.5)),
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0))),
+                                          ),
+                                          onPressed: () {
+                                            chooseType('Whole Area');
+                                          },
+                                          child: const Text(
+                                            'Whole Area',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontFamily: 'Josefin Sans',
+                                                fontSize: 18,
+                                                color: Colors.black),
+                                          ),
+                                        ))),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 32, top: 13),
+                                    child: Align(
+                                      alignment: Alignment.topCenter,
+                                      child: SizedBox(
+                                          width: 130,
+                                          height: 45,
+                                          child: OutlinedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      setTypeButtonColor(
+                                                          'Outdoor')),
+                                              side: MaterialStateProperty.all(
+                                                  const BorderSide(
+                                                      color: Colors.black,
+                                                      width: 1.5)),
+                                              shape: MaterialStateProperty.all(
+                                                  RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0))),
+                                            ),
+                                            onPressed: () {
+                                              chooseType('Outdoor');
+                                            },
+                                            child: const Text(
+                                              'Outdoor',
+                                              style: TextStyle(
+                                                  fontFamily: 'Josefin Sans',
+                                                  fontSize: 20,
+                                                  color: Colors.black),
+                                            ),
+                                          )),
+                                    )),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 32, top: 13),
+                                    child: SizedBox(
+                                      width: 130,
+                                      height: 45,
+                                    )),
+                              ],
+                            ),
                           ],
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 13, left: 32),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: SizedBox(
-                                  width: 130,
-                                  height: 45,
-                                  child: OutlinedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              setTypeButtonColor('Whole Area')),
-                                      side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              color: Colors.black, width: 1.5)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0))),
-                                    ),
-                                    onPressed: () {
-                                      chooseType('Whole Area');
-                                    },
-                                    child: const Text(
-                                      'Whole Area',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontFamily: 'Josefin Sans',
-                                          fontSize: 18,
-                                          color: Colors.black),
-                                    ),
-                                  )),
-                            )),
                         const Padding(
                             padding: EdgeInsets.only(top: 16, left: 47),
                             child: Align(

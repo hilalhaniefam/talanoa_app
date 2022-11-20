@@ -27,6 +27,12 @@ class _UserReservationPageState extends State<UserReservationPage> {
     'assets/images/indoor_res_100k.png',
   ];
 
+  @override
+  void initState() {
+    selectedTime = firstTime;
+    super.initState();
+  }
+
   void chooseType(type) {
     setState(() {
       formValue = {...formValue, 'type': type};
@@ -100,6 +106,10 @@ class _UserReservationPageState extends State<UserReservationPage> {
             'reservetableData', jsonEncode(data['payload']));
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(data['message'].toString()));
+        setState(() {
+          chooseType(null);
+          choosePax(null);
+        });
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -396,7 +406,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
                                       ))),
                               Padding(
                                   padding:
-                                      const EdgeInsets.only(top: 10, left: 40),
+                                      const EdgeInsets.only(top: 10, left: 32),
                                   child: SizedBox(
                                       width: 130,
                                       height: 45,
