@@ -37,7 +37,7 @@ Widget rowItemAdmin({
         },
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          height: 115,
+          height: 120,
           child: Card(
             color: HexColor('A7B79F'),
             child: Row(
@@ -45,7 +45,7 @@ Widget rowItemAdmin({
                 imageFile == null
                     ? Container(
                         color: HexColor('A7B79F'),
-                        width: 60,
+                        width: 130,
                         height: 61,
                         child: const Text('Image Not Found'),
                       )
@@ -59,8 +59,8 @@ Widget rowItemAdmin({
                     vertical: 10,
                     horizontal: 2,
                   ),
-                  width: 150,
-                  height: 115,
+                  width: 200,
+                  height: 120,
                   child: Column(
                     children: [
                       Align(
@@ -100,7 +100,7 @@ Widget rowItemUser({
       var imageFile = data['imageUrl'];
       return SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 115,
+        height: 120,
         child: Card(
           elevation: 0,
           color: HexColor('A7B79F'),
@@ -109,11 +109,13 @@ Widget rowItemUser({
               imageFile == null
                   ? Container(
                       color: HexColor('A7B79F'),
-                      width: 180,
+                      width: 130,
                       height: 61,
+                      child: const Text('Image Not Found'),
                     )
                   : Image.network(
                       imageFile,
+                      width: 130,
                     ),
               Container(
                 margin: const EdgeInsets.only(left: 17),
@@ -121,8 +123,8 @@ Widget rowItemUser({
                   vertical: 10,
                   horizontal: 2,
                 ),
-                width: 150,
-                height: 115,
+                width: 180,
+                height: 120,
                 child: Column(
                   children: [
                     Align(

@@ -20,7 +20,7 @@ class CodeVerifAccPage extends StatefulWidget {
 }
 
 class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
-  Timer? timer;
+  late Timer timer;
   Duration duration = const Duration(minutes: 2);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   _handleBack() => Navigator.of(context).pop();
@@ -42,9 +42,7 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
         sharedPreferences.setString('otpNewUser', data['payload'].toString());
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(data['message'].toString()));
-        setState(() {
-          resetTimer();
-        });
+        resetTimer();
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -104,10 +102,9 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
   }
 
   void resetTimer() {
-    setState(() {
-      duration = const Duration(minutes: 2);
-      startTimer();
-    });
+    timer.cancel();
+    duration = const Duration(minutes: 2);
+    startTimer();
   }
 
   @override
@@ -118,8 +115,8 @@ class _CodeVerifAccountPageState extends State<CodeVerifAccPage> {
 
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
+    timer.cancel();
   }
 
   Widget buildTime() {

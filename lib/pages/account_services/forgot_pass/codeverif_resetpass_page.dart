@@ -23,7 +23,7 @@ class CodeVerifResetPassPage extends StatefulWidget {
 class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Duration duration = const Duration(seconds: 120);
-  Timer? timer;
+  late Timer timer;
   _handleBack() => Navigator.of(context).pop();
   String otp = '';
   TextEditingController otpCon = TextEditingController();
@@ -44,9 +44,7 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
         sharedPreferences.setString('userData', data['payload'].toString());
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(data['message'].toString()));
-        setState(() {
-          resetTimer();
-        });
+        resetTimer();
       } else {
         if (data['message'].isNotEmpty) {
           throw data['message'];
@@ -122,15 +120,14 @@ class _CodeVerifResetPassPageState extends State<CodeVerifResetPassPage> {
 
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
+    timer.cancel();
   }
 
   void resetTimer() {
-    setState(() {
-      duration = const Duration(minutes: 2);
-      startTimer();
-    });
+    timer.cancel();
+    duration = const Duration(minutes: 2);
+    startTimer();
   }
 
   Widget buildTime() {

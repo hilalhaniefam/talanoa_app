@@ -77,6 +77,14 @@ class _UserReservationPageState extends State<UserRentPage> {
         selectedTime = firstTime;
       });
     }
+    if (pickedTime.hour == 21 && pickedTime.minute >= 30 ||
+        pickedTime.hour == 22) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+          'Sorry, ${formatTime(pickedTime)} Talanoa Kopi and Space is about to close'));
+      setState(() {
+        selectedTime = firstTime;
+      });
+    }
   }
 
   void addRent(String type, String date, String time) async {
@@ -104,7 +112,7 @@ class _UserReservationPageState extends State<UserRentPage> {
         ScaffoldMessenger.of(context)
             .showSnackBar(CustomSnackbar(data['message'].toString()));
         setState(() {
-          chooseType(null);
+          chooseType('');
         });
       } else {
         if (data['message'].isNotEmpty) {
@@ -348,8 +356,7 @@ class _UserReservationPageState extends State<UserRentPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 13, right: 5),
+                                padding: const EdgeInsets.only(top: 13),
                                 child: SizedBox(
                                     width: 130,
                                     height: 45,

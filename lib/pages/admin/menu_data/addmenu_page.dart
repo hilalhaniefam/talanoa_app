@@ -102,7 +102,7 @@ class _AddMenuState extends State<AddMenu> {
           imageFile = null;
           formValue['productName'].clear();
           formValue['description'].clear();
-          chooseCategory(null);
+          chooseCategory('');
         });
       } else {
         ScaffoldMessenger.of(context)
@@ -267,7 +267,7 @@ class _AddMenuState extends State<AddMenu> {
                                 onTap: () {
                                   final progress = ProgressHUD.of(context);
                                   progress?.show();
-                                  Future.delayed(const Duration(seconds: 3),
+                                  Future.delayed(const Duration(seconds: 4),
                                       () {
                                     progress?.dismiss();
                                   });

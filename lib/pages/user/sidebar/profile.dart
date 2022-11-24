@@ -80,7 +80,7 @@ class _Profile extends State<Profile> {
     getUser();
   }
 
-  _handleBack() => Navigator.of(context).pop();
+  _handleBack() => Navigator.pop(context, 'refresh');
   @override
   Widget build(BuildContext context) {
     return Scaffold(

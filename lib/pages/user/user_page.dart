@@ -20,6 +20,13 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String name = 'loading';
+  bool value = false;
+  void updateName() {
+    setState(() {
+      value = true;
+      getName();
+    });
+  }
 
   Future<String> getName() async {
     final SharedPreferences sharedPreferences =
@@ -37,6 +44,11 @@ class _UserPageState extends State<UserPage> {
   void initState() {
     super.initState();
     getName();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -69,11 +81,14 @@ class _UserPageState extends State<UserPage> {
                 color: Colors.black,
                 size: 22,
               ),
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                String refresh = await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext context) => const Profile()));
+                if (refresh == 'refresh') {
+                  updateName();
+                }
               },
             ),
           ),
@@ -119,15 +134,25 @@ class _UserPageState extends State<UserPage> {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(left: 18),
-                child: Text(
-                  name,
-                  style: const TextStyle(
-                    fontFamily: 'Josefin Sans',
-                    fontSize: 22,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+                child: value
+                    ? Text(
+                        name,
+                        style: const TextStyle(
+                          fontFamily: 'Josefin Sans',
+                          fontSize: 22,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )
+                    : Text(
+                        name,
+                        style: const TextStyle(
+                          fontFamily: 'Josefin Sans',
+                          fontSize: 22,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
               ),
             ),
             const SizedBox(

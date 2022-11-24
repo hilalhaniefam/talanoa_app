@@ -36,10 +36,6 @@ class _MenudataState extends State<Coffee> {
       listMenuByType =
           listMenu.where(((category) => category['type'] == 'Coffee')).toList();
     });
-    print('INI LISTMENU:');
-    print(listMenu);
-    print('INIIIIIIIIIIIIIIIIIIIIIIIIIII!!!!!!!:');
-    print(listMenuByType);
   }
 
   @override
