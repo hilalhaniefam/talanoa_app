@@ -34,9 +34,7 @@ class _MenudataState extends State<AdminDessert> {
           .where(((category) => category['type'] == 'Dessert'))
           .toList();
     });
-    print('INI LISTMENU:');
     print(listMenu);
-    print('INIIIIIIIIIIIIIIIIIIIIIIIIIII!!!!!!!:');
     print(listMenuByType);
     return response;
   }

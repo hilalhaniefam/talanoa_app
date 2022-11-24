@@ -45,13 +45,25 @@ Widget rowItemAdmin({
                 imageFile == null
                     ? Container(
                         color: HexColor('A7B79F'),
-                        width: 130,
+                        width: 120,
                         height: 61,
                         child: const Text('Image Not Found'),
                       )
                     : Image.network(
                         imageFile,
                         width: 130,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: 120,
+                            height: 61,
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "Can't pick image from database",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          );
+                        },
                       ),
                 Container(
                   margin: const EdgeInsets.only(left: 17),
@@ -116,6 +128,18 @@ Widget rowItemUser({
                   : Image.network(
                       imageFile,
                       width: 130,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: 120,
+                          height: 61,
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "Can't pick image from database",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        );
+                      },
                     ),
               Container(
                 margin: const EdgeInsets.only(left: 17),
@@ -123,7 +147,7 @@ Widget rowItemUser({
                   vertical: 10,
                   horizontal: 2,
                 ),
-                width: 180,
+                width: 200,
                 height: 120,
                 child: Column(
                   children: [
@@ -135,10 +159,13 @@ Widget rowItemUser({
                               fontSize: 20, fontWeight: FontWeight.w400),
                         )),
                     const SizedBox(height: 6),
-                    Text(
-                      data['description'],
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w400),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        data['description'],
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                      ),
                     ),
                   ],
                 ),
