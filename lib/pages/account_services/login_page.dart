@@ -23,6 +23,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   bool hidePassword = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isLoading = true;

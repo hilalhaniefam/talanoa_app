@@ -7,6 +7,7 @@ class Reserve {
   String? time;
   String? date;
   String? pax;
+  String? request;
   String? status;
   String? createdAt;
   String? updatedAt;
@@ -20,6 +21,7 @@ class Reserve {
       this.time,
       this.date,
       this.pax,
+      this.request,
       this.status,
       this.createdAt,
       this.updatedAt});
@@ -33,6 +35,7 @@ class Reserve {
     time = json['time'];
     date = json['date'];
     pax = json['pax'];
+    request = json['request'];
     status = json['status'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -48,6 +51,7 @@ class Reserve {
     data['time'] = time;
     data['date'] = date;
     data['pax'] = pax;
+    data['request'] = request;
     data['status'] = status;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;

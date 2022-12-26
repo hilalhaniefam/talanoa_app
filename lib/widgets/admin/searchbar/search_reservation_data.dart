@@ -101,7 +101,8 @@ class SearchOngoing extends SearchDelegate {
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: '${data[index].pax} person');
+                            pax: '${data[index].pax} person',
+                            request: data[index].request);
                       }));
             }));
   }
@@ -198,7 +199,8 @@ class SearchCompleted extends SearchDelegate {
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: data[index].pax,
+                            request: data[index].request);
                       }));
             }));
   }
@@ -295,7 +297,8 @@ class SearchCanceled extends SearchDelegate {
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: data[index].pax,
+                            request: data[index].request);
                       }));
             }));
   }

@@ -60,13 +60,13 @@ class _UserReservationHistoryState extends State<UserReservationHistory> {
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   return resCardHistory(
-                    name: data[index].name,
-                    phone: data[index].phone,
-                    type: data[index].type,
-                    time: data[index].time,
-                    date: data[index].date,
-                    pax: data[index].pax,
-                  );
+                      name: data[index].name,
+                      phone: data[index].phone,
+                      type: data[index].type,
+                      time: data[index].time,
+                      date: data[index].date,
+                      pax: data[index].pax,
+                      request: data[index].request);
                 },
               ),
             );

@@ -36,7 +36,7 @@ class _RentareaState extends State<RentArea> {
             height: 21,
           ),
           buttonAdmin(
-              title: 'Cenceled',
+              title: 'Canceled',
               page: const Rentareacanceled(),
               context: context),
           const SizedBox(

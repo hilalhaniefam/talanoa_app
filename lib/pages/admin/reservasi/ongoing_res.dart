@@ -77,7 +77,8 @@ class _OngoingState extends State<ReservasiOngoing> {
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: '${data[index].pax} person');
+                            pax: '${data[index].pax} person',
+                            request: data[index].request);
                       }));
             }));
   }

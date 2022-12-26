@@ -20,6 +20,7 @@ class UserReservationPage extends StatefulWidget {
 
 class _UserReservationPageState extends State<UserReservationPage> {
   _handleBack() => Navigator.of(context).pop();
+  int _itemCount = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final List<String> resSliderAssets = [
@@ -93,7 +94,8 @@ class _UserReservationPageState extends State<UserReservationPage> {
     }
   }
 
-  void addReserve(String type, String date, String time, String pax) async {
+  void addReserve(
+      String type, String date, String time, String pax, String request) async {
     try {
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
@@ -102,8 +104,16 @@ class _UserReservationPageState extends State<UserReservationPage> {
               as Map<String, dynamic>;
       String token = userData['accessToken'];
       Response response = await post(Uri.parse('$ipurl/reservetable/add'),
-          body: {'type': type, 'date': date, 'time': time, 'pax': pax},
-          headers: {'Authorization': 'Bearer $token'});
+          body: {
+            'type': type,
+            'date': date,
+            'time': time,
+            'pax': pax,
+            'request': request
+          },
+          headers: {
+            'Authorization': 'Bearer $token'
+          });
       print(response.body);
       var data = jsonDecode(response.body.toString());
       if (response.statusCode == 200) {
@@ -116,6 +126,7 @@ class _UserReservationPageState extends State<UserReservationPage> {
         setState(() {
           chooseType('');
           choosePax('');
+          _itemCount = 0;
         });
       } else {
         if (data['message'].isNotEmpty) {
@@ -445,6 +456,62 @@ class _UserReservationPageState extends State<UserReservationPage> {
                                       ))),
                             ],
                           ),
+                          const Padding(
+                              padding: EdgeInsets.only(top: 20, left: 47),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'Request More Chair',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: 'Josefin Sans',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 60),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: SizedBox(
+                                  width: 130,
+                                  height: 45,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.remove),
+                                        onPressed: () =>
+                                            setState(() => _itemCount--),
+                                      ),
+                                      Container(
+                                        width: 30,
+                                        // padding: const EdgeInsets.all(3.0),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.black,
+                                                style: BorderStyle.solid),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.transparent),
+                                        child: Center(
+                                          child: Text(
+                                            _itemCount.toString(),
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 19),
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                          icon: const Icon(Icons.add),
+                                          onPressed: () =>
+                                              setState(() => _itemCount++)),
+                                    ],
+                                  ),
+                                ),
+                              )),
                           Padding(
                               padding:
                                   const EdgeInsets.only(top: 32, bottom: 10),
@@ -458,7 +525,8 @@ class _UserReservationPageState extends State<UserReservationPage> {
                                         formValue['type'],
                                         formatDate(selectedDate),
                                         formatTime(selectedTime),
-                                        formValue['pax']);
+                                        formValue['pax'],
+                                        _itemCount.toString());
                                   },
                                   btnColor: HexColor("#F1ECE1"),
                                   borderColor: Colors.grey,

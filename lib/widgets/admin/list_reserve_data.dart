@@ -8,6 +8,7 @@ Widget resOngoingCard({
   required time,
   required date,
   required pax,
+  required request,
   required void Function() completed,
   required void Function() canceled,
 }) =>
@@ -23,7 +24,7 @@ Widget resOngoingCard({
         color: HexColor('F1ECE1'),
         child: SizedBox(
             width: 267,
-            height: 210,
+            height: 250,
             child: Column(
               children: [
                 Align(
@@ -97,6 +98,19 @@ Widget resOngoingCard({
                     padding: const EdgeInsets.only(left: 34, top: 6),
                     child: Text(
                       pax,
+                      style: const TextStyle(
+                          fontFamily: 'Josefin Sans',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 34, top: 8),
+                    child: Text(
+                      'Request More : $request',
                       style: const TextStyle(
                           fontFamily: 'Josefin Sans',
                           fontSize: 18,
@@ -129,6 +143,7 @@ Widget resDeletableCard({
   required time,
   required date,
   required pax,
+  required request,
   required void Function() delete,
 }) =>
     Card(
@@ -143,7 +158,7 @@ Widget resDeletableCard({
         color: HexColor('F1ECE1'),
         child: SizedBox(
             width: 267,
-            height: 210,
+            height: 250,
             child: Column(
               children: [
                 Align(
@@ -217,6 +232,19 @@ Widget resDeletableCard({
                     padding: const EdgeInsets.only(left: 34, top: 6),
                     child: Text(
                       pax,
+                      style: const TextStyle(
+                          fontFamily: 'Josefin Sans',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 34, top: 8),
+                    child: Text(
+                      'Request More : $request',
                       style: const TextStyle(
                           fontFamily: 'Josefin Sans',
                           fontSize: 18,

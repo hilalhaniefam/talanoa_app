@@ -22,7 +22,7 @@ class _CanceledState extends State<Rentareacanceled> {
     return Scaffold(
         appBar: appBarAdminWithSearch(
             backButton: _handleBack,
-            title: 'Cenceled',
+            title: 'Canceled',
             onPressed: () {
               showSearch(context: context, delegate: SearchCanceled());
             }),

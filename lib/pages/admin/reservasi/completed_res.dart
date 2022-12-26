@@ -68,7 +68,8 @@ class _CompletedState extends State<ReservasiCompleted> {
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: data[index].pax,
+                            request: data[index].request);
                       }));
             }));
   }

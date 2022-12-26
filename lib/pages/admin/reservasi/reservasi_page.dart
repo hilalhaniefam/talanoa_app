@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
+import 'package:talanoa_app/pages/admin/reservasi/add_pax_page.dart';
 import 'package:talanoa_app/pages/admin/reservasi/canceled_res.dart';
 import 'package:talanoa_app/pages/admin/reservasi/completed_res.dart';
 import 'package:talanoa_app/pages/admin/reservasi/ongoing_res.dart';
@@ -35,12 +36,37 @@ class _ReservasidataState extends State<Reservasidata> {
           height: 21,
         ),
         buttonAdmin(
-            title: 'Cenceled',
+            title: 'Canceled',
             page: const ReservasiCanceled(),
             context: context),
         const SizedBox(
           height: 50,
         ),
+        // Padding(
+        //   padding: const EdgeInsets.only(right: 10),
+        //   child: Align(
+        //     alignment: Alignment.bottomRight,
+        //     child: ElevatedButton(
+        //         onPressed: () {
+        //           Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (context) => const AddPax()));
+        //         },
+        //         child: const Align(
+        //             alignment: Alignment.center,
+        //             child: Icon(
+        //               Icons.add,
+        //               color: Colors.black,
+        //               size: 35,
+        //             )),
+        //         style: ElevatedButton.styleFrom(
+        //             fixedSize: const Size(55, 55),
+        //             shape: RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.circular(10),
+        //             ),
+        //             primary: HexColor('#F1ECE1'),
+        //             shadowColor: Colors.black)),
+        //   ),
+        // ),
       ]),
     );
   }

@@ -23,7 +23,7 @@ class _CanceledState extends State<ReservasiCanceled> {
     return Scaffold(
         appBar: appBarAdminWithSearch(
             backButton: _handleBack,
-            title: 'Cenceled',
+            title: 'Canceled',
             onPressed: () {
               showSearch(context: context, delegate: SearchCanceled());
             }),
@@ -67,7 +67,8 @@ class _CanceledState extends State<ReservasiCanceled> {
                             type: data[index].type,
                             time: data[index].time,
                             date: data[index].date,
-                            pax: data[index].pax);
+                            pax: data[index].pax,
+                            request: data[index].request);
                       }));
             }));
   }

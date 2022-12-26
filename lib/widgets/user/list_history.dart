@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-Widget resCardHistory({
-  required name,
-  required phone,
-  required type,
-  required time,
-  required date,
-  required pax,
-}) =>
+Widget resCardHistory(
+        {required name,
+        required phone,
+        required type,
+        required time,
+        required date,
+        required pax,
+        required request}) =>
     Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -27,7 +27,7 @@ Widget resCardHistory({
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 34, top: 22),
+                    padding: const EdgeInsets.only(left: 34, top: 15),
                     child: Text(
                       name,
                       style: const TextStyle(
@@ -95,6 +95,19 @@ Widget resCardHistory({
                     padding: const EdgeInsets.only(left: 34, top: 6),
                     child: Text(
                       '$pax person',
+                      style: const TextStyle(
+                          fontFamily: 'Josefin Sans',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 34, top: 8),
+                    child: Text(
+                      'Request More : $request',
                       style: const TextStyle(
                           fontFamily: 'Josefin Sans',
                           fontSize: 18,
